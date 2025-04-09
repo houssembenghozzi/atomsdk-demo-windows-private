@@ -29,7 +29,7 @@
                         <Border x:Name="border" 
                                 BorderBrush="#212121" 
                                 BorderThickness="1" 
-                                CornerRadius="1000"
+                                CornerRadius="100"
                                 Background="Transparent"
                                 Padding="16,16">
                             <Grid>
@@ -39,7 +39,7 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 
-                                <Image Grid.Column="0" Source="/Resources/Images/mail_icon.svg" Width="24" Height="24"/>
+                                <Image Grid.Column="0" Source="/Resources/Images/fortis_icon.png" Width="24" Height="24"/>
                                 <ScrollViewer Grid.Column="2" x:Name="PART_ContentHost" Focusable="false"/>
                                 <TextBlock Grid.Column="2" 
                                            x:Name="Placeholder" 
@@ -82,7 +82,7 @@
                         <Border x:Name="border" 
                                 BorderBrush="#BEBEBE" 
                                 BorderThickness="1" 
-                                CornerRadius="1000"
+                                CornerRadius="100"
                                 Background="Transparent"
                                 Padding="16,16">
                             <Grid>
@@ -93,7 +93,7 @@
                                     <ColumnDefinition Width="24"/>
                                 </Grid.ColumnDefinitions>
                                 
-                                <Image Grid.Column="0" Source="/Resources/Images/lock_icon.svg" Width="24" Height="24"/>
+                                <Image Grid.Column="0" Source="/Resources/Images/fortis_icon.png" Width="24" Height="24"/>
                                 <ScrollViewer Grid.Column="2" x:Name="PART_ContentHost" Focusable="false"/>
                                 <TextBlock Grid.Column="2" 
                                            x:Name="Placeholder" 
@@ -103,7 +103,7 @@
                                            FontSize="14"
                                            FontWeight="Medium"/>
                                 <Button Grid.Column="3" x:Name="ShowPasswordButton" Background="Transparent" BorderThickness="0">
-                                    <Image Source="/Resources/Images/eye_icon.svg" Width="24" Height="24"/>
+                                    <Image Source="/Resources/Images/fortis_icon.png" Width="24" Height="24"/>
                                 </Button>
                             </Grid>
                         </Border>
@@ -205,8 +205,7 @@
     <Grid Margin="30">
         <!-- Logo -->
         <Grid VerticalAlignment="Top">
-            <Image Source="/Resources/Images/logo_red_part.svg" Width="42" Height="42" HorizontalAlignment="Left"/>
-            <Image Source="/Resources/Images/logo_white_part.svg" Width="42" Height="42" HorizontalAlignment="Left"/>
+            <Image Source="/Resources/Images/fortis_icon.png" Width="42" Height="42" HorizontalAlignment="Left"/>
         </Grid>
         
         <!-- Content -->
