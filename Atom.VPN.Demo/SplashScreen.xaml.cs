@@ -74,30 +74,55 @@ namespace Atom.VPN.Demo
         {
             timer.Stop();
             
-            // Create and initialize the main window
-            mainWindow = new MainWindow();
-            
-            // Set the main window's automatic initialization of SDK with the key
-            // Pre-populate the key from our embedded value
-            mainWindow.SecretKey = "17355649429f7d4adbe993a8d227bc580c8f369b";
-            
-            // Call the InitializeSDK method
-            if (isAtomServiceInstalled)
+            try
             {
-                // We'll check if the window has the InitializeSDK method using reflection
-                var initMethod = mainWindow.GetType().GetMethod("InitializeSDK", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                if (initMethod != null)
+                // Create and initialize the main window
+                mainWindow = new MainWindow();
+                
+                // Set the main window's automatic initialization of SDK with the key
+                // Pre-populate the key from our embedded value
+                mainWindow.SecretKey = "17355649429f7d4adbe993a8d227bc580c8f369b";
+                
+                // Call the InitializeSDK method
+                if (isAtomServiceInstalled)
                 {
-                    // Call the method with no parameters
-                    initMethod.Invoke(mainWindow, null);
+                    try
+                    {
+                        // We'll check if the window has the InitializeSDK method using reflection
+                        var initMethod = mainWindow.GetType().GetMethod("InitializeSDK", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                        if (initMethod != null)
+                        {
+                            // Call the method with no parameters
+                            initMethod.Invoke(mainWindow, null);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error initializing SDK: " + ex.Message);
+                    }
                 }
+                
+                // Make sure the main window is created successfully before closing the splash screen
+                mainWindow.Closed += (s, args) => 
+                {
+                    // When main window is closed, exit the application
+                    Application.Current.Shutdown();
+                };
+                
+                // Show main window
+                mainWindow.Show();
+                
+                // Close splash screen
+                this.Close();
             }
-            
-            // Show main window
-            mainWindow.Show();
-            
-            // Close splash screen
-            this.Close();
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error opening main window: " + ex.Message);
+                
+                // If we can't open the main window, don't close the splash screen
+                // Restart the timer to try again
+                timer.Start();
+            }
         }
     }
 } 
