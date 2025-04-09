@@ -52,7 +52,7 @@
                                 </Grid.ColumnDefinitions>
                                 
                                 <!-- Mail Icon -->
-                                <Path Data="{StaticResource EmailIconPath}" 
+                                <shapes:Path Data="{StaticResource EmailIconPath}" 
                                      Fill="Transparent"
                                      Stroke="#111827"
                                      StrokeThickness="1.5"
@@ -137,7 +137,7 @@
                                 </Grid.ColumnDefinitions>
                                 
                                 <!-- Lock Icon -->
-                                <Path Data="{StaticResource LockIconPath}" 
+                                <shapes:Path Data="{StaticResource LockIconPath}" 
                                      Fill="Transparent"
                                      Stroke="#BEBEBE"
                                      StrokeThickness="1.5"
@@ -162,7 +162,7 @@
                                         BorderThickness="0"
                                         Cursor="Hand"
                                         ToolTip="Show/Hide Password">
-                                    <Path x:Name="EyeIcon"
+                                    <shapes:Path x:Name="EyeIcon"
                                           Data="{StaticResource EyeIconPath}" 
                                           Fill="Transparent"
                                           Stroke="#BEBEBE"
