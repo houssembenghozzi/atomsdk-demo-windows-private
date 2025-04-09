@@ -174,11 +174,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\ic_atom.ico" />
-    <Resource Include="Resources\world-map.png" />
-    <Resource Include="Resources\fortis_logo.png" />
-    <Resource Include="Resources\Images\logo.svg" />
-    <Resource Include="Resources\Images\world_map.svg" />
+    <Resource Include="Resources\Images\logo.png" />
+    <Resource Include="Resources\Images\world_map.png" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

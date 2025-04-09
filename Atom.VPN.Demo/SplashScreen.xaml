@@ -19,7 +19,7 @@
             <Grid>
                 <!-- Logo -->
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,100">
-                    <Image x:Name="LogoImage" Source="/Resources/ic_atom.ico" Width="200" Height="200"/>
+                    <Image x:Name="LogoImage" Source="Resources/Images/logo.png" Width="200" Height="200"/>
                 </StackPanel>
                 
                 <!-- Loading Animation -->
