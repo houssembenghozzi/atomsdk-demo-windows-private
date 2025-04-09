@@ -17,28 +17,37 @@
     <Grid>
         <Border CornerRadius="20" Background="#000000">
             <Grid>
+                <!-- World Map Background with Gradient Overlay -->
+                <Grid VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="250">
+                    <Image Source="/Resources/Images/world_map.png" Stretch="UniformToFill" Opacity="0.3">
+                        <Image.Effect>
+                            <BlurEffect Radius="1"/>
+                        </Image.Effect>
+                    </Image>
+                    <Rectangle>
+                        <Rectangle.Fill>
+                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                <GradientStop Color="#00000000" Offset="0"/>
+                                <GradientStop Color="#FF000000" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Grid>
+                
                 <!-- Logo -->
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,100">
-                    <Image x:Name="LogoImage" Source="Resources/Images/logo.png" Width="200" Height="200"/>
+                    <Image x:Name="LogoImage" Source="/Resources/Images/logo.png" Width="200" Height="200"/>
                 </StackPanel>
                 
                 <!-- Loading Animation -->
                 <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,200,0,0">
                     <Ellipse Width="50" Height="50" Stroke="#A9A9A9" StrokeThickness="5" Opacity="0.4"/>
-                    <Ellipse Width="50" Height="50" Stroke="White" StrokeThickness="5">
+                    <Ellipse Width="50" Height="50" Stroke="White" StrokeThickness="5" StrokeDashArray="1,1.5">
                         <Ellipse.RenderTransform>
                             <RotateTransform x:Name="SpinnerRotation" CenterX="25" CenterY="25"/>
                         </Ellipse.RenderTransform>
                     </Ellipse>
                 </Grid>
-                
-                <!-- Loading Text -->
-                <TextBlock Text="Initializing Atom VPN..." 
-                           Foreground="White" 
-                           FontSize="16"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           Margin="0,300,0,0"/>
             </Grid>
         </Border>
     </Grid>

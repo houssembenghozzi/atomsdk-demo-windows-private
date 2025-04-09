@@ -25,7 +25,7 @@ namespace Atom.VPN.Demo
             {
                 From = 0,
                 To = 360,
-                Duration = new Duration(TimeSpan.FromSeconds(1)),
+                Duration = new Duration(TimeSpan.FromSeconds(0.8)),
                 RepeatBehavior = RepeatBehavior.Forever
             };
             
