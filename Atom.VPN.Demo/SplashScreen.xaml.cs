@@ -106,24 +106,8 @@ namespace Atom.VPN.Demo
                     
                     try
                     {
-                        // Call the InitializeSDK method
-                        if (isAtomServiceInstalled)
-                        {
-                            try
-                            {
-                                // We'll check if the window has the InitializeSDK method using reflection
-                                var initMethod = mainWindow.GetType().GetMethod("InitializeSDK", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                                if (initMethod != null)
-                                {
-                                    // Call the method with no parameters
-                                    initMethod.Invoke(mainWindow, null);
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show("Error initializing SDK: " + ex.Message);
-                            }
-                        }
+                        // Skip SDK initialization in the splash screen - let the main window handle it
+                        // This avoids the reflection error "Correspondence ambiguë trouvée"
                         
                         // Show the main window
                         mainWindow.Show();

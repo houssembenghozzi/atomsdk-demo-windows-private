@@ -8,7 +8,10 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            
+            <!-- Define any global resources here -->
+            <BitmapImage x:Key="WorldMapImage" UriSource="/Resources/Images/world_map.png" />
+            <BitmapImage x:Key="LogoImage" UriSource="/Resources/Images/logo.png" />
         </ResourceDictionary>
-
     </Application.Resources>
 </Application>

@@ -18,8 +18,8 @@
         <Border CornerRadius="20" Background="#000000">
             <Grid>
                 <!-- World Map Background with Gradient Overlay -->
-                <Grid VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="250">
-                    <Image Source="/Resources/Images/world_map.png" Stretch="UniformToFill" Opacity="0.3">
+                <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <Image Source="{StaticResource WorldMapImage}" Stretch="UniformToFill" Opacity="0.3">
                         <Image.Effect>
                             <BlurEffect Radius="1"/>
                         </Image.Effect>
@@ -36,15 +36,22 @@
                 
                 <!-- Logo -->
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,100">
-                    <Image x:Name="LogoImage" Source="/Resources/Images/logo.png" Width="200" Height="200"/>
+                    <Image x:Name="LogoImage" Source="{StaticResource LogoImage}" Width="200" Height="200"/>
                 </StackPanel>
                 
                 <!-- Loading Animation -->
                 <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,200,0,0">
-                    <Ellipse Width="50" Height="50" Stroke="#A9A9A9" StrokeThickness="5" Opacity="0.4"/>
-                    <Ellipse Width="50" Height="50" Stroke="White" StrokeThickness="5" StrokeDashArray="1,1.5">
+                    <Ellipse Width="80" Height="80" Stroke="#3A3A3A" StrokeThickness="8" Opacity="0.4"/>
+                    <Ellipse Width="80" Height="80" Stroke="White" StrokeThickness="8">
+                        <Ellipse.Clip>
+                            <PathGeometry>
+                                <PathFigure StartPoint="40,0">
+                                    <ArcSegment Size="40,40" IsLargeArc="True" SweepDirection="Clockwise" Point="40,80"/>
+                                </PathFigure>
+                            </PathGeometry>
+                        </Ellipse.Clip>
                         <Ellipse.RenderTransform>
-                            <RotateTransform x:Name="SpinnerRotation" CenterX="25" CenterY="25"/>
+                            <RotateTransform x:Name="SpinnerRotation" CenterX="40" CenterY="40"/>
                         </Ellipse.RenderTransform>
                     </Ellipse>
                 </Grid>
