@@ -90,14 +90,37 @@ namespace Atom.VPN.Demo
                     Application.Current.Shutdown();
                 };
                 
-                // Load the main window but don't show it yet
-                mainWindow.Show();
-                mainWindow.Hide(); // Hide it temporarily
+                // Try to initialize the SDK directly - but don't show any error if it fails
+                // as the main window will handle SDK initialization anyway
+                if (isAtomServiceInstalled)
+                {
+                    try
+                    {
+                        // Initialize SDK directly through MainWindow's methods
+                        var initMethod = mainWindow.GetType().GetMethod("InitializeSDK", 
+                           System.Reflection.BindingFlags.NonPublic | 
+                           System.Reflection.BindingFlags.Public |
+                           System.Reflection.BindingFlags.Instance, 
+                           null, 
+                           new Type[0], 
+                           null);
+                           
+                        if (initMethod != null)
+                        {
+                            initMethod.Invoke(mainWindow, null);
+                        }
+                    }
+                    catch
+                    {
+                        // Silently ignore initialization errors here
+                        // The main window will handle initialization
+                    }
+                }
                 
                 // Create a second timer to wait a bit more before showing the main window
                 DispatcherTimer finalizeTimer = new DispatcherTimer
                 {
-                    Interval = TimeSpan.FromSeconds(1) // Additional delay before showing main window
+                    Interval = TimeSpan.FromSeconds(2) // Additional delay before showing main window
                 };
                 
                 finalizeTimer.Tick += (s, args) =>
@@ -106,9 +129,6 @@ namespace Atom.VPN.Demo
                     
                     try
                     {
-                        // Skip SDK initialization in the splash screen - let the main window handle it
-                        // This avoids the reflection error "Correspondence ambiguë trouvée"
-                        
                         // Show the main window
                         mainWindow.Show();
                         

@@ -7,4 +7,4 @@ obj/
 Atom.VPN.Demo/bin/
 Atom.VPN.Demo/obj/
 packages/
-
+.DS_Store

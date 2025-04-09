@@ -10,8 +10,8 @@
             </ResourceDictionary.MergedDictionaries>
             
             <!-- Define any global resources here -->
-            <BitmapImage x:Key="WorldMapImage" UriSource="/Resources/Images/world_map.png" />
-            <BitmapImage x:Key="LogoImage" UriSource="/Resources/Images/logo.png" />
+            <BitmapImage x:Key="WorldMapImage" UriSource="/Atom.VPN.Demo;component/Resources/Images/world_map.png" />
+            <BitmapImage x:Key="LogoImage" UriSource="/Atom.VPN.Demo;component/Resources/Images/fortis_logo.png" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>
