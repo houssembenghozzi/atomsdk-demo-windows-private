@@ -259,55 +259,64 @@ namespace Atom.VPN.Demo
             var countries = new List<Country>();
             var protocols = new List<Protocol>();
 
-            await Task.Factory.StartNew(() =>
+            try
             {
-                var atomConfig = new AtomConfiguration(SecretKey);
-                atomConfig.PersistVPNDetails = true;
-                atomConfig.VpnInterfaceName = "AtomDemo";
-                atomManagerInstance = AtomManager.Initialize(atomConfig);
-
-                atomManagerInstance.Connected += AtomManagerInstance_Connected;
-                atomManagerInstance.DialError += AtomManagerInstance_DialError;
-                atomManagerInstance.Disconnected += AtomManagerInstance_Disconnected;
-                atomManagerInstance.StateChanged += AtomManagerInstance_StateChanged;
-                atomManagerInstance.Redialing += AtomManagerInstance_Redialing;
-                atomManagerInstance.OnUnableToAccessInternet += AtomManagerInstance_OnUnableToAccessInternet;
-                atomManagerInstance.SDKAlreadyInitialized += AtomManagerInstance_SDKAlreadyInitialized;
-                atomManagerInstance.ConnectedLocation += AtomManagerInstance_ConnectedLocation;
-                atomManagerInstance.AtomInitialized += AtomManagerInstance_AtomInitialized;
-                atomManagerInstance.AtomDependenciesMissing += AtomManagerInstance_AtomDependenciesMissing;
-                
-                // Add sensitive application that needs to be close if network connections drops automatically.
-                atomManagerInstance.SensitiveApplications = new List<SensitiveApplication>() 
-                { 
-                    new SensitiveApplication() { CompleteExePath = @"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" }
-                };
-
-                atomManagerInstance.AutoRedialOnConnectionDrop = true;
-
-                //To get countries
-                try
+                await Task.Factory.StartNew(() =>
                 {
-                    countries = atomManagerInstance.GetCountries();
-                }
-                catch { }
+                    var atomConfig = new AtomConfiguration(SecretKey);
+                    atomConfig.PersistVPNDetails = true;
+                    atomConfig.VpnInterfaceName = "AtomDemo";
+                    atomManagerInstance = AtomManager.Initialize(atomConfig);
 
-                //To get protocols
-                try
-                {
-                    protocols = atomManagerInstance.GetProtocols();
-                }
-                catch { }
+                    atomManagerInstance.Connected += AtomManagerInstance_Connected;
+                    atomManagerInstance.DialError += AtomManagerInstance_DialError;
+                    atomManagerInstance.Disconnected += AtomManagerInstance_Disconnected;
+                    atomManagerInstance.StateChanged += AtomManagerInstance_StateChanged;
+                    atomManagerInstance.Redialing += AtomManagerInstance_Redialing;
+                    atomManagerInstance.OnUnableToAccessInternet += AtomManagerInstance_OnUnableToAccessInternet;
+                    atomManagerInstance.SDKAlreadyInitialized += AtomManagerInstance_SDKAlreadyInitialized;
+                    atomManagerInstance.ConnectedLocation += AtomManagerInstance_ConnectedLocation;
+                    atomManagerInstance.AtomInitialized += AtomManagerInstance_AtomInitialized;
+                    atomManagerInstance.AtomDependenciesMissing += AtomManagerInstance_AtomDependenciesMissing;
+                    
+                    // Add sensitive application that needs to be close if network connections drops automatically.
+                    atomManagerInstance.SensitiveApplications = new List<SensitiveApplication>() 
+                    { 
+                        new SensitiveApplication() { CompleteExePath = @"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" }
+                    };
 
-                //AtomHelper lets you use the functionality of above created instance in all usercontrols and pages
-                AtomHelper.SetAtomManagerInstance(atomManagerInstance);
-            });
+                    atomManagerInstance.AutoRedialOnConnectionDrop = true;
 
-            ConnectionWithDedicatedIP.Initialize(protocols, countries);
-            ConnectionWithParams.Initialize(protocols, countries);
-            IsSDKInitializing = false;
-            ISSDKInitialized = true;
-            IsConnDisconnAllowed = true;
+                    //To get countries
+                    try
+                    {
+                        countries = atomManagerInstance.GetCountries();
+                    }
+                    catch { }
+
+                    //To get protocols
+                    try
+                    {
+                        protocols = atomManagerInstance.GetProtocols();
+                    }
+                    catch { }
+
+                    //AtomHelper lets you use the functionality of above created instance in all usercontrols and pages
+                    AtomHelper.SetAtomManagerInstance(atomManagerInstance);
+                });
+
+                ConnectionWithDedicatedIP.Initialize(protocols, countries);
+                ConnectionWithParams.Initialize(protocols, countries);
+                IsSDKInitializing = false;
+                ISSDKInitialized = true;
+                IsConnDisconnAllowed = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error initializing Atom SDK: " + ex.Message);
+                IsSDKInitializing = false;
+                ISSDKInitialized = false;
+            }
         }
 
         private void AtomManagerInstance_ConnectedLocation(object sender, ConnectedLocationEventArgs e)
@@ -420,7 +429,15 @@ namespace Atom.VPN.Demo
 
         private void AtomManagerInstance_AtomDependenciesMissing(object sender, SDK.Core.CustomEventArgs.AtomDependenciesMissingEventArgs e)
         {
-            MessageBox.Show(e?.Exception?.ErrorMessage);
+            MessageBox.Show("Atom Service is not installed on this system. Please install Atom VPN Service before running this application.\n\n" + 
+                            (e?.Exception?.ErrorMessage ?? "No additional error details available."));
+            
+            // Ensure UI is in a usable state despite missing dependencies
+            Dispatcher.Invoke(() => {
+                ActionButton.IsEnabled = false;
+                IsSDKInitializing = false;
+                ISSDKInitialized = false;
+            });
         }
 
         #endregion

@@ -14,6 +14,15 @@
             <TextBlock Padding="0,50" Text="Please wait while SDK is being initialized." HorizontalAlignment="Center" FontSize="20" Visibility="{Binding IsSDKInitializing, Converter={StaticResource BoolToVis}}" />
         </StackPanel>
 
+        <!-- Service not installed message -->
+        <StackPanel x:Name="ServiceNotInstalledPanel" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                  Visibility="{Binding ISSDKInitialized, Converter={StaticResource InvertBoolToVis}}">
+            <TextBlock TextAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="Red" TextWrapping="Wrap"
+                     Text="Atom VPN Service is not installed on this system." />
+            <TextBlock TextAlignment="Center" Margin="0,10,0,0" TextWrapping="Wrap" Width="400"
+                     Text="Please make sure you have installed the AtomSDK prerequisites. Visit https://atom.purevpn.com to download the necessary components." />
+        </StackPanel>
+
         <Grid Visibility="Visible" Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
