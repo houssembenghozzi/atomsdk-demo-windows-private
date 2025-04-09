@@ -27,11 +27,10 @@ namespace Atom.VPN.Demo
             InitializeComponent();
             ActionButton.IsEnabled = false;
             
-            // Automatically set the SecretKey
+            // Automatically set the SecretKey - actual initialization will be triggered by SplashScreen
             SecretKey = "17355649429f7d4adbe993a8d227bc580c8f369b";
             
-            // Initialize SDK automatically
-            InitializeSDK();
+            // Note: InitializeSDK will now be called by the SplashScreen
         }
 
         AtomManager atomManagerInstance;

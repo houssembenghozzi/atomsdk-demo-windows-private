@@ -81,6 +81,7 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="System.ServiceProcess" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -91,6 +92,9 @@
     <Compile Include="Interfaces\IConnection.cs" />
     <Compile Include="Models\Messages.cs" />
     <Compile Include="Models\ResponseValidation.cs" />
+    <Compile Include="SplashScreen.xaml.cs">
+      <DependentUpon>SplashScreen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UINotifiers\UserControlBase.cs" />
     <Compile Include="UINotifiers\WindowBase.cs" />
     <Compile Include="UserControls\ConnectWithDedicatedIP.xaml.cs">
@@ -119,6 +123,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Resources\Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SplashScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -167,6 +175,8 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\ic_atom.ico" />
+    <Resource Include="Resources\world-map.png" />
+    <Resource Include="Resources\fortis_logo.png" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
