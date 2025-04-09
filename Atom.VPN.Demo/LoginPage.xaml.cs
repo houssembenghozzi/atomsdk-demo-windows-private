@@ -1,8 +1,6 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using shapes = System.Windows.Shapes;
 
 namespace Atom.VPN.Demo
 {
@@ -12,164 +10,92 @@ namespace Atom.VPN.Demo
     public partial class LoginPage : Window
     {
         private MainWindow mainWindow;
-        private TextBox passwordVisibleTextBox;
-        private bool passwordIsVisible = false;
         
         public LoginPage()
         {
             InitializeComponent();
-        }
-
-        private void PasswordBox_Loaded(object sender, RoutedEventArgs e)
-        {
+            
             // Handle the eye button in password box for showing/hiding password
-            var passwordBox = sender as PasswordBox;
-            if (passwordBox != null)
+            var passwordTemplate = PasswordBox.Template;
+            var showPasswordButton = passwordTemplate.FindName("ShowPasswordButton", PasswordBox) as Button;
+            if (showPasswordButton != null)
             {
-                var toggleButton = passwordBox.Template.FindName("PART_TogglePasswordButton", passwordBox) as Button;
-                if (toggleButton != null)
-                {
-                    toggleButton.Click += TogglePasswordButton_Click;
-                }
-            }
-        }
-
-        private void TogglePasswordButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Toggle password visibility
-            if (passwordIsVisible)
-            {
-                // Hide password - transfer text from TextBox back to PasswordBox
-                if (passwordVisibleTextBox != null)
-                {
-                    PasswordBox.Password = passwordVisibleTextBox.Text;
-                    
-                    // Remove the temporary TextBox
-                    var parentGrid = passwordVisibleTextBox.Parent as Grid;
-                    if (parentGrid != null)
-                    {
-                        parentGrid.Children.Remove(passwordVisibleTextBox);
-                        passwordVisibleTextBox = null;
-                    }
-                    
-                    // Show the PasswordBox again
-                    PasswordBox.Visibility = Visibility.Visible;
-                    
-                    // Update the icon to the closed eye
-                    var eyeIcon = ((sender as Button).Content as shapes.Path);
-                    if (eyeIcon != null)
-                    {
-                        eyeIcon.Stroke = new SolidColorBrush(Color.FromRgb(190, 190, 190));
-                    }
-                }
-            }
-            else
-            {
-                // Show password - create a TextBox with the same style and content
-                var passwordBoxParent = PasswordBox.Parent as Grid;
-                if (passwordBoxParent != null)
-                {
-                    // Create a TextBox to show the password
-                    passwordVisibleTextBox = new TextBox
-                    {
-                        Text = PasswordBox.Password,
-                        FontFamily = PasswordBox.FontFamily,
-                        FontSize = PasswordBox.FontSize,
-                        Foreground = PasswordBox.Foreground,
-                        VerticalContentAlignment = PasswordBox.VerticalContentAlignment,
-                        Margin = new Thickness(0),
-                        Padding = new Thickness(0),
-                        Background = Brushes.Transparent,
-                        BorderThickness = new Thickness(0),
-                        VerticalAlignment = PasswordBox.VerticalAlignment,
-                        HorizontalAlignment = PasswordBox.HorizontalAlignment
-                    };
-                    
-                    // Add event handlers
-                    passwordVisibleTextBox.GotFocus += InputField_GotFocus;
-                    passwordVisibleTextBox.LostFocus += InputField_LostFocus;
-                    
-                    // Hide the PasswordBox and add the TextBox in the same position
-                    PasswordBox.Visibility = Visibility.Hidden;
-                    Grid.SetColumn(passwordVisibleTextBox, 2);
-                    passwordBoxParent.Children.Add(passwordVisibleTextBox);
-                    passwordVisibleTextBox.Focus();
-                    
-                    // Update the icon to the open eye
-                    var eyeIcon = ((sender as Button).Content as shapes.Path);
-                    if (eyeIcon != null)
-                    {
-                        eyeIcon.Stroke = new SolidColorBrush(Color.FromRgb(33, 33, 33));
-                    }
-                }
+                showPasswordButton.Click += ShowPasswordButton_Click;
             }
             
-            // Toggle the visibility state
-            passwordIsVisible = !passwordIsVisible;
+            // Add handler for password changes to hide/show placeholder
+            PasswordBox.PasswordChanged += PasswordBox_PasswordChanged;
+        }
+
+        private void ShowPasswordButton_Click(object sender, RoutedEventArgs e)
+        {
+            // This would normally toggle password visibility, but WPF PasswordBox doesn't support this directly
+            // In a real application, you'd need to implement a custom control or use a workaround
+            MessageBox.Show("Password visibility toggle is not implemented in this demo.", "Feature Not Implemented", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void InputField_GotFocus(object sender, RoutedEventArgs e)
         {
-            // Change border color and hide placeholder text when the input field gets focus
+            // Change border color and placeholder text to black when the input field gets focus
             if (sender is TextBox textBox)
             {
-                var border = textBox.Template?.FindName("border", textBox) as Border;
+                var border = textBox.Template.FindName("border", textBox) as Border;
                 if (border != null)
                 {
-                    border.BorderBrush = new SolidColorBrush(Color.FromRgb(33, 33, 33));
+                    border.BorderBrush = System.Windows.Media.Brushes.Black;
                 }
                 
-                var placeholder = textBox.Template?.FindName("PlaceholderText", textBox) as TextBlock;
+                var placeholder = textBox.Template.FindName("Placeholder", textBox) as TextBlock;
                 if (placeholder != null)
                 {
-                    placeholder.Visibility = Visibility.Collapsed;
+                    placeholder.Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(50, 52, 56));
                 }
             }
             else if (sender is PasswordBox passwordBox)
             {
-                var border = passwordBox.Template?.FindName("border", passwordBox) as Border;
+                var border = passwordBox.Template.FindName("border", passwordBox) as Border;
                 if (border != null)
                 {
-                    border.BorderBrush = new SolidColorBrush(Color.FromRgb(33, 33, 33));
+                    border.BorderBrush = System.Windows.Media.Brushes.Black;
                 }
                 
-                var placeholder = passwordBox.Template?.FindName("PlaceholderText", passwordBox) as TextBlock;
+                var placeholder = passwordBox.Template.FindName("Placeholder", passwordBox) as TextBlock;
                 if (placeholder != null)
                 {
-                    placeholder.Visibility = Visibility.Collapsed;
+                    placeholder.Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(50, 52, 56));
                 }
             }
         }
 
         private void InputField_LostFocus(object sender, RoutedEventArgs e)
         {
-            // Change border color and show placeholder text when the input field loses focus (if empty)
+            // Change border color and placeholder text to gray when the input field loses focus
             if (sender is TextBox textBox)
             {
-                var border = textBox.Template?.FindName("border", textBox) as Border;
+                var border = textBox.Template.FindName("border", textBox) as Border;
                 if (border != null)
                 {
-                    border.BorderBrush = new SolidColorBrush(Color.FromRgb(190, 190, 190));
+                    border.BorderBrush = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(190, 190, 190));
                 }
                 
-                var placeholder = textBox.Template?.FindName("PlaceholderText", textBox) as TextBlock;
+                var placeholder = textBox.Template.FindName("Placeholder", textBox) as TextBlock;
                 if (placeholder != null && string.IsNullOrEmpty(textBox.Text))
                 {
-                    placeholder.Visibility = Visibility.Visible;
+                    placeholder.Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(190, 190, 190));
                 }
             }
             else if (sender is PasswordBox passwordBox)
             {
-                var border = passwordBox.Template?.FindName("border", passwordBox) as Border;
+                var border = passwordBox.Template.FindName("border", passwordBox) as Border;
                 if (border != null)
                 {
-                    border.BorderBrush = new SolidColorBrush(Color.FromRgb(190, 190, 190));
+                    border.BorderBrush = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(190, 190, 190));
                 }
                 
-                var placeholder = passwordBox.Template?.FindName("PlaceholderText", passwordBox) as TextBlock;
+                var placeholder = passwordBox.Template.FindName("Placeholder", passwordBox) as TextBlock;
                 if (placeholder != null && passwordBox.Password.Length == 0)
                 {
-                    placeholder.Visibility = Visibility.Visible;
+                    placeholder.Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(190, 190, 190));
                 }
             }
         }
@@ -198,6 +124,21 @@ namespace Atom.VPN.Demo
         private void SignUp_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Sign up functionality is not implemented in this demo.", "Feature Not Implemented", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            var passwordBox = sender as PasswordBox;
+            if (passwordBox != null)
+            {
+                var placeholder = passwordBox.Template.FindName("Placeholder", passwordBox) as TextBlock;
+                if (placeholder != null)
+                {
+                    // Show placeholder only when password is empty
+                    placeholder.Visibility = string.IsNullOrEmpty(passwordBox.Password) ? 
+                        Visibility.Visible : Visibility.Collapsed;
+                }
+            }
         }
     }
 } 
