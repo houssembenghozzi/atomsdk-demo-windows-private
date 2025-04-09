@@ -185,8 +185,6 @@
     <Resource Include="Resources\Images\world_map.png" />
     <Resource Include="Resources\Images\fortis_logo.png" />
     <Resource Include="Resources\Images\fortis_icon.png" />
-    <Resource Include="Resources\Images\logo_red_part.svg" />
-    <Resource Include="Resources\Images\logo_white_part.svg" />
     <Resource Include="Resources\Images\mail_icon.svg" />
     <Resource Include="Resources\Images\lock_icon.svg" />
     <Resource Include="Resources\Images\eye_icon.svg" />
