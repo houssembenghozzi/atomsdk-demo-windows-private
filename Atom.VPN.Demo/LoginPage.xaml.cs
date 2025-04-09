@@ -2,7 +2,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Shapes;
+using shapes = System.Windows.Shapes;
 
 namespace Atom.VPN.Demo
 {
@@ -56,7 +56,7 @@ namespace Atom.VPN.Demo
                     PasswordBox.Visibility = Visibility.Visible;
                     
                     // Update the icon to the closed eye
-                    var eyeIcon = ((sender as Button).Content as Path);
+                    var eyeIcon = ((sender as Button).Content as shapes.Path);
                     if (eyeIcon != null)
                     {
                         eyeIcon.Stroke = new SolidColorBrush(Color.FromRgb(190, 190, 190));
@@ -96,7 +96,7 @@ namespace Atom.VPN.Demo
                     passwordVisibleTextBox.Focus();
                     
                     // Update the icon to the open eye
-                    var eyeIcon = ((sender as Button).Content as Path);
+                    var eyeIcon = ((sender as Button).Content as shapes.Path);
                     if (eyeIcon != null)
                     {
                         eyeIcon.Stroke = new SolidColorBrush(Color.FromRgb(33, 33, 33));
