@@ -12,7 +12,9 @@
         WindowStyle="None"
         ResizeMode="NoResize"
         AllowsTransparency="True"
-        Background="#FAFAFA">
+        Background="#FAFAFA"
+        TextOptions.TextFormattingMode="Display"
+        UseLayoutRounding="True">
     
     <Window.Resources>
         <!-- Font families -->
@@ -46,19 +48,25 @@
                                            Text="email@email.com" 
                                            Foreground="#BEBEBE" 
                                            FontFamily="{StaticResource GTWalsheimPro}" 
-                                           FontSize="16"
-                                           Visibility="Collapsed"/>
+                                           FontSize="16"/>
                             </Grid>
                         </Border>
                         
                         <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#212121"/>
+                                <Setter TargetName="Placeholder" Property="Visibility" Value="Collapsed"/>
+                            </Trigger>
                             <Trigger Property="Text" Value="">
                                 <Setter TargetName="Placeholder" Property="Visibility" Value="Visible"/>
                             </Trigger>
-                            <Trigger Property="IsFocused" Value="True">
-                                <Setter TargetName="border" Property="BorderBrush" Value="#212121"/>
-                                <Setter TargetName="Placeholder" Property="Foreground" Value="#323438"/>
-                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsFocused" Value="True"/>
+                                    <Condition Property="Text" Value=""/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Placeholder" Property="Visibility" Value="Collapsed"/>
+                            </MultiTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -69,6 +77,7 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Padding" Value="0"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
         </Style>
         
         <Style x:Key="PasswordBoxStyle" TargetType="PasswordBox">
@@ -98,8 +107,8 @@
                                            FontFamily="{StaticResource GTWalsheimProMedium}" 
                                            FontSize="14"
                                            FontWeight="Medium"/>
-                                <Button Grid.Column="3" x:Name="ShowPasswordButton" Background="Transparent" BorderThickness="0">
-                                    <Image Source="/Resources/Images/fortis_icon.png" Width="24" Height="24" Opacity="0.7"/>
+                                <Button Grid.Column="3" x:Name="ShowPasswordButton" Background="Transparent" BorderThickness="0" Cursor="Hand">
+                                    <Image Source="/Resources/Images/eye.png" Width="24" Height="24" Opacity="0.7"/>
                                 </Button>
                             </Grid>
                         </Border>
@@ -107,7 +116,7 @@
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsFocused" Value="True">
                                 <Setter TargetName="border" Property="BorderBrush" Value="#212121"/>
-                                <Setter TargetName="Placeholder" Property="Foreground" Value="#323438"/>
+                                <Setter TargetName="Placeholder" Property="Visibility" Value="Collapsed"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -119,6 +128,69 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Padding" Value="0"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+        </Style>
+        
+        <Style x:Key="TextBoxStyleForPasswordDisplay" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="border" 
+                                BorderBrush="#BEBEBE" 
+                                BorderThickness="1" 
+                                CornerRadius="100"
+                                Background="Transparent"
+                                Padding="16,16">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="24"/>
+                                    <ColumnDefinition Width="12"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="24"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Image Grid.Column="0" Source="/Resources/Images/fortis_icon.png" Width="24" Height="24" Opacity="0.7"/>
+                                <ScrollViewer Grid.Column="2" x:Name="PART_ContentHost" Focusable="false"/>
+                                <TextBlock Grid.Column="2" 
+                                           x:Name="Placeholder" 
+                                           Text="Password" 
+                                           Foreground="#BEBEBE" 
+                                           FontFamily="{StaticResource GTWalsheimProMedium}" 
+                                           FontSize="14"
+                                           FontWeight="Medium"/>
+                                <Button Grid.Column="3" x:Name="HidePasswordButton" Background="Transparent" BorderThickness="0" Cursor="Hand">
+                                    <Image Source="/Resources/Images/eye-slash.png" Width="24" Height="24" Opacity="0.7"/>
+                                </Button>
+                            </Grid>
+                        </Border>
+                        
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#212121"/>
+                                <Setter TargetName="Placeholder" Property="Visibility" Value="Collapsed"/>
+                            </Trigger>
+                            <Trigger Property="Text" Value="">
+                                <Setter TargetName="Placeholder" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsFocused" Value="True"/>
+                                    <Condition Property="Text" Value=""/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Placeholder" Property="Visibility" Value="Collapsed"/>
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="FontFamily" Value="{StaticResource GTWalsheimProMedium}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="#323438"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Visibility" Value="Collapsed"/>
         </Style>
         
         <!-- Button styles -->
@@ -150,6 +222,7 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Setter Property="Cursor" Value="Hand"/>
         </Style>
         
         <Style x:Key="SignUpButtonStyle" TargetType="Button">
@@ -172,6 +245,7 @@
             </Setter>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
         </Style>
         
         <Style x:Key="ForgotPasswordButtonStyle" TargetType="Button">
@@ -195,30 +269,36 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Cursor" Value="Hand"/>
         </Style>
     </Window.Resources>
     
     <Grid Margin="30">
         <!-- Logo -->
         <Grid VerticalAlignment="Top">
-            <Image Source="/Resources/Images/logo_red_part.svg" Width="42" Height="42" HorizontalAlignment="Left"/>
-            <Image Source="/Resources/Images/logo_white_part.svg" Width="42" Height="42" HorizontalAlignment="Left"/>
+            <Image Source="/Resources/Images/fortis_logo.png" Width="42" Height="42" HorizontalAlignment="Left"/>
         </Grid>
         
         <!-- Content -->
         <StackPanel VerticalAlignment="Center" Margin="0,-40,0,0">
             <!-- Title Section -->
             <StackPanel Margin="0,0,0,40">
-                <TextBlock Text="Login" 
+                <TextBlock Text="Create New Account" 
                            FontFamily="{StaticResource GTWalsheimProBold}" 
                            FontSize="24" 
                            FontWeight="Bold" 
                            Foreground="#323438" 
-                           Margin="0,0,0,8"/>
+                           Margin="0,0,0,8"
+                           TextOptions.TextFormattingMode="Display"
+                           UseLayoutRounding="True"
+                           SnapsToDevicePixels="True"/>
                 <TextBlock Text="Please enter your details." 
                            FontFamily="{StaticResource GTWalsheimPro}" 
                            FontSize="16" 
-                           Foreground="#323438"/>
+                           Foreground="#323438"
+                           TextOptions.TextFormattingMode="Display"
+                           UseLayoutRounding="True"
+                           SnapsToDevicePixels="True"/>
             </StackPanel>
             
             <!-- Form Section -->
@@ -226,41 +306,62 @@
                 <!-- Email Input -->
                 <TextBox x:Name="EmailTextBox" 
                          Style="{StaticResource EmailTextBoxStyle}" 
-                         Margin="0,0,0,20" 
-                         GotFocus="InputField_GotFocus"
-                         LostFocus="InputField_LostFocus"/>
+                         Margin="0,0,0,20"/>
                 
                 <!-- Password Section -->
-                <StackPanel>
+                <Grid>
                     <PasswordBox x:Name="PasswordBox" 
                                  Style="{StaticResource PasswordBoxStyle}" 
-                                 Margin="0,0,0,14"
-                                 GotFocus="InputField_GotFocus"
-                                 LostFocus="InputField_LostFocus"/>
-                    <Button Style="{StaticResource ForgotPasswordButtonStyle}" 
-                            HorizontalAlignment="Right" 
-                            Margin="0,0,0,30"
-                            Click="ForgotPassword_Click"/>
-                </StackPanel>
+                                 Margin="0,0,0,14"/>
+                    <TextBox x:Name="PasswordTextBox"
+                             Style="{StaticResource TextBoxStyleForPasswordDisplay}"
+                             Margin="0,0,0,14"/>
+                </Grid>
+                
+                <Button Style="{StaticResource ForgotPasswordButtonStyle}" 
+                        HorizontalAlignment="Right" 
+                        Margin="0,0,0,30"
+                        Click="ForgotPassword_Click"/>
             </StackPanel>
+            
+            <!-- Checkbox for Terms -->
+            <Grid Margin="0,0,0,30">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <CheckBox x:Name="TermsCheckbox" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                
+                <TextBlock Grid.Column="1" VerticalAlignment="Center" TextWrapping="Wrap">
+                    <Run Text="Agree to "/>
+                    <Hyperlink Foreground="#DC1E3D">
+                        <Run Text="Terms &amp; Conditions"/>
+                    </Hyperlink>
+                    <Run Text=" and "/>
+                    <Hyperlink Foreground="#DC1E3D">
+                        <Run Text="Privacy Policy"/>
+                    </Hyperlink>
+                </TextBlock>
+            </Grid>
             
             <!-- Sign In Button -->
             <Button Style="{StaticResource SignInButtonStyle}" 
                     Margin="0,0,0,30"
                     Click="SignIn_Click"/>
-            
-            <!-- Sign Up Link -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock Text="Don't have an account?" 
-                           FontFamily="{StaticResource PlusJakartaSans}" 
-                           FontSize="14" 
-                           Foreground="#212121" 
-                           VerticalAlignment="Center" 
-                           Margin="0,0,4,0"/>
-                <Button Style="{StaticResource SignUpButtonStyle}" 
-                        VerticalAlignment="Center"
-                        Click="SignUp_Click"/>
-            </StackPanel>
+        </StackPanel>
+        
+        <!-- Sign Up Link (at bottom) -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10">
+            <TextBlock Text="Already have an account?" 
+                       FontFamily="{StaticResource PlusJakartaSans}" 
+                       FontSize="14" 
+                       Foreground="#212121" 
+                       VerticalAlignment="Center" 
+                       Margin="0,0,4,0"/>
+            <Button Style="{StaticResource SignUpButtonStyle}" 
+                    VerticalAlignment="Center"
+                    Click="SignUp_Click"/>
         </StackPanel>
     </Grid>
 </Window> 

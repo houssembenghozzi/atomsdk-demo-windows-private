@@ -15,23 +15,56 @@ namespace Atom.VPN.Demo
         {
             InitializeComponent();
             
-            // Handle the eye button in password box for showing/hiding password
-            var passwordTemplate = PasswordBox.Template;
-            var showPasswordButton = passwordTemplate.FindName("ShowPasswordButton", PasswordBox) as Button;
-            if (showPasswordButton != null)
-            {
-                showPasswordButton.Click += ShowPasswordButton_Click;
-            }
-            
-            // Add handler for password changes to hide/show placeholder
-            PasswordBox.PasswordChanged += PasswordBox_PasswordChanged;
+            // Setup password visibility toggle
+            SetupPasswordVisibilityToggle();
         }
 
-        private void ShowPasswordButton_Click(object sender, RoutedEventArgs e)
+        private void SetupPasswordVisibilityToggle()
         {
-            // This would normally toggle password visibility, but WPF PasswordBox doesn't support this directly
-            // In a real application, you'd need to implement a custom control or use a workaround
-            MessageBox.Show("Password visibility toggle is not implemented in this demo.", "Feature Not Implemented", MessageBoxButton.OK, MessageBoxImage.Information);
+            // Get the show password button from password box template
+            if (PasswordBox.Template.FindName("ShowPasswordButton", PasswordBox) is Button showPasswordButton)
+            {
+                showPasswordButton.Click += (s, e) => 
+                {
+                    // Show the text version and hide the password version
+                    PasswordTextBox.Text = PasswordBox.Password;
+                    PasswordBox.Visibility = Visibility.Collapsed;
+                    PasswordTextBox.Visibility = Visibility.Visible;
+                    PasswordTextBox.Focus();
+                    e.Handled = true;
+                };
+            }
+
+            // Get the hide password button from text box template
+            if (PasswordTextBox.Template.FindName("HidePasswordButton", PasswordTextBox) is Button hidePasswordButton)
+            {
+                hidePasswordButton.Click += (s, e) => 
+                {
+                    // Show the password version and hide the text version
+                    PasswordBox.Password = PasswordTextBox.Text;
+                    PasswordTextBox.Visibility = Visibility.Collapsed;
+                    PasswordBox.Visibility = Visibility.Visible;
+                    PasswordBox.Focus();
+                    e.Handled = true;
+                };
+            }
+
+            // Sync password changes
+            PasswordBox.PasswordChanged += (s, e) => 
+            {
+                if (PasswordTextBox.Visibility == Visibility.Visible)
+                {
+                    PasswordTextBox.Text = PasswordBox.Password;
+                }
+            };
+
+            PasswordTextBox.TextChanged += (s, e) => 
+            {
+                if (PasswordBox.Visibility == Visibility.Visible)
+                {
+                    PasswordBox.Password = PasswordTextBox.Text;
+                }
+            };
         }
 
         private void InputField_GotFocus(object sender, RoutedEventArgs e)
@@ -124,21 +157,6 @@ namespace Atom.VPN.Demo
         private void SignUp_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Sign up functionality is not implemented in this demo.", "Feature Not Implemented", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-
-        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            var passwordBox = sender as PasswordBox;
-            if (passwordBox != null)
-            {
-                var placeholder = passwordBox.Template.FindName("Placeholder", passwordBox) as TextBlock;
-                if (placeholder != null)
-                {
-                    // Show placeholder only when password is empty
-                    placeholder.Visibility = string.IsNullOrEmpty(passwordBox.Password) ? 
-                        Visibility.Visible : Visibility.Collapsed;
-                }
-            }
         }
     }
 } 
