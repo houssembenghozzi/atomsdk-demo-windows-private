@@ -14,15 +14,18 @@
         AllowsTransparency="True"
         Background="Transparent">
     
+    <Window.Resources>
+        <BitmapImage x:Key="WorldMapImage" UriSource="/Resources/Images/world_map.png" />
+        <BitmapImage x:Key="LogoImage" UriSource="/Resources/Images/fortis_logo.png" />
+    </Window.Resources>
+    
     <Grid>
         <Border CornerRadius="20" Background="#000000">
             <Grid>
                 <!-- World Map Background with Gradient Overlay -->
                 <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                    <Image Stretch="UniformToFill" Opacity="0.3">
-                        <Image.Source>
-                            <BitmapImage UriSource="pack://application:,,,/Atom.VPN.Demo;component/Resources/Images/world_map.png" />
-                        </Image.Source>
+                    <!-- Image will be set programmatically -->
+                    <Image x:Name="WorldMapImage" Stretch="UniformToFill" Opacity="0.3">
                         <Image.Effect>
                             <BlurEffect Radius="1"/>
                         </Image.Effect>
@@ -38,27 +41,24 @@
                 </Grid>
                 
                 <!-- Logo -->
-                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,100">
-                    <Image x:Name="LogoImage" Width="200" Height="200">
-                        <Image.Source>
-                            <BitmapImage UriSource="pack://application:,,,/Atom.VPN.Demo;component/Resources/Images/fortis_logo.png" />
-                        </Image.Source>
-                    </Image>
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <!-- Image will be set programmatically -->
+                    <Image x:Name="LogoImage" Width="200" Height="200"/>
                 </StackPanel>
                 
-                <!-- Loading Animation -->
-                <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,200,0,0">
-                    <Ellipse Width="80" Height="80" Stroke="#3A3A3A" StrokeThickness="8" Opacity="0.4"/>
-                    <Ellipse Width="80" Height="80" Stroke="White" StrokeThickness="8">
+                <!-- Loading Animation (at bottom) -->
+                <Grid VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,50">
+                    <Ellipse Width="36" Height="36" Stroke="#3A3A3A" StrokeThickness="4" Opacity="0.4"/>
+                    <Ellipse Width="36" Height="36" Stroke="White" StrokeThickness="4">
                         <Ellipse.Clip>
                             <PathGeometry>
-                                <PathFigure StartPoint="40,0">
-                                    <ArcSegment Size="40,40" IsLargeArc="True" SweepDirection="Clockwise" Point="40,80"/>
+                                <PathFigure StartPoint="18,0">
+                                    <ArcSegment Size="18,18" IsLargeArc="True" SweepDirection="Clockwise" Point="18,36"/>
                                 </PathFigure>
                             </PathGeometry>
                         </Ellipse.Clip>
                         <Ellipse.RenderTransform>
-                            <RotateTransform x:Name="SpinnerRotation" CenterX="40" CenterY="40"/>
+                            <RotateTransform x:Name="SpinnerRotation" CenterX="18" CenterY="18"/>
                         </Ellipse.RenderTransform>
                     </Ellipse>
                 </Grid>

@@ -1,9 +1,11 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using System.Windows.Media.Imaging;
 
 namespace Atom.VPN.Demo
 {
@@ -19,6 +21,32 @@ namespace Atom.VPN.Demo
         public SplashScreen()
         {
             InitializeComponent();
+            
+            // Load the images programmatically
+            try
+            {
+                // Try multiple ways to load the world map image
+                WorldMapImage.Source = new BitmapImage(new Uri("pack://application:,,,/Atom.VPN.Demo;component/Resources/Images/world_map.png"));
+                
+                // Try to load the logo
+                LogoImage.Source = new BitmapImage(new Uri("pack://application:,,,/Atom.VPN.Demo;component/Resources/Images/fortis_logo.png"));
+            }
+            catch (Exception ex)
+            {
+                // Try a fallback method if the first one fails
+                try
+                {
+                    string basePath = AppDomain.CurrentDomain.BaseDirectory;
+                    
+                    // Use absolute file paths as a fallback
+                    WorldMapImage.Source = new BitmapImage(new Uri(Path.Combine(basePath, "Resources", "Images", "world_map.png")));
+                    LogoImage.Source = new BitmapImage(new Uri(Path.Combine(basePath, "Resources", "Images", "fortis_logo.png")));
+                }
+                catch (Exception ex2)
+                {
+                    MessageBox.Show("Error loading images: " + ex2.Message);
+                }
+            }
             
             // Start the spinner animation
             DoubleAnimation spinnerAnimation = new DoubleAnimation
