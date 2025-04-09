@@ -7,14 +7,14 @@
         mc:Ignorable="d" xmlns:UI="clr-namespace:Atom.VPN.Demo.UINotifiers"
         Title="Atom SDK Demo" Height="680" Width="515" ResizeMode="CanMinimize" Closing="ClosingApp" Icon="Resources/ic_atom.ico">
     <Grid Margin="5" >
-        <StackPanel x:Name="InitSDKPanel" VerticalAlignment="Top" Margin="10,100" Visibility="{Binding ISSDKInitialized, Converter={StaticResource InvertBoolToVis}}" IsEnabled="{Binding IsSDKInitializing, Converter={StaticResource InvertBoolConverter}}">
+        <StackPanel x:Name="InitSDKPanel" VerticalAlignment="Top" Margin="10,100" Visibility="Collapsed" IsEnabled="{Binding IsSDKInitializing, Converter={StaticResource InvertBoolConverter}}">
             <TextBlock Padding="0,10" TextAlignment="Center" HorizontalAlignment="Center" Text="Enter your Secret Key below which is provided by Atom. The SDK Object requires it to be initialized." TextWrapping="Wrap" />
             <TextBox TextAlignment="Center" VerticalContentAlignment="Center" Height="30" Text="{Binding SecretKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="SecretKeyBox_KeyDown" />
             <Button FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="40" Content="Initialize" Margin="0,30,0,0" Click="InitializeSDK"  />
             <TextBlock Padding="0,50" Text="Please wait while SDK is being initialized." HorizontalAlignment="Center" FontSize="20" Visibility="{Binding IsSDKInitializing, Converter={StaticResource BoolToVis}}" />
         </StackPanel>
 
-        <Grid Visibility="{Binding ISSDKInitialized, Converter={StaticResource BoolToVis}}" Background="White">
+        <Grid Visibility="Visible" Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="300" />

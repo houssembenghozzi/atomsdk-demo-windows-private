@@ -26,6 +26,12 @@ namespace Atom.VPN.Demo
         {
             InitializeComponent();
             ActionButton.IsEnabled = false;
+            
+            // Automatically set the SecretKey
+            SecretKey = "17355649429f7d4adbe993a8d227bc580c8f369b";
+            
+            // Initialize SDK automatically
+            InitializeSDK();
         }
 
         AtomManager atomManagerInstance;
