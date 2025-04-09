@@ -186,51 +186,23 @@ namespace Atom.VPN.Demo
             
             try
             {
-                // Create and initialize the main window
-                mainWindow = new MainWindow();
+                // Create the login window instead of main window
+                var loginPage = new LoginPage();
                 
-                // Set the main window's automatic initialization of SDK with the key
-                // Pre-populate the key from our embedded value
-                mainWindow.SecretKey = "17355649429f7d4adbe993a8d227bc580c8f369b";
-                
-                // Make sure the main window is created successfully before closing the splash screen
-                mainWindow.Closed += (s, args) => 
+                // Make sure the login window is created successfully before closing the splash screen
+                loginPage.Closed += (s, args) => 
                 {
-                    // When main window is closed, exit the application
-                    Application.Current.Shutdown();
+                    // Only exit if the main window wasn't opened from login
+                    if (Application.Current.MainWindow == null || !Application.Current.MainWindow.IsVisible)
+                    {
+                        Application.Current.Shutdown();
+                    }
                 };
                 
-                // Try to initialize the SDK directly - but don't show any error if it fails
-                // as the main window will handle SDK initialization anyway
-                if (isAtomServiceInstalled)
-                {
-                    try
-                    {
-                        // Initialize SDK directly through MainWindow's methods
-                        var initMethod = mainWindow.GetType().GetMethod("InitializeSDK", 
-                           System.Reflection.BindingFlags.NonPublic | 
-                           System.Reflection.BindingFlags.Public |
-                           System.Reflection.BindingFlags.Instance, 
-                           null, 
-                           new Type[0], 
-                           null);
-                           
-                        if (initMethod != null)
-                        {
-                            initMethod.Invoke(mainWindow, null);
-                        }
-                    }
-                    catch
-                    {
-                        // Silently ignore initialization errors here
-                        // The main window will handle initialization
-                    }
-                }
-                
-                // Create a second timer to wait a bit more before showing the main window
+                // Create a second timer to wait a bit more before showing the login window
                 DispatcherTimer finalizeTimer = new DispatcherTimer
                 {
-                    Interval = TimeSpan.FromSeconds(2) // Additional delay before showing main window
+                    Interval = TimeSpan.FromSeconds(2) // Additional delay before showing login window
                 };
                 
                 finalizeTimer.Tick += (s, args) =>
@@ -239,15 +211,15 @@ namespace Atom.VPN.Demo
                     
                     try
                     {
-                        // Show the main window
-                        mainWindow.Show();
+                        // Show the login window
+                        loginPage.Show();
                         
                         // Close splash screen
                         this.Close();
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Error finalizing main window: " + ex.Message);
+                        MessageBox.Show("Error finalizing login window: " + ex.Message);
                     }
                 };
                 
@@ -255,9 +227,9 @@ namespace Atom.VPN.Demo
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error opening main window: " + ex.Message);
+                MessageBox.Show("Error opening login window: " + ex.Message);
                 
-                // If we can't open the main window, don't close the splash screen
+                // If we can't open the login window, don't close the splash screen
                 // Restart the timer to try again
                 timer.Start();
             }

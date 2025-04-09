@@ -90,6 +90,9 @@
     </ApplicationDefinition>
     <Compile Include="Helpers\AtomHelper.cs" />
     <Compile Include="Interfaces\IConnection.cs" />
+    <Compile Include="LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\Messages.cs" />
     <Compile Include="Models\ResponseValidation.cs" />
     <Compile Include="SplashScreen.xaml.cs">
@@ -106,6 +109,10 @@
     <Compile Include="UserControls\ConnectWithPSK.xaml.cs">
       <DependentUpon>ConnectWithPSK.xaml</DependentUpon>
     </Compile>
+    <Page Include="LoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -177,6 +184,11 @@
     <Resource Include="Resources\ic_atom.ico" />
     <Resource Include="Resources\Images\world_map.png" />
     <Resource Include="Resources\Images\fortis_logo.png" />
+    <Resource Include="Resources\Images\logo_red_part.svg" />
+    <Resource Include="Resources\Images\logo_white_part.svg" />
+    <Resource Include="Resources\Images\mail_icon.svg" />
+    <Resource Include="Resources\Images\lock_icon.svg" />
+    <Resource Include="Resources\Images\eye_icon.svg" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
