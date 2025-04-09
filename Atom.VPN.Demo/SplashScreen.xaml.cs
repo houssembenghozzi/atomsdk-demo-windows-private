@@ -4,8 +4,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Threading;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace Atom.VPN.Demo
 {
@@ -22,31 +22,8 @@ namespace Atom.VPN.Demo
         {
             InitializeComponent();
             
-            // Load the images programmatically
-            try
-            {
-                // Try multiple ways to load the world map image
-                WorldMapImage.Source = new BitmapImage(new Uri("pack://application:,,,/Atom.VPN.Demo;component/Resources/Images/world_map.png"));
-                
-                // Try to load the logo
-                LogoImage.Source = new BitmapImage(new Uri("pack://application:,,,/Atom.VPN.Demo;component/Resources/Images/fortis_logo.png"));
-            }
-            catch (Exception ex)
-            {
-                // Try a fallback method if the first one fails
-                try
-                {
-                    string basePath = AppDomain.CurrentDomain.BaseDirectory;
-                    
-                    // Use absolute file paths as a fallback
-                    WorldMapImage.Source = new BitmapImage(new Uri(Path.Combine(basePath, "Resources", "Images", "world_map.png")));
-                    LogoImage.Source = new BitmapImage(new Uri(Path.Combine(basePath, "Resources", "Images", "fortis_logo.png")));
-                }
-                catch (Exception ex2)
-                {
-                    MessageBox.Show("Error loading images: " + ex2.Message);
-                }
-            }
+            // Load images directly
+            LoadImages();
             
             // Start the spinner animation
             DoubleAnimation spinnerAnimation = new DoubleAnimation
@@ -80,6 +57,69 @@ namespace Atom.VPN.Demo
                 isAtomServiceInstalled = false;
             }
         }
+        
+        private void LoadImages()
+        {
+            try
+            {
+                // Get the executing assembly's location
+                string exeDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                
+                // Try loading directly from file paths with BuildAction=Resource
+                WorldMapImage.Source = LoadImage("world_map.png", exeDir);
+                
+                // If world map failed to load, create a placeholder
+                if (WorldMapImage.Source == null)
+                {
+                    WorldMapImage.Source = CreatePlaceholderWorldMap();
+                }
+                
+                LogoImage.Source = LoadImage("fortis_logo.png", exeDir);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading images: " + ex.Message);
+            }
+        }
+        
+        private BitmapImage LoadImage(string filename, string exeDir)
+        {
+            // Try multiple methods to load the image
+            
+            try
+            {
+                // Method 1: Try loading from resource
+                var uri = new Uri($"pack://application:,,,/Atom.VPN.Demo;component/Resources/Images/{filename}");
+                return new BitmapImage(uri);
+            }
+            catch
+            {
+                try
+                {
+                    // Method 2: Try loading from the Images folder relative to the exe
+                    string path = System.IO.Path.Combine(exeDir, "Resources", "Images", filename);
+                    
+                    // Make sure the file exists
+                    if (File.Exists(path))
+                    {
+                        var bitmap = new BitmapImage();
+                        bitmap.BeginInit();
+                        bitmap.UriSource = new Uri(path);
+                        bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmap.EndInit();
+                        return bitmap;
+                    }
+                }
+                catch
+                {
+                    // Method 3: Try with a simple relative path
+                    return new BitmapImage(new Uri("Resources/Images/" + filename, UriKind.Relative));
+                }
+            }
+            
+            // If all else fails, return null
+            return null;
+        }
 
         private bool CheckAtomServiceInstalled()
         {
@@ -96,6 +136,48 @@ namespace Atom.VPN.Demo
             {
                 return false;
             }
+        }
+
+        private ImageSource CreatePlaceholderWorldMap()
+        {
+            // Create a simple drawing to use in place of the world map
+            int width = 460;
+            int height = 350;
+            
+            DrawingVisual drawingVisual = new DrawingVisual();
+            
+            using (DrawingContext drawingContext = drawingVisual.RenderOpen())
+            {
+                drawingContext.DrawRectangle(
+                    Brushes.Transparent,
+                    null,
+                    new Rect(0, 0, width, height));
+                    
+                // Draw some simple shapes to simulate a world map
+                for (int i = 0; i < 20; i++)
+                {
+                    // Create random ovals as "continents"
+                    Random rand = new Random(i);
+                    double x = rand.Next(width);
+                    double y = rand.Next(height);
+                    double w = rand.Next(30, 100);
+                    double h = rand.Next(20, 60);
+                    
+                    drawingContext.DrawEllipse(
+                        new SolidColorBrush(Color.FromArgb(40, 200, 200, 200)),
+                        null,
+                        new Point(x, y),
+                        w, h);
+                }
+            }
+            
+            // Render the drawing to a bitmap
+            RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap(
+                width, height, 96, 96, PixelFormats.Pbgra32);
+            
+            renderTargetBitmap.Render(drawingVisual);
+            
+            return renderTargetBitmap;
         }
 
         private void Timer_Tick(object sender, EventArgs e)

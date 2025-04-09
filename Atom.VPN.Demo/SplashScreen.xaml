@@ -14,22 +14,12 @@
         AllowsTransparency="True"
         Background="Transparent">
     
-    <Window.Resources>
-        <BitmapImage x:Key="WorldMapImage" UriSource="/Resources/Images/world_map.png" />
-        <BitmapImage x:Key="LogoImage" UriSource="/Resources/Images/fortis_logo.png" />
-    </Window.Resources>
-    
     <Grid>
         <Border CornerRadius="20" Background="#000000">
             <Grid>
-                <!-- World Map Background with Gradient Overlay -->
+                <!-- World Map Background -->
                 <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                    <!-- Image will be set programmatically -->
-                    <Image x:Name="WorldMapImage" Stretch="UniformToFill" Opacity="0.3">
-                        <Image.Effect>
-                            <BlurEffect Radius="1"/>
-                        </Image.Effect>
-                    </Image>
+                    <Image x:Name="WorldMapImage" Stretch="UniformToFill" Opacity="0.3"/>
                     <Rectangle>
                         <Rectangle.Fill>
                             <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
@@ -42,7 +32,6 @@
                 
                 <!-- Logo -->
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <!-- Image will be set programmatically -->
                     <Image x:Name="LogoImage" Width="200" Height="200"/>
                 </StackPanel>
                 
