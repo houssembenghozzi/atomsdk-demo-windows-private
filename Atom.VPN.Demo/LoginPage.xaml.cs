@@ -81,8 +81,7 @@ namespace Atom.VPN.Demo
                         Background = Brushes.Transparent,
                         BorderThickness = new Thickness(0),
                         VerticalAlignment = PasswordBox.VerticalAlignment,
-                        HorizontalAlignment = PasswordBox.HorizontalAlignment,
-                        Grid.Column = 2
+                        HorizontalAlignment = PasswordBox.HorizontalAlignment
                     };
                     
                     // Add event handlers

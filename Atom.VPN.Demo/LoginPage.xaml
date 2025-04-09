@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Atom.VPN.Demo"
+        xmlns:shapes="clr-namespace:System.Windows.Shapes;assembly=PresentationFramework"
         mc:Ignorable="d"
         Title="Atom VPN - Login" 
         Height="700" 
