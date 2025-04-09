@@ -31,37 +31,10 @@ namespace Atom.VPN.Demo
             
             SpinnerRotation.BeginAnimation(RotateTransform.AngleProperty, spinnerAnimation);
             
-            // Setup logo animation
-            // Fade in animation for the red part of the logo
-            DoubleAnimation fadeInAnimation = new DoubleAnimation
-            {
-                From = 0,
-                To = 1,
-                Duration = new Duration(TimeSpan.FromSeconds(1.5)),
-                AutoReverse = false
-            };
-            
-            // Set the initial opacity of the red logo to 0
-            LogoImageRed.Opacity = 0;
-            
-            // Begin the animation after a short delay
-            DispatcherTimer animationTimer = new DispatcherTimer
-            {
-                Interval = TimeSpan.FromSeconds(0.5)
-            };
-            
-            animationTimer.Tick += (sender, e) =>
-            {
-                animationTimer.Stop();
-                LogoImageRed.BeginAnimation(OpacityProperty, fadeInAnimation);
-            };
-            
-            animationTimer.Start();
-            
-            // Start timer to check dependencies and load the main window
+            // Start timer to check dependencies and load the main window after 2 seconds
             timer = new DispatcherTimer
             {
-                Interval = TimeSpan.FromSeconds(3)
+                Interval = TimeSpan.FromSeconds(2)
             };
             
             timer.Tick += Timer_Tick;

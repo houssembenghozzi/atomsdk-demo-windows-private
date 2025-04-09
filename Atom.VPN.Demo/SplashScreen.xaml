@@ -15,33 +15,11 @@
         Background="Transparent">
     
     <Grid>
-        <Border CornerRadius="20" Background="#020101">
+        <Border CornerRadius="20" Background="#000000">
             <Grid>
-                <!-- World Map Background with Gradient Overlay -->
-                <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                    <Rectangle Fill="#C4C4C4" Opacity="0.2"/>
-                    <Image Source="/Resources/Images/world_map.svg" Stretch="UniformToFill" Opacity="0.3">
-                        <Image.Effect>
-                            <BlurEffect Radius="1"/>
-                        </Image.Effect>
-                    </Image>
-                    <Rectangle>
-                        <Rectangle.Fill>
-                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                <GradientStop Color="#00FFFFFF" Offset="0"/>
-                                <GradientStop Color="#EEFFFFFF" Offset="0.48"/>
-                                <GradientStop Color="#00FFFFFF" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Rectangle.Fill>
-                    </Rectangle>
-                </Grid>
-                
                 <!-- Logo -->
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,100">
-                    <Grid>
-                        <Image x:Name="LogoImageWhite" Source="/Resources/Images/logo_white.svg" Width="200" Height="200"/>
-                        <Image x:Name="LogoImageRed" Source="/Resources/Images/logo_red.svg" Width="200" Height="200"/>
-                    </Grid>
+                    <Image x:Name="LogoImage" Source="/Resources/Images/logo.svg" Width="200" Height="200"/>
                 </StackPanel>
                 
                 <!-- Loading Animation -->
