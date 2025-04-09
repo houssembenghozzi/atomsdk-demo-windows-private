@@ -12,7 +12,9 @@
         WindowStyle="None"
         ResizeMode="NoResize"
         AllowsTransparency="True"
-        Background="#FAFAFA">
+        Background="#FAFAFA"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType">
     
     <Window.Resources>
         <!-- Font families -->
@@ -21,15 +23,24 @@
         <FontFamily x:Key="GTWalsheimProMedium">/Atom.VPN.Demo;component/Resources/font/GT-Walsheim-Medium-Trial-BF651b7fc728fb3.otf#GT Walsheim Pro</FontFamily>
         <FontFamily x:Key="PlusJakartaSans">Segoe UI</FontFamily> <!-- Fallback for Plus Jakarta Sans -->
         
+        <!-- Email icon path data -->
+        <PathGeometry x:Key="EmailIconPath">M3 8L10.89 13.26C11.2187 13.4793 11.6049 13.5963 12 13.5963C12.3951 13.5963 12.7813 13.4793 13.11 13.26L21 8M5 19H19C19.5304 19 20.0391 18.7893 20.4142 18.4142C20.7893 18.0391 21 17.5304 21 17V7C21 6.46957 20.7893 5.96086 20.4142 5.58579C20.0391 5.21071 19.5304 5 19 5H5C4.46957 5 3.96086 5.21071 3.58579 5.58579C3.21071 5.96086 3 6.46957 3 7V17C3 17.5304 3.21071 18.0391 3.58579 18.4142C3.96086 18.7893 4.46957 19 5 19Z</PathGeometry>
+        
+        <!-- Lock icon path data -->
+        <PathGeometry x:Key="LockIconPath">M17 11H7C5.89543 11 5 11.8954 5 13V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V13C19 11.8954 18.1046 11 17 11Z M12 17C11.4477 17 11 16.5523 11 16C11 15.4477 11.4477 15 12 15C12.5523 15 13 15.4477 13 16C13 16.5523 12.5523 17 12 17Z M9 11V7C9 5.34315 10.3431 4 12 4C13.6569 4 15 5.34315 15 7V11</PathGeometry>
+        
+        <!-- Eye icon path data -->
+        <PathGeometry x:Key="EyeIconPath">M12 4C5 4 1 12 1 12C1 12 5 20 12 20C19 20 23 12 23 12C23 12 19 4 12 4Z M12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12C15 13.6569 13.6569 15 12 15Z</PathGeometry>
+        
         <!-- Text box styles -->
         <Style x:Key="EmailTextBoxStyle" TargetType="TextBox">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">
                         <Border x:Name="border" 
-                                BorderBrush="#212121" 
+                                BorderBrush="#BEBEBE" 
                                 BorderThickness="1" 
-                                CornerRadius="100"
+                                CornerRadius="30"
                                 Background="Transparent"
                                 Padding="16,16">
                             <Grid>
@@ -39,30 +50,60 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 
-                                <Image Grid.Column="0" Source="/Resources/Images/fortis_icon.png" Width="24" Height="24"/>
-                                <ScrollViewer Grid.Column="2" x:Name="PART_ContentHost" Focusable="false"/>
+                                <!-- Mail Icon -->
+                                <Path Data="{StaticResource EmailIconPath}" 
+                                     Fill="Transparent"
+                                     Stroke="#111827"
+                                     StrokeThickness="1.5"
+                                     Stretch="Uniform"
+                                     Width="24" 
+                                     Height="24" />
+                                
+                                <ScrollViewer Grid.Column="2" x:Name="PART_ContentHost" Focusable="false" VerticalAlignment="Center"/>
                                 <TextBlock Grid.Column="2" 
-                                           x:Name="Placeholder" 
+                                           x:Name="PlaceholderText" 
                                            Text="email@email.com" 
-                                           Foreground="#323438" 
+                                           Foreground="#BEBEBE" 
                                            FontFamily="{StaticResource GTWalsheimPro}" 
                                            FontSize="16"
-                                           Visibility="Collapsed"/>
+                                           VerticalAlignment="Center"/>
                             </Grid>
                         </Border>
                         
                         <ControlTemplate.Triggers>
-                            <Trigger Property="Text" Value="">
-                                <Setter TargetName="Placeholder" Property="Visibility" Value="Visible"/>
-                            </Trigger>
                             <Trigger Property="IsFocused" Value="True">
                                 <Setter TargetName="border" Property="BorderBrush" Value="#212121"/>
-                                <Setter TargetName="Placeholder" Property="Foreground" Value="#323438"/>
                             </Trigger>
-                            <Trigger Property="IsFocused" Value="False">
-                                <Setter TargetName="border" Property="BorderBrush" Value="#BEBEBE"/>
-                                <Setter TargetName="Placeholder" Property="Foreground" Value="#BEBEBE"/>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="PlaceholderText" Property="Visibility" Value="Collapsed"/>
                             </Trigger>
+                            <Trigger Property="Text" Value="">
+                                <Setter TargetName="PlaceholderText" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                            <Trigger Property="Text" Value="{x:Null}">
+                                <Setter TargetName="PlaceholderText" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Text" Value=""/>
+                                    <Condition Property="IsFocused" Value="False"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="PlaceholderText" Property="Visibility" Value="Visible"/>
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Text" Value="{x:Null}"/>
+                                    <Condition Property="IsFocused" Value="False"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="PlaceholderText" Property="Visibility" Value="Visible"/>
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Text" Value=""/>
+                                    <Condition Property="IsFocused" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="PlaceholderText" Property="Visibility" Value="Collapsed"/>
+                            </MultiTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -73,6 +114,7 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Padding" Value="0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
         
         <Style x:Key="PasswordBoxStyle" TargetType="PasswordBox">
@@ -82,7 +124,7 @@
                         <Border x:Name="border" 
                                 BorderBrush="#BEBEBE" 
                                 BorderThickness="1" 
-                                CornerRadius="100"
+                                CornerRadius="30"
                                 Background="Transparent"
                                 Padding="16,16">
                             <Grid>
@@ -93,17 +135,40 @@
                                     <ColumnDefinition Width="24"/>
                                 </Grid.ColumnDefinitions>
                                 
-                                <Image Grid.Column="0" Source="/Resources/Images/fortis_icon.png" Width="24" Height="24"/>
-                                <ScrollViewer Grid.Column="2" x:Name="PART_ContentHost" Focusable="false"/>
+                                <!-- Lock Icon -->
+                                <Path Data="{StaticResource LockIconPath}" 
+                                     Fill="Transparent"
+                                     Stroke="#BEBEBE"
+                                     StrokeThickness="1.5"
+                                     Stretch="Uniform"
+                                     Width="24" 
+                                     Height="24" />
+                                
+                                <ScrollViewer Grid.Column="2" x:Name="PART_ContentHost" Focusable="false" VerticalAlignment="Center"/>
                                 <TextBlock Grid.Column="2" 
-                                           x:Name="Placeholder" 
+                                           x:Name="PlaceholderText" 
                                            Text="Password" 
                                            Foreground="#BEBEBE" 
                                            FontFamily="{StaticResource GTWalsheimProMedium}" 
                                            FontSize="14"
-                                           FontWeight="Medium"/>
-                                <Button Grid.Column="3" x:Name="ShowPasswordButton" Background="Transparent" BorderThickness="0">
-                                    <Image Source="/Resources/Images/fortis_icon.png" Width="24" Height="24"/>
+                                           FontWeight="Medium"
+                                           VerticalAlignment="Center"/>
+                                
+                                <!-- Eye Icon Button for password visibility -->
+                                <Button x:Name="PART_TogglePasswordButton" 
+                                        Grid.Column="3" 
+                                        Background="Transparent" 
+                                        BorderThickness="0"
+                                        Cursor="Hand"
+                                        ToolTip="Show/Hide Password">
+                                    <Path x:Name="EyeIcon"
+                                          Data="{StaticResource EyeIconPath}" 
+                                          Fill="Transparent"
+                                          Stroke="#BEBEBE"
+                                          StrokeThickness="1.5"
+                                          Stretch="Uniform"
+                                          Width="24" 
+                                          Height="24" />
                                 </Button>
                             </Grid>
                         </Border>
@@ -111,8 +176,25 @@
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsFocused" Value="True">
                                 <Setter TargetName="border" Property="BorderBrush" Value="#212121"/>
-                                <Setter TargetName="Placeholder" Property="Foreground" Value="#323438"/>
+                                <Setter TargetName="PlaceholderText" Property="Visibility" Value="Collapsed"/>
                             </Trigger>
+                            <Trigger Property="Password" Value="">
+                                <Setter TargetName="PlaceholderText" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Password" Value=""/>
+                                    <Condition Property="IsFocused" Value="False"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="PlaceholderText" Property="Visibility" Value="Visible"/>
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Password" Value=""/>
+                                    <Condition Property="IsFocused" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="PlaceholderText" Property="Visibility" Value="Collapsed"/>
+                            </MultiTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -123,6 +205,7 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Padding" Value="0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
         
         <!-- Button styles -->
@@ -164,7 +247,8 @@
                                    FontFamily="{StaticResource PlusJakartaSans}" 
                                    FontWeight="Bold" 
                                    FontSize="14" 
-                                   Foreground="#212121"/>
+                                   Foreground="#212121"
+                                   TextOptions.TextFormattingMode="Display"/>
                         
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
@@ -186,7 +270,8 @@
                                    FontFamily="{StaticResource PlusJakartaSans}" 
                                    FontWeight="Bold" 
                                    FontSize="14" 
-                                   Foreground="#464646"/>
+                                   Foreground="#464646"
+                                   TextOptions.TextFormattingMode="Display"/>
                         
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
@@ -217,11 +302,13 @@
                            FontSize="24" 
                            FontWeight="Bold" 
                            Foreground="#323438" 
-                           Margin="0,0,0,8"/>
+                           Margin="0,0,0,8"
+                           TextOptions.TextFormattingMode="Display"/>
                 <TextBlock Text="Please enter your details." 
                            FontFamily="{StaticResource GTWalsheimPro}" 
                            FontSize="16" 
-                           Foreground="#323438"/>
+                           Foreground="#323438"
+                           TextOptions.TextFormattingMode="Display"/>
             </StackPanel>
             
             <!-- Form Section -->
@@ -239,7 +326,8 @@
                                  Style="{StaticResource PasswordBoxStyle}" 
                                  Margin="0,0,0,14"
                                  GotFocus="InputField_GotFocus"
-                                 LostFocus="InputField_LostFocus"/>
+                                 LostFocus="InputField_LostFocus"
+                                 Loaded="PasswordBox_Loaded"/>
                     <Button Style="{StaticResource ForgotPasswordButtonStyle}" 
                             HorizontalAlignment="Right" 
                             Margin="0,0,0,30"
@@ -259,7 +347,8 @@
                            FontSize="14" 
                            Foreground="#212121" 
                            VerticalAlignment="Center" 
-                           Margin="0,0,4,0"/>
+                           Margin="0,0,4,0"
+                           TextOptions.TextFormattingMode="Display"/>
                 <Button Style="{StaticResource SignUpButtonStyle}" 
                         VerticalAlignment="Center"
                         Click="SignUp_Click"/>
