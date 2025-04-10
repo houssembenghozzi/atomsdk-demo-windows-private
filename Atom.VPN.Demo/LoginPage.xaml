@@ -202,7 +202,7 @@
                                 Background="#212121" 
                                 CornerRadius="100"
                                 Height="58">
-                            <TextBlock Text="Sign up" 
+                            <TextBlock Text="Sign in" 
                                        FontFamily="{StaticResource GTWalsheimProBold}" 
                                        FontSize="18" 
                                        FontWeight="Bold" 
@@ -229,7 +229,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <TextBlock Text="Sign in" 
+                        <TextBlock Text="Sign up" 
                                    FontFamily="{StaticResource PlusJakartaSans}" 
                                    FontWeight="Bold" 
                                    FontSize="14" 
@@ -283,7 +283,7 @@
         <StackPanel VerticalAlignment="Center" Margin="0,-40,0,0">
             <!-- Title Section -->
             <StackPanel Margin="0,0,0,40">
-                <TextBlock Text="Create New Account" 
+                <TextBlock Text="Login" 
                            FontFamily="{StaticResource GTWalsheimProBold}" 
                            FontSize="24" 
                            FontWeight="Bold" 
@@ -355,7 +355,7 @@
         
         <!-- Sign Up Link (at bottom) -->
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,30">
-            <TextBlock Text="Already have an account? " 
+            <TextBlock Text="Don't have an account? " 
                        FontFamily="{StaticResource PlusJakartaSans}" 
                        FontSize="14" 
                        Foreground="#212121" 
