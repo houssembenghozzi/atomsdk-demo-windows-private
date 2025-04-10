@@ -31,7 +31,7 @@
                         <Border x:Name="border" 
                                 BorderBrush="#BEBEBE" 
                                 BorderThickness="1" 
-                                CornerRadius="100"
+                                CornerRadius="30"
                                 Background="Transparent"
                                 Padding="16,16">
                             <Grid>
@@ -41,7 +41,7 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 
-                                <Image Grid.Column="0" Source="/Resources/Images/fortis_icon.png" Width="24" Height="24"/>
+                                <Image Grid.Column="0" Source="/Resources/Images/mail_icon.svg" Width="24" Height="24"/>
                                 <ScrollViewer Grid.Column="2" x:Name="PART_ContentHost" Focusable="false"/>
                                 <TextBlock Grid.Column="2" 
                                            x:Name="Placeholder" 
@@ -87,7 +87,7 @@
                         <Border x:Name="border" 
                                 BorderBrush="#BEBEBE" 
                                 BorderThickness="1" 
-                                CornerRadius="100"
+                                CornerRadius="30"
                                 Background="Transparent"
                                 Padding="16,16">
                             <Grid>
@@ -98,7 +98,7 @@
                                     <ColumnDefinition Width="24"/>
                                 </Grid.ColumnDefinitions>
                                 
-                                <Image Grid.Column="0" Source="/Resources/Images/fortis_icon.png" Width="24" Height="24" Opacity="0.7"/>
+                                <Image Grid.Column="0" Source="/Resources/Images/lock_icon.svg" Width="24" Height="24" Opacity="0.7"/>
                                 <ScrollViewer Grid.Column="2" x:Name="PART_ContentHost" Focusable="false"/>
                                 <TextBlock Grid.Column="2" 
                                            x:Name="Placeholder" 
@@ -108,7 +108,7 @@
                                            FontSize="14"
                                            FontWeight="Medium"/>
                                 <Button Grid.Column="3" x:Name="ShowPasswordButton" Background="Transparent" BorderThickness="0" Cursor="Hand">
-                                    <Image Source="/Resources/Images/eye.png" Width="24" Height="24" Opacity="0.7"/>
+                                    <Image Source="/Resources/Images/eye_icon.svg" Width="24" Height="24" Opacity="0.7"/>
                                 </Button>
                             </Grid>
                         </Border>
@@ -138,7 +138,7 @@
                         <Border x:Name="border" 
                                 BorderBrush="#BEBEBE" 
                                 BorderThickness="1" 
-                                CornerRadius="100"
+                                CornerRadius="30"
                                 Background="Transparent"
                                 Padding="16,16">
                             <Grid>
@@ -149,7 +149,7 @@
                                     <ColumnDefinition Width="24"/>
                                 </Grid.ColumnDefinitions>
                                 
-                                <Image Grid.Column="0" Source="/Resources/Images/fortis_icon.png" Width="24" Height="24" Opacity="0.7"/>
+                                <Image Grid.Column="0" Source="/Resources/Images/lock_icon.svg" Width="24" Height="24" Opacity="0.7"/>
                                 <ScrollViewer Grid.Column="2" x:Name="PART_ContentHost" Focusable="false"/>
                                 <TextBlock Grid.Column="2" 
                                            x:Name="Placeholder" 
@@ -159,7 +159,7 @@
                                            FontSize="14"
                                            FontWeight="Medium"/>
                                 <Button Grid.Column="3" x:Name="HidePasswordButton" Background="Transparent" BorderThickness="0" Cursor="Hand">
-                                    <Image Source="/Resources/Images/eye-slash.png" Width="24" Height="24" Opacity="0.7"/>
+                                    <Image Source="/Resources/Images/eye-slash_icon.svg" Width="24" Height="24" Opacity="0.7"/>
                                 </Button>
                             </Grid>
                         </Border>
@@ -276,7 +276,7 @@
     <Grid Margin="30">
         <!-- Logo -->
         <Grid VerticalAlignment="Top">
-            <Image Source="/Resources/Images/fortis_logo.png" Width="42" Height="42" HorizontalAlignment="Left"/>
+            <Image Source="/Resources/Images/fortis_logo.png" Width="52" Height="52" HorizontalAlignment="Left"/>
         </Grid>
         
         <!-- Content -->

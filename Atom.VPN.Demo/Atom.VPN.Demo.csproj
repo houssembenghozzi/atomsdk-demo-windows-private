@@ -188,6 +188,7 @@
     <Resource Include="Resources\Images\mail_icon.svg" />
     <Resource Include="Resources\Images\lock_icon.svg" />
     <Resource Include="Resources\Images\eye_icon.svg" />
+    <Resource Include="Resources\Images\eye-slash_icon.svg" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
