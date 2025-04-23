@@ -9,7 +9,7 @@
         Height="700" 
         Width="460" 
         WindowStartupLocation="CenterScreen"
-        WindowStyle="None"
+        
         ResizeMode="NoResize"
         AllowsTransparency="True"
         Background="#FAFAFA"
@@ -31,7 +31,7 @@
                         <Border x:Name="border" 
                                 BorderBrush="#BEBEBE" 
                                 BorderThickness="1" 
-                                CornerRadius="100"
+                                CornerRadius="40"
                                 Background="Transparent"
                                 Padding="16,16">
                             <Grid>
@@ -87,7 +87,7 @@
                         <Border x:Name="border" 
                                 BorderBrush="#BEBEBE" 
                                 BorderThickness="1" 
-                                CornerRadius="100"
+                                CornerRadius="40"
                                 Background="Transparent"
                                 Padding="16,16">
                             <Grid>
@@ -138,7 +138,7 @@
                         <Border x:Name="border" 
                                 BorderBrush="#BEBEBE" 
                                 BorderThickness="1" 
-                                CornerRadius="100"
+                                CornerRadius="40"
                                 Background="Transparent"
                                 Padding="16,16">
                             <Grid>
@@ -200,7 +200,7 @@
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="border" 
                                 Background="#212121" 
-                                CornerRadius="100"
+                                CornerRadius="40"
                                 Height="58">
                             <TextBlock Text="Sign in" 
                                        FontFamily="{StaticResource GTWalsheimProBold}" 
