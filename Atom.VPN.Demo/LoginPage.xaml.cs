@@ -151,12 +151,18 @@ namespace Atom.VPN.Demo
 
         private void ForgotPassword_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Password recovery functionality is not implemented in this demo.", "Feature Not Implemented", MessageBoxButton.OK, MessageBoxImage.Information);
+            // Open the forgot password page
+            ForgotPasswordPage forgotPasswordPage = new ForgotPasswordPage();
+            forgotPasswordPage.Show();
+            this.Close();
         }
 
         private void SignUp_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Sign up functionality is not implemented in this demo.", "Feature Not Implemented", MessageBoxButton.OK, MessageBoxImage.Information);
+            // Navigate to sign up page
+            SignUpPage signUpPage = new SignUpPage();
+            signUpPage.Show();
+            this.Close();
         }
     }
 } 

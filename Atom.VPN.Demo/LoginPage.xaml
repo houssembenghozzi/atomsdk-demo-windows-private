@@ -41,7 +41,7 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 
-                                <Image Grid.Column="0" Source="/Resources/Images/mail_icon.svg" Width="24" Height="24"/>
+                                <Image x:Name="iconImage" Grid.Column="0" Source="/Resources/icon/mail.svg" Width="24" Height="24" Opacity="0.7"/>
                                 <ScrollViewer Grid.Column="2" x:Name="PART_ContentHost" Focusable="false"/>
                                 <TextBlock Grid.Column="2" 
                                            x:Name="Placeholder" 
@@ -56,9 +56,13 @@
                             <Trigger Property="IsFocused" Value="True">
                                 <Setter TargetName="border" Property="BorderBrush" Value="#212121"/>
                                 <Setter TargetName="Placeholder" Property="Visibility" Value="Collapsed"/>
+                                <Setter TargetName="iconImage" Property="Opacity" Value="1.0"/>
                             </Trigger>
                             <Trigger Property="Text" Value="">
                                 <Setter TargetName="Placeholder" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="False">
+                                <Setter TargetName="iconImage" Property="Opacity" Value="0.7"/>
                             </Trigger>
                             <MultiTrigger>
                                 <MultiTrigger.Conditions>
@@ -98,7 +102,7 @@
                                     <ColumnDefinition Width="24"/>
                                 </Grid.ColumnDefinitions>
                                 
-                                <Image Grid.Column="0" Source="/Resources/Images/lock_icon.svg" Width="24" Height="24" Opacity="0.7"/>
+                                <Image x:Name="iconImage" Grid.Column="0" Source="/Resources/icon/lock.svg" Width="24" Height="24" Opacity="0.7"/>
                                 <ScrollViewer Grid.Column="2" x:Name="PART_ContentHost" Focusable="false"/>
                                 <TextBlock Grid.Column="2" 
                                            x:Name="Placeholder" 
@@ -117,6 +121,10 @@
                             <Trigger Property="IsFocused" Value="True">
                                 <Setter TargetName="border" Property="BorderBrush" Value="#212121"/>
                                 <Setter TargetName="Placeholder" Property="Visibility" Value="Collapsed"/>
+                                <Setter TargetName="iconImage" Property="Opacity" Value="1.0"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="False">
+                                <Setter TargetName="iconImage" Property="Opacity" Value="0.7"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -149,7 +157,7 @@
                                     <ColumnDefinition Width="24"/>
                                 </Grid.ColumnDefinitions>
                                 
-                                <Image Grid.Column="0" Source="/Resources/Images/lock_icon.svg" Width="24" Height="24" Opacity="0.7"/>
+                                <Image x:Name="iconImage" Grid.Column="0" Source="/Resources/icon/lock.svg" Width="24" Height="24" Opacity="0.7"/>
                                 <ScrollViewer Grid.Column="2" x:Name="PART_ContentHost" Focusable="false"/>
                                 <TextBlock Grid.Column="2" 
                                            x:Name="Placeholder" 
@@ -168,9 +176,13 @@
                             <Trigger Property="IsFocused" Value="True">
                                 <Setter TargetName="border" Property="BorderBrush" Value="#212121"/>
                                 <Setter TargetName="Placeholder" Property="Visibility" Value="Collapsed"/>
+                                <Setter TargetName="iconImage" Property="Opacity" Value="1.0"/>
                             </Trigger>
                             <Trigger Property="Text" Value="">
                                 <Setter TargetName="Placeholder" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="False">
+                                <Setter TargetName="iconImage" Property="Opacity" Value="0.7"/>
                             </Trigger>
                             <MultiTrigger>
                                 <MultiTrigger.Conditions>
