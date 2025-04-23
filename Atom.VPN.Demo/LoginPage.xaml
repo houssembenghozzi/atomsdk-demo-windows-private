@@ -11,7 +11,7 @@
         WindowStartupLocation="CenterScreen"
         
         ResizeMode="NoResize"
-        AllowsTransparency="True"
+        
         Background="#FAFAFA"
         TextOptions.TextFormattingMode="Display"
         UseLayoutRounding="True">
