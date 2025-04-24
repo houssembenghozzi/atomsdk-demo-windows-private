@@ -93,6 +93,18 @@
     <Compile Include="LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ForgotPasswordPage.xaml.cs">
+      <DependentUpon>ForgotPasswordPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ResetPasswordPage.xaml.cs">
+      <DependentUpon>ResetPasswordPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SignUpPage.xaml.cs">
+      <DependentUpon>SignUpPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EmailVerificationPage.xaml.cs">
+      <DependentUpon>EmailVerificationPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\Messages.cs" />
     <Compile Include="Models\ResponseValidation.cs" />
     <Compile Include="SplashScreen.xaml.cs">
@@ -110,6 +122,22 @@
       <DependentUpon>ConnectWithPSK.xaml</DependentUpon>
     </Compile>
     <Page Include="LoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ForgotPasswordPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResetPasswordPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SignUpPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EmailVerificationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -185,10 +213,10 @@
     <Resource Include="Resources\Images\world_map.png" />
     <Resource Include="Resources\Images\fortis_logo.png" />
     <Resource Include="Resources\Images\fortis_icon.png" />
-    <Resource Include="Resources\Images\mail_icon.svg" />
-    <Resource Include="Resources\Images\lock_icon.svg" />
-    <Resource Include="Resources\Images\eye_icon.svg" />
-    <Resource Include="Resources\Images\eye-slash_icon.svg" />
+    <Resource Include="Resources\icon\mail.svg" />
+    <Resource Include="Resources\icon\lock.svg" />
+    <Resource Include="Resources\icon\eye.svg" />
+    <Resource Include="Resources\icon\eye-slash.svg" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

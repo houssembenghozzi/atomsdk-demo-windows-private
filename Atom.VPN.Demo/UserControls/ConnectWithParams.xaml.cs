@@ -27,7 +27,7 @@ namespace Atom.VPN.Demo.UserControls
             InitializeComponent();
         }
 
-        public async void Initialize(List<Protocol> protocols = null, List<Country> countries = null)
+        public void Initialize(List<Protocol> protocols = null, List<Country> countries = null)
         {
             Protocols = protocols;
             Countries = countries;
@@ -236,7 +236,7 @@ namespace Atom.VPN.Demo.UserControls
             }
         }
 
-        private async void SetCountries(bool isUseSmartConnect = false)
+        private void SetCountries(bool isUseSmartConnect = false)
         {
             try
             {
@@ -246,9 +246,9 @@ namespace Atom.VPN.Demo.UserControls
                     var countries = new List<Country>();
 
                     if (isUseSmartConnect)
-                        await Task.Factory.StartNew(() => countries = AtomHelper.GetSmartCountries());
+                        countries = AtomHelper.GetSmartCountries();
                     else
-                        await Task.Factory.StartNew(() => countries = AtomHelper.GetCountries());
+                        countries = AtomHelper.GetCountries();
 
                     if (countries != null)
                     {

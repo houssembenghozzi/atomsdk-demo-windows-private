@@ -112,7 +112,7 @@
                                            FontSize="14"
                                            FontWeight="Medium"/>
                                 <Button Grid.Column="3" x:Name="ShowPasswordButton" Background="Transparent" BorderThickness="0" Cursor="Hand">
-                                    <Image Source="/Resources/Images/eye_icon.svg" Width="24" Height="24" Opacity="0.7"/>
+                                    <Image Source="/Resources/icon/eye.svg" Width="24" Height="24" Opacity="0.7"/>
                                 </Button>
                             </Grid>
                         </Border>
@@ -287,12 +287,12 @@
     
     <Grid Margin="0" SnapsToDevicePixels="True">
         <!-- Logo -->
-        <Grid VerticalAlignment="Top">
+        <Grid VerticalAlignment="Top" Margin="30,20,0,0">
             <Image Source="/Resources/Images/fortis_icon.png" Width="52" Height="52" HorizontalAlignment="Left"/>
         </Grid>
         
         <!-- Content -->
-        <StackPanel VerticalAlignment="Center" Margin="0,-30,0,0">
+        <StackPanel VerticalAlignment="Center" Margin="30,-30,30,0">
             <!-- Title Section -->
             <StackPanel Margin="0,0,0,30">
                 <TextBlock Text="Login" 

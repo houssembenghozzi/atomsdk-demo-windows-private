@@ -15,7 +15,6 @@ namespace Atom.VPN.Demo
     public partial class SplashScreen : Window
     {
         private DispatcherTimer timer;
-        private MainWindow mainWindow;
         private bool isAtomServiceInstalled = false;
 
         public SplashScreen()

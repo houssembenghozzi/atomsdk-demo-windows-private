@@ -94,7 +94,7 @@ namespace Atom.VPN.Demo.UserControls
             }
         }
 
-        public async void Initialize(List<Protocol> protocols = null, List<Country> countries = null)
+        public void Initialize(List<Protocol> protocols = null, List<Country> countries = null)
         {
             Protocols = protocols;
             Countries = countries;
