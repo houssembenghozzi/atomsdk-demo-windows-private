@@ -93,8 +93,8 @@ namespace Atom.VPN.Demo
             MessageBox.Show("Your password has been reset successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             
             // Navigate to login page
-            LoginPage loginPage = new LoginPage();
-            loginPage.Show();
+            LoginWindow loginWindow = new LoginWindow();
+            loginWindow.Show();
             this.Close();
         }
         
@@ -109,8 +109,8 @@ namespace Atom.VPN.Demo
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             // Go back to forgot password page
-            ForgotPasswordPage forgotPasswordPage = new ForgotPasswordPage();
-            forgotPasswordPage.Show();
+            ForgotPasswordWindow forgotPasswordWindow = new ForgotPasswordWindow();
+            forgotPasswordWindow.Show();
             this.Close();
         }
     }

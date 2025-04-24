@@ -245,8 +245,8 @@ namespace Atom.VPN.Demo
             // Navigate to the login page
             try
             {
-                LoginPage loginPage = new LoginPage();
-                loginPage.Show();
+                LoginWindow loginWindow = new LoginWindow();
+                loginWindow.Show();
                 this.Close();
             }
             catch (Exception ex)
@@ -260,8 +260,8 @@ namespace Atom.VPN.Demo
             // Navigate back to the login page
             try
             {
-                LoginPage loginPage = new LoginPage();
-                loginPage.Show();
+                LoginWindow loginWindow = new LoginWindow();
+                loginWindow.Show();
                 this.Close();
             }
             catch (Exception ex)

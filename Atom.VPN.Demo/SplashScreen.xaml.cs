@@ -185,11 +185,11 @@ namespace Atom.VPN.Demo
             
             try
             {
-                // Create the login window instead of main window
-                var loginPage = new LoginPage();
+                // Create the login window instead of login page
+                var loginWindow = new LoginWindow();
                 
                 // Make sure the login window is created successfully before closing the splash screen
-                loginPage.Closed += (s, args) => 
+                loginWindow.Closed += (s, args) => 
                 {
                     // Only exit if the main window wasn't opened from login
                     if (Application.Current.MainWindow == null || !Application.Current.MainWindow.IsVisible)
@@ -211,7 +211,7 @@ namespace Atom.VPN.Demo
                     try
                     {
                         // Show the login window
-                        loginPage.Show();
+                        loginWindow.Show();
                         
                         // Close splash screen
                         this.Close();

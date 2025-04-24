@@ -3,127 +3,125 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace Atom.VPN.Demo
 {
     /// <summary>
     /// Interaction logic for ForgotPasswordPage.xaml
     /// </summary>
-    public partial class ForgotPasswordPage : Window
+    public partial class ForgotPasswordPage : Page
     {
+        private readonly Regex _emailRegex = new Regex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$");
+
         public ForgotPasswordPage()
         {
             InitializeComponent();
-            
-            // Set focus to email textbox when the window loads
-            this.Loaded += (s, e) => EmailTextBox.Focus();
+            Loaded += ForgotPasswordPage_Loaded;
         }
 
-        private void InputField_GotFocus(object sender, RoutedEventArgs e)
+        private void ForgotPasswordPage_Loaded(object sender, RoutedEventArgs e)
         {
-            // Change border color and placeholder text to black when the input field gets focus
-            if (sender is TextBox textBox)
+            // Focus the email field when the page loads
+            EmailTextBox.Focus();
+        }
+
+        private void NextButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
             {
-                var border = textBox.Template.FindName("border", textBox) as Border;
-                if (border != null)
+                // Validate email format
+                if (string.IsNullOrWhiteSpace(EmailTextBox.Text))
                 {
-                    border.BorderBrush = System.Windows.Media.Brushes.Black;
+                    MessageBox.Show("Please enter your email address.", "Email Required", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    EmailTextBox.Focus();
+                    return;
+                }
+
+                if (!_emailRegex.IsMatch(EmailTextBox.Text))
+                {
+                    MessageBox.Show("Please enter a valid email address.", "Invalid Email", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    EmailTextBox.Focus();
+                    return;
+                }
+
+                // Disable inputs to prevent additional clicks
+                EmailTextBox.IsEnabled = false;
+                NextButton.IsEnabled = false;
+                
+                // Show success message directly in UI
+                if (this.FindName("SuccessMessage") is TextBlock successMessage)
+                {
+                    // If we found the SuccessMessage TextBlock, show it
+                    successMessage.Text = $"A password reset link has been sent to {EmailTextBox.Text}. Redirecting...";
+                    successMessage.Visibility = Visibility.Visible;
                 }
                 
-                var placeholder = textBox.Template.FindName("Placeholder", textBox) as TextBlock;
-                if (placeholder != null)
-                {
-                    placeholder.Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(50, 52, 56));
-                }
+                // Use a timer to delay navigation so the user can see the success message
+                var timer = new System.Windows.Threading.DispatcherTimer();
+                timer.Interval = TimeSpan.FromSeconds(1.5);
+                timer.Tick += (s, args) => {
+                    timer.Stop();
+                    
+                    // Get the parent window
+                    var parentWindow = Window.GetWindow(this);
+                    
+                    // Check what type of window we're in
+                    if (parentWindow is MainContainerWindow mainContainerWindow)
+                    {
+                        // Navigate to login page using MainContainerWindow
+                        mainContainerWindow.NavigateToLoginPage();
+                    }
+                    else if (parentWindow is LoginWindow loginWindow)
+                    {
+                        // Navigate to login page using LoginWindow
+                        loginWindow.NavigateToLoginPage();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Could not navigate back to login page: Unknown parent window type.", 
+                                       "Navigation Error", 
+                                       MessageBoxButton.OK, 
+                                       MessageBoxImage.Error);
+                    }
+                };
+                timer.Start();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        private void InputField_LostFocus(object sender, RoutedEventArgs e)
+        private void BackToLogin_Click(object sender, RoutedEventArgs e)
         {
-            // Change border color and placeholder text to gray when the input field loses focus
-            if (sender is TextBox textBox)
+            try
             {
-                var border = textBox.Template.FindName("border", textBox) as Border;
-                if (border != null)
-                {
-                    border.BorderBrush = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(190, 190, 190));
-                }
+                // Get the parent window
+                var parentWindow = Window.GetWindow(this);
                 
-                var placeholder = textBox.Template.FindName("Placeholder", textBox) as TextBlock;
-                if (placeholder != null && string.IsNullOrEmpty(textBox.Text))
+                // Check what type of window we're in
+                if (parentWindow is MainContainerWindow mainContainerWindow)
                 {
-                    placeholder.Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(190, 190, 190));
+                    // Navigate to login page using MainContainerWindow
+                    mainContainerWindow.NavigateToLoginPage();
+                }
+                else if (parentWindow is LoginWindow loginWindow)
+                {
+                    // Navigate to login page using LoginWindow
+                    loginWindow.NavigateToLoginPage();
+                }
+                else
+                {
+                    MessageBox.Show("Could not navigate back to login page: Unknown parent window type.", 
+                                   "Navigation Error", 
+                                   MessageBoxButton.OK, 
+                                   MessageBoxImage.Error);
                 }
             }
-        }
-
-        private void ResetPassword_Click(object sender, RoutedEventArgs e)
-        {
-            // Basic validation for email input
-            if (string.IsNullOrWhiteSpace(EmailTextBox.Text))
-            {
-                MessageBox.Show("Please enter your email address.", "Email Required", MessageBoxButton.OK, MessageBoxImage.Warning);
-                EmailTextBox.Focus();
-                return;
-            }
-
-            // Simple email validation
-            if (!IsValidEmail(EmailTextBox.Text))
-            {
-                MessageBox.Show("Please enter a valid email address.", "Invalid Email", MessageBoxButton.OK, MessageBoxImage.Warning);
-                EmailTextBox.Focus();
-                return;
-            }
-
-            // Navigate to email verification page
-            try
-            {
-                var verificationPage = new EmailVerificationPage(EmailTextBox.Text);
-                verificationPage.Show();
-                this.Close();
-            }
             catch (Exception ex)
             {
                 MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
-
-        private void SignUp_Click(object sender, RoutedEventArgs e)
-        {
-            // Navigate to sign up page
-            try
-            {
-                SignUpPage signUpPage = new SignUpPage();
-                signUpPage.Show();
-                this.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void Back_Click(object sender, RoutedEventArgs e)
-        {
-            // Navigate back to the login page
-            try
-            {
-                LoginPage loginPage = new LoginPage();
-                loginPage.Show();
-                this.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-        
-        private bool IsValidEmail(string email)
-        {
-            // Simple regex for email validation
-            string pattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
-            return Regex.IsMatch(email, pattern);
         }
     }
 } 

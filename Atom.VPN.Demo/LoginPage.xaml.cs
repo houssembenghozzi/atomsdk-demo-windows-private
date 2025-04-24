@@ -7,16 +7,17 @@ namespace Atom.VPN.Demo
     /// <summary>
     /// Interaction logic for LoginPage.xaml
     /// </summary>
-    public partial class LoginPage : Window
+    public partial class LoginPage : Page
     {
-        private MainWindow mainWindow;
-        
         public LoginPage()
         {
             InitializeComponent();
             
             // Setup password visibility toggle
             SetupPasswordVisibilityToggle();
+            
+            // Focus the email field when the page loads
+            this.Loaded += (s, e) => EmailTextBox.Focus();
         }
 
         private void SetupPasswordVisibilityToggle()
@@ -135,34 +136,102 @@ namespace Atom.VPN.Demo
 
         private void SignIn_Click(object sender, RoutedEventArgs e)
         {
-            // For demo purposes, simply open the main window
-            mainWindow = new MainWindow();
-            mainWindow.SecretKey = "17355649429f7d4adbe993a8d227bc580c8f369b";
-            
-            // Set event handler to shut down app when main window is closed
-            mainWindow.Closed += (s, args) => Application.Current.Shutdown();
-            
-            // Show the main window
-            mainWindow.Show();
-            
-            // Close this login window
-            this.Close();
+            try
+            {
+                // Get the parent window
+                var parentWindow = Window.GetWindow(this);
+                
+                // Check what type of window we're in
+                if (parentWindow is MainContainerWindow mainContainerWindow)
+                {
+                    // Navigate to the main VPN page using MainContainerWindow
+                    mainContainerWindow.NavigateToMainVPNPage();
+                }
+                else if (parentWindow is LoginWindow loginWindow)
+                {
+                    // For LoginWindow, we need to create a new MainContainerWindow to show the main VPN page
+                    var newMainWindow = new MainContainerWindow();
+                    newMainWindow.Show();
+                    
+                    // Close the login window
+                    loginWindow.Close();
+                }
+                else
+                {
+                    throw new InvalidOperationException($"Parent window is not a navigation window: {parentWindow?.GetType().Name ?? "null"}");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error signing in: {ex.Message}",
+                                "Sign In Error",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Error);
+            }
         }
 
         private void ForgotPassword_Click(object sender, RoutedEventArgs e)
         {
-            // Open the forgot password page
-            ForgotPasswordPage forgotPasswordPage = new ForgotPasswordPage();
-            forgotPasswordPage.Show();
-            this.Close();
+            try
+            {
+                // Get the parent window
+                var parentWindow = Window.GetWindow(this);
+                
+                // Check what type of window we're in
+                if (parentWindow is MainContainerWindow mainContainerWindow)
+                {
+                    // Navigate to forgot password page using MainContainerWindow
+                    mainContainerWindow.NavigateToForgotPasswordPage();
+                }
+                else if (parentWindow is LoginWindow loginWindow)
+                {
+                    // Navigate to forgot password page using LoginWindow
+                    loginWindow.NavigateToForgotPasswordPage();
+                }
+                else
+                {
+                    throw new InvalidOperationException($"Parent window is not a navigation window: {parentWindow?.GetType().Name ?? "null"}");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error navigating to Forgot Password screen: {ex.Message}", 
+                                "Navigation Error", 
+                                MessageBoxButton.OK, 
+                                MessageBoxImage.Error);
+            }
         }
 
         private void SignUp_Click(object sender, RoutedEventArgs e)
         {
-            // Navigate to sign up page
-            SignUpPage signUpPage = new SignUpPage();
-            signUpPage.Show();
-            this.Close();
+            try
+            {
+                // Get the parent window
+                var parentWindow = Window.GetWindow(this);
+                
+                // Check what type of window we're in
+                if (parentWindow is MainContainerWindow mainContainerWindow)
+                {
+                    // Navigate to sign up page using MainContainerWindow
+                    mainContainerWindow.NavigateToSignUpPage();
+                }
+                else if (parentWindow is LoginWindow loginWindow)
+                {
+                    // Navigate to sign up page using LoginWindow
+                    loginWindow.NavigateToSignUpPage();
+                }
+                else
+                {
+                    throw new InvalidOperationException($"Parent window is not a navigation window: {parentWindow?.GetType().Name ?? "null"}");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error navigating to Sign Up screen: {ex.Message}",
+                                "Navigation Error",
+                                MessageBoxButton.OK, 
+                                MessageBoxImage.Error);
+            }
         }
     }
 } 
