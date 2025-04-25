@@ -1,0 +1,120 @@
+<Window x:Class="Atom.VPN.Demo.AppShortcutsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Atom.VPN.Demo"
+        Title="Manage Shortcuts" 
+        Width="350" 
+        Height="500"
+        WindowStartupLocation="CenterOwner"
+        Background="Transparent"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        AllowsTransparency="True">
+    
+    <Window.Resources>
+        <local:AppIconConverter x:Key="IconConverter"/>
+        <local:BoolToBackgroundConverter x:Key="BoolToBackgroundConverter"/>
+        <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </Window.Resources>
+    
+    <Border Background="#FFFFFF" 
+            CornerRadius="20" 
+            BorderBrush="#EEEEEE" 
+            BorderThickness="1" 
+            Margin="5">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Header -->
+            <TextBlock Grid.Row="0" 
+                       Text="Manage shortcuts" 
+                       FontSize="20" 
+                       FontWeight="SemiBold" 
+                       Foreground="#333333" 
+                       Margin="20,20,20,20"/>
+            
+            <!-- Shortcuts List -->
+            <ScrollViewer Grid.Row="1" 
+                          VerticalScrollBarVisibility="Auto" 
+                          Margin="0,0,0,10"
+                          HorizontalScrollBarVisibility="Disabled"
+                          BorderThickness="0">
+                <ItemsControl x:Name="ShortcutsItemsControl">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="#F2F2F2" 
+                                    BorderThickness="0,0,0,1" 
+                                    Padding="20,15" 
+                                    Margin="0,0,0,0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <!-- App Icon -->
+                                    <Border x:Name="AppIconBorder" 
+                                            Grid.Column="0" 
+                                            Width="40" 
+                                            Height="40" 
+                                            CornerRadius="20">
+                                        <Image x:Name="AppIcon" 
+                                               Source="{Binding Key, Converter={StaticResource IconConverter}}" 
+                                               Width="25" 
+                                               Height="25"/>
+                                    </Border>
+                                    
+                                    <!-- App Name -->
+                                    <TextBlock Grid.Column="1" 
+                                               Text="{Binding Key}" 
+                                               FontSize="18" 
+                                               Foreground="#333333" 
+                                               VerticalAlignment="Center"
+                                               FontWeight="Medium"
+                                               Margin="15,0,0,0"/>
+                                    
+                                    <!-- Selection Button -->
+                                    <Border Grid.Column="2" 
+                                            Width="30" 
+                                            Height="30" 
+                                            Background="{Binding IsSelected, Converter={StaticResource BoolToBackgroundConverter}}" 
+                                            CornerRadius="15"
+                                            Tag="{Binding Key}"
+                                            MouseDown="ToggleShortcut_Click">
+                                        <Path x:Name="CheckIcon" 
+                                              Data="M9,16.17L4.83,12L3.41,13.41L9,19L21,7L19.59,5.59L9,16.17Z" 
+                                              Fill="White" 
+                                              Width="15" 
+                                              Height="15" 
+                                              Stretch="Uniform" 
+                                              Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                    </Border>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+            
+            <!-- Save Button -->
+            <Border Grid.Row="2" 
+                    Background="#222222" 
+                    CornerRadius="25" 
+                    Margin="20,10,20,20" 
+                    Cursor="Hand"
+                    MouseDown="SaveButton_Click">
+                <TextBlock Text="Save" 
+                           FontSize="18" 
+                           Foreground="White" 
+                           HorizontalAlignment="Center" 
+                           VerticalAlignment="Center" 
+                           Padding="0,15,0,15"/>
+            </Border>
+        </Grid>
+    </Border>
+</Window> 

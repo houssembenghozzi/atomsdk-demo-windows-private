@@ -147,19 +147,23 @@
             <!-- Main VPN Control Area -->
             <StackPanel Grid.Row="1" VerticalAlignment="Center" Margin="0,-50,0,0">
                 <!-- Status text -->
-                <TextBlock Text="Not Connected" 
+                <TextBlock x:Name="StatusText" 
+                           Text="Not Connected" 
                            FontFamily="{StaticResource GTWalsheimProBold}" 
                            FontSize="24" 
                            Foreground="White" 
                            HorizontalAlignment="Center"
-                           Margin="0,0,0,10"/>
+                           Margin="0,0,0,10"
+                           Height="30"/>
                 
-                <TextBlock Text="Press on button to connect" 
+                <TextBlock x:Name="DescriptionText" 
+                           Text="Press on button to connect" 
                            FontFamily="{StaticResource GTWalsheimPro}" 
                            FontSize="16" 
                            Foreground="#BBBBBB" 
                            HorizontalAlignment="Center"
-                           Margin="0,0,0,30"/>
+                           Margin="0,0,0,30"
+                           Height="25"/>
                 
                 <!-- Power button -->
                 <Button x:Name="PowerButton" 
@@ -201,7 +205,7 @@
                                 
                                 <!-- Power icon -->
                                 <Path x:Name="PowerIcon" 
-                                      Data="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,5A7,7 0 0,1 19,12A7,7 0 0,1 12,19A7,7 0 0,1 5,12A7,7 0 0,1 12,5M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z" 
+                                      Data="M15,4V8H17V4H15M17,10H15V16H17V10M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6" 
                                       Fill="White" 
                                       Width="40" 
                                       Height="40" 
@@ -220,71 +224,197 @@
                     </Button.Template>
                 </Button>
                 
-                <!-- Current Location section -->
-                <Button Style="{StaticResource LocationButtonStyle}"
-                        Tag="Current Location"
-                        Content="United States - Washington DC"
-                        Margin="0,20,0,20">
-                    <Button.ContentTemplate>
-                        <DataTemplate>
-                            <Grid Width="30" Height="30">
-                                <Ellipse Fill="#0052D4" Width="30" Height="30"/>
-                                <TextBlock Text="🇺🇸" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Grid>
-                        </DataTemplate>
-                    </Button.ContentTemplate>
-                </Button>
-                
-                <!-- Quick location options -->
-                <Grid Margin="0,10,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <!-- Smart Location -->
-                    <Button Grid.Column="0" 
-                            Margin="0,0,5,0"
-                            Style="{StaticResource LocationButtonStyle}"
-                            Tag="Smart Location"
-                            Content="Singapore- Juron">
-                        <Button.ContentTemplate>
-                            <DataTemplate>
-                                <Grid Width="30" Height="30">
-                                    <Ellipse Fill="#222222" Width="30" Height="30"/>
-                                    <Path Data="M12,3L1,9L12,15L21,10.09V17H23V9M5,13.18V17.18L12,21L19,17.18V13.18L12,17L5,13.18Z" 
-                                          Fill="#FF9500" 
-                                          Width="18" 
-                                          Height="18" 
-                                          Stretch="Uniform"/>
+                <!-- Current Location and Connection Info section - Fixed Height Container -->
+                <Grid MinHeight="170">
+                    <StackPanel>
+                        <!-- Current Location section -->
+                        <Button Style="{StaticResource LocationButtonStyle}"
+                                Tag="Current Location"
+                                Content="United States - Washington DC"
+                                Margin="0,0,0,10">
+                            <Button.ContentTemplate>
+                                <DataTemplate>
+                                    <Grid Width="30" Height="30">
+                                        <Ellipse Fill="#0052D4" Width="30" Height="30"/>
+                                        <TextBlock Text="🇺🇸" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </Button.ContentTemplate>
+                        </Button>
+                        
+                        <!-- Connection Info - Only visible when connected -->
+                        <Grid x:Name="ConnectionInfoPanel" Margin="0,0,0,0" Visibility="Collapsed">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- App shortcuts -->
+                            <Border Grid.Column="0" 
+                                    Margin="0,0,5,0"
+                                    Background="White" 
+                                    CornerRadius="15" 
+                                    Padding="15">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <!-- Plus icon -->
+                                    <Border Grid.Column="0" 
+                                            Width="30" 
+                                            Height="30" 
+                                            Background="#FFF8E0" 
+                                            CornerRadius="15"
+                                            VerticalAlignment="Center"
+                                            Cursor="Hand"
+                                            MouseDown="AddShortcut_Click">
+                                        <TextBlock Text="+" 
+                                                   FontSize="20" 
+                                                   Foreground="#FFBB00" 
+                                                   HorizontalAlignment="Center" 
+                                                   VerticalAlignment="Center"/>
+                                    </Border>
+                                    
+                                    <!-- Separator -->
+                                    <Rectangle Grid.Column="1" 
+                                               Width="1" 
+                                               Height="40" 
+                                               Fill="#EEEEEE" 
+                                               Margin="10,0"/>
+                                    
+                                    <!-- App icons -->
+                                    <StackPanel Grid.Column="2" 
+                                                Orientation="Vertical" 
+                                                Margin="0,0,0,0">
+                                        <TextBlock Text="App shortcuts" 
+                                                   FontSize="14" 
+                                                   Foreground="#333333" 
+                                                   FontFamily="{StaticResource GTWalsheimProMedium}" 
+                                                   Margin="0,0,0,8"/>
+                                        
+                                        <Grid x:Name="AppShortcutsPanel" Margin="0,0,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                        </Grid>
+                                    </StackPanel>
                                 </Grid>
-                            </DataTemplate>
-                        </Button.ContentTemplate>
-                    </Button>
-                    
-                    <!-- Recent Location -->
-                    <Button Grid.Column="1" 
-                            Margin="5,0,0,0"
-                            Style="{StaticResource LocationButtonStyle}"
-                            Tag="Recent Location"
-                            Content="Japan- Tokyo">
-                        <Button.ContentTemplate>
-                            <DataTemplate>
-                                <Grid Width="30" Height="30">
-                                    <Ellipse Fill="#222222" Width="30" Height="30"/>
-                                    <Path Data="M13,3A9,9 0 0,0 4,12H1L4.89,15.89L4.96,16.03L9,12H6A7,7 0 0,1 13,5A7,7 0 0,1 20,12A7,7 0 0,1 13,19C11.07,19 9.32,18.21 8.06,16.94L6.64,18.36C8.27,20 10.5,21 13,21A9,9 0 0,0 22,12A9,9 0 0,0 13,3Z" 
-                                          Fill="#FFBB00" 
-                                          Width="18" 
-                                          Height="18" 
-                                          Stretch="Uniform"/>
+                            </Border>
+                            
+                            <!-- Connected IP -->
+                            <Border Grid.Column="1" 
+                                    Margin="5,0,0,0"
+                                    Background="White" 
+                                    CornerRadius="15" 
+                                    Padding="15">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <!-- Lightning icon -->
+                                    <Border Grid.Column="0" 
+                                            Width="30" 
+                                            Height="30" 
+                                            Background="#F2F8F1" 
+                                            CornerRadius="15"
+                                            VerticalAlignment="Center">
+                                        <Path Data="M13,3H11V13H13V3M13,17H11V21H13V17Z" 
+                                              Fill="#4CAF50" 
+                                              Width="12" 
+                                              Height="12" 
+                                              Stretch="Uniform"/>
+                                    </Border>
+                                    
+                                    <!-- Separator -->
+                                    <Rectangle Grid.Column="1" 
+                                               Width="1" 
+                                               Height="40" 
+                                               Fill="#EEEEEE" 
+                                               Margin="10,0"/>
+                                    
+                                    <!-- IP address -->
+                                    <StackPanel Grid.Column="2" 
+                                                Orientation="Vertical">
+                                        <TextBlock Text="Connected IP" 
+                                                   FontSize="14" 
+                                                   Foreground="#333333" 
+                                                   FontFamily="{StaticResource GTWalsheimProMedium}" 
+                                                   Margin="0,0,0,8"/>
+                                        
+                                        <TextBlock x:Name="ConnectedIpText"
+                                                   Text="198.25.255.36" 
+                                                   FontSize="14" 
+                                                   Foreground="#4CAF50" 
+                                                   FontFamily="{StaticResource GTWalsheimProMedium}"/>
+                                    </StackPanel>
                                 </Grid>
-                            </DataTemplate>
-                        </Button.ContentTemplate>
-                    </Button>
+                            </Border>
+                        </Grid>
+                        
+                        <!-- Quick location options - Only visible when not connected -->
+                        <Grid x:Name="QuickLocationPanel" Margin="0,0,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- Smart Location -->
+                            <Button Grid.Column="0" 
+                                    Margin="0,0,5,0"
+                                    Style="{StaticResource LocationButtonStyle}"
+                                    Tag="Smart Location"
+                                    Content="Singapore- Juron">
+                                <Button.ContentTemplate>
+                                    <DataTemplate>
+                                        <Grid Width="30" Height="30">
+                                            <Ellipse Fill="#222222" Width="30" Height="30"/>
+                                            <Path Data="M12,3L1,9L12,15L21,10.09V17H23V9M5,13.18V17.18L12,21L19,17.18V13.18L12,17L5,13.18Z" 
+                                                  Fill="#FF9500" 
+                                                  Width="18" 
+                                                  Height="18" 
+                                                  Stretch="Uniform"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </Button.ContentTemplate>
+                            </Button>
+                            
+                            <!-- Recent Location -->
+                            <Button Grid.Column="1" 
+                                    Margin="5,0,0,0"
+                                    Style="{StaticResource LocationButtonStyle}"
+                                    Tag="Recent Location"
+                                    Content="Japan- Tokyo">
+                                <Button.ContentTemplate>
+                                    <DataTemplate>
+                                        <Grid Width="30" Height="30">
+                                            <Ellipse Fill="#222222" Width="30" Height="30"/>
+                                            <Path Data="M13,3A9,9 0 0,0 4,12H1L4.89,15.89L4.96,16.03L9,12H6A7,7 0 0,1 13,5A7,7 0 0,1 20,12A7,7 0 0,1 13,19C11.07,19 9.32,18.21 8.06,16.94L6.64,18.36C8.27,20 10.5,21 13,21A9,9 0 0,0 22,12A9,9 0 0,0 13,3Z" 
+                                                  Fill="#FFBB00" 
+                                                  Width="18" 
+                                                  Height="18" 
+                                                  Stretch="Uniform"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </Button.ContentTemplate>
+                            </Button>
+                        </Grid>
+                    </StackPanel>
                 </Grid>
                 
                 <!-- Ad Blocker section -->
-                <Border Margin="0,25,0,0" 
+                <Border Margin="0,10,0,0" 
                        Background="#222222" 
                        CornerRadius="15" 
                        Padding="15">
