@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Windows.Navigation;
 
 namespace Atom.VPN.Demo
 {
@@ -377,6 +378,12 @@ namespace Atom.VPN.Demo
                 // Start the connection timer
                 _connectionTimer.Start();
             }
+        }
+        
+        private void MenuButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Navigate to the MenuPage
+            NavigationService.Navigate(new MenuPage());
         }
         
         // Helper method to get named elements from a control template

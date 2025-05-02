@@ -135,12 +135,14 @@
                        HorizontalAlignment="Left"/>
                 
                 <Button Grid.Column="2" 
+                        x:Name="MenuButton"
                         Content="≡" 
                         FontSize="24" 
                         Foreground="White" 
                         Background="Transparent" 
                         BorderThickness="0"
                         Padding="10"
+                        Click="MenuButton_Click"
                         VerticalAlignment="Center"/>
             </Grid>
             
