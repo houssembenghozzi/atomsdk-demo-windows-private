@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Atom.VPN.Demo"
       mc:Ignorable="d" 
-      d:DesignHeight="700" d:DesignWidth="460"
+      d:DesignHeight="1000" d:DesignWidth="460"
       Title="MenuPage"
       Background="#FAFAFA">
 
@@ -15,15 +15,15 @@
                Stretch="UniformToFill"
                Opacity="0.07"/>
                
-        <!-- Main content -->
-        <Grid Margin="26,40,26,40">
+        <!-- Main content with reduced side margins to match screenshot -->
+        <Grid Margin="16,40,16,40" VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/> <!-- Top menu title -->
+                <RowDefinition Height="Auto"/> <!-- Free trial card -->
+                <RowDefinition Height="auto"/>    <!-- Menu items -->
             </Grid.RowDefinitions>
             
-            <!-- Header with back button and title -->
+            <!-- Header with back button and title - Row 0 -->
             <Grid Grid.Row="0" Margin="0,0,0,20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -53,13 +53,14 @@
                            VerticalAlignment="Center"/>
             </Grid>
             
-            <!-- Premium banner -->
+            <!-- Premium banner - Row 1 -->
             <Border Grid.Row="1" 
                     Background="#1F1F1F" 
                     CornerRadius="12"
                     BorderThickness="2"
                     Margin="0,0,0,16"
-                    Height="111">
+                    Height="111"
+                    Width="408">
                 <Border.BorderBrush>
                     <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
                         <GradientStop Color="#FD1414" Offset="0"/>
@@ -85,11 +86,10 @@
                         <!-- Free trial info -->
                         <StackPanel>
                             <TextBlock Text="Free trial" 
-                                       FontWeight="Bold"
+                                       FontWeight="ExtraBold"
                                        FontSize="18"
                                        Foreground="White"/>
                             <TextBlock Text="3.5GB/5GB" 
-                                       FontWeight="Light"
                                        FontSize="14"
                                        Foreground="White"
                                        Margin="0,7,0,0"/>
@@ -104,10 +104,10 @@
                             <StackPanel VerticalAlignment="Center">
                                 <TextBlock Text="2" 
                                            FontSize="24"
+                                           FontWeight="Bold"
                                            Foreground="White"
                                            HorizontalAlignment="Center"/>
                                 <TextBlock Text="Days Left" 
-                                           FontWeight="Light"
                                            FontSize="10"
                                            Foreground="#A1A1AC"
                                            HorizontalAlignment="Center"/>
@@ -118,172 +118,300 @@
                     <!-- Upgrade button -->
                     <StackPanel Grid.Row="1" 
                                 Orientation="Horizontal" 
-                                HorizontalAlignment="Center"
+                                HorizontalAlignment="Left"
                                 VerticalAlignment="Bottom">
                         <TextBlock Text="Upgrade Now" 
                                    FontSize="16"
                                    Foreground="White"
                                    VerticalAlignment="Center"/>
-                        <Path Data="M16.172 11L10.808 5.636L12.222 4.222L20 12L12.222 19.778L10.808 18.364L16.172 13H4V11H16.172Z"
-                              Fill="White"
-                              Width="20"
-                              Height="20"
-                              Margin="10,0,0,0"
-                              Stretch="Uniform"
-                              VerticalAlignment="Center"/>
+                        <Canvas Width="22" Height="15" Margin="10,0,0,0">
+                            <Path Data="M14.5898 1.09129L20.9983 7.49975L14.5898 13.9082" 
+                                  Stroke="White" 
+                                  StrokeThickness="1.94366" 
+                                  StrokeLineJoin="Round" 
+                                  StrokeStartLineCap="Round"
+                                  StrokeEndLineCap="Round"/>
+                            <Path Data="M1 7.85156L19.1573 7.85156" 
+                                  Stroke="White" 
+                                  StrokeThickness="1.94366" 
+                                  StrokeLineJoin="Round" 
+                                  StrokeStartLineCap="Round"
+                                  StrokeEndLineCap="Round"/>
+                        </Canvas>
                     </StackPanel>
                 </Grid>
             </Border>
             
-            <!-- Menu items -->
-            <StackPanel Grid.Row="2" Margin="0,16,0,0">
+            <!-- Menu items container - Row 2 -->
+            <StackPanel Grid.Row="2" Margin="0,16,0,0" Width="408">
                 <!-- Divider -->
                 <Rectangle Height="1" Fill="#EEEEEE" Width="408" Margin="0,0,0,16"/>
                 
-                <!-- Account -->
-                <Grid Height="50" Margin="0,0,0,28">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <Border Width="24" Height="24" Margin="0,0,10,0">
-                        <Path Data="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"
-                              Stroke="#212121"
-                              StrokeThickness="1.5"
-                              Fill="Transparent"
-                              Stretch="Uniform"/>
-                    </Border>
-                    
-                    <TextBlock Grid.Column="1" 
-                               Text="Account" 
-                               FontSize="18"
-                               Foreground="#212121"
-                               VerticalAlignment="Center"/>
-                    
-                    <Path Grid.Column="2" 
-                          Data="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"
-                          Stroke="#212121"
-                          StrokeThickness="1.5"
-                          Width="8"
-                          Height="12"
-                          Stretch="Uniform"/>
-                </Grid>
-                
-                <!-- Settings -->
-                <Grid Height="50" Margin="0,0,0,28">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <Border Width="24" Height="24" Margin="0,0,10,0">
-                        <Path Data="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z"
-                              Stroke="#212121"
-                              StrokeThickness="1.5"
-                              Fill="Transparent"
-                              Stretch="Uniform"/>
-                    </Border>
-                    
-                    <TextBlock Grid.Column="1" 
-                               Text="Settings" 
-                               FontSize="18"
-                               Foreground="#212121"
-                               VerticalAlignment="Center"/>
-                    
-                    <Path Grid.Column="2" 
-                          Data="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"
-                          Stroke="#212121"
-                          StrokeThickness="1.5"
-                          Width="8"
-                          Height="12"
-                          Stretch="Uniform"/>
-                </Grid>
-                
-                <!-- Help Center -->
-                <Grid Height="50" Margin="0,0,0,28">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <Border Width="24" Height="24" Margin="0,0,10,0">
-                        <Path Data="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z"
-                              Stroke="#212121"
-                              StrokeThickness="1.5"
-                              Fill="Transparent"
-                              Stretch="Uniform"/>
-                    </Border>
-                    
-                    <TextBlock Grid.Column="1" 
-                               Text="Help Center" 
-                               FontSize="18"
-                               Foreground="#212121"
-                               VerticalAlignment="Center"/>
-                    
-                    <Path Grid.Column="2" 
-                          Data="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"
-                          Stroke="#212121"
-                          StrokeThickness="1.5"
-                          Width="8"
-                          Height="12"
-                          Stretch="Uniform"/>
-                </Grid>
-                
-                <!-- Invite Friends -->
-                <Grid Height="50" Margin="0,0,0,28">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <Border Width="24" Height="24" Margin="0,0,10,0">
-                        <Path Data="M16,13C15.71,13 15.38,13 15.03,13.05C16.19,13.89 17,15 17,16.5V19H23V16.5C23,14.17 18.33,13 16,13M8,13C5.67,13 1,14.17 1,16.5V19H15V16.5C15,14.17 10.33,13 8,13M8,11A3,3 0 0,0 11,8A3,3 0 0,0 8,5A3,3 0 0,0 5,8A3,3 0 0,0 8,11M16,11A3,3 0 0,0 19,8A3,3 0 0,0 16,5A3,3 0 0,0 13,8A3,3 0 0,0 16,11Z"
-                              Stroke="#212121"
-                              StrokeThickness="1.5"
-                              Fill="Transparent"
-                              Stretch="Uniform"/>
-                    </Border>
-                    
-                    <TextBlock Grid.Column="1" 
-                               Text="Invite Friends" 
-                               FontSize="18"
-                               Foreground="#212121"
-                               VerticalAlignment="Center"/>
-                    
-                    <Path Grid.Column="2" 
-                          Data="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"
-                          Stroke="#212121"
-                          StrokeThickness="1.5"
-                          Width="8"
-                          Height="12"
-                          Stretch="Uniform"/>
-                </Grid>
-                
-                <!-- Logout -->
-                <Grid Height="50">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <Border Width="24" Height="24" Margin="0,0,10,0">
-                        <Path Data="M16,17V14H9V10H16V7L21,12L16,17M14,2A2,2 0 0,1 16,4V6H14V4H5V20H14V18H16V20A2,2 0 0,1 14,22H5A2,2 0 0,1 3,20V4A2,2 0 0,1 5,2H14Z"
-                              Stroke="#F75555"
-                              StrokeThickness="1.5"
-                              Fill="Transparent"
-                              Stretch="Uniform"/>
-                    </Border>
-                    
-                    <TextBlock Grid.Column="1" 
-                               Text="Logout" 
-                               FontSize="18"
-                               Foreground="#F75555"
-                               VerticalAlignment="Center"/>
+                <!-- Menu container with fixed height -->
+                <Grid Height="449.53">
+                    <StackPanel>
+                        <!-- Account -->
+                        <Grid Height="50" Margin="0,0,0,28">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Border Width="27" Height="27" Margin="0,0,10,0">
+                                <Canvas Width="18" Height="24">
+                                    <!-- Bottom part (body) -->
+                                    <Path Data="M8.63805 22.9398C4.3876 22.9398 0.757812 22.2783 0.757812 19.6294C0.757812 16.9805 4.36457 14.5352 8.63805 14.5352C12.8885 14.5352 16.5183 16.9568 16.5183 19.6057C16.5183 22.2536 12.9115 22.9398 8.63805 22.9398Z" 
+                                          Stroke="#212121" 
+                                          StrokeThickness="1.48026" 
+                                          StrokeLineJoin="Round" 
+                                          StrokeStartLineCap="Round"
+                                          StrokeEndLineCap="Round"
+                                          Fill="Transparent"/>
+                                    
+                                    <!-- Top part (head) -->
+                                    <Path Data="M8.62929 10.8649C11.4186 10.8649 13.6794 8.60413 13.6794 5.81481C13.6794 3.02548 11.4186 0.763672 8.62929 0.763672C5.83997 0.763672 3.57815 3.02548 3.57815 5.81481C3.56873 8.59471 5.8138 10.8555 8.5937 10.8649C8.60626 10.8649 8.61778 10.8649 8.62929 10.8649Z" 
+                                          Stroke="#212121" 
+                                          StrokeThickness="1.48026" 
+                                          StrokeLineJoin="Round" 
+                                          StrokeStartLineCap="Round"
+                                          StrokeEndLineCap="Round"
+                                          Fill="Transparent"/>
+                                </Canvas>
+                            </Border>
+                            
+                            <TextBlock Grid.Column="1" 
+                                       Text="Account" 
+                                       FontSize="18"
+                                       Foreground="#212121"
+                                       VerticalAlignment="Center"/>
+                            
+                            <Path Grid.Column="2" 
+                                  Data="M7.25391 5.05911L13.0105 10.8157L7.25391 16.5723"
+                                  Stroke="#212121"
+                                  StrokeThickness="1.48026"
+                                  StrokeLineJoin="Round" 
+                                  StrokeStartLineCap="Round"
+                                  StrokeEndLineCap="Round"
+                                  Width="12"
+                                  Height="6"
+                                  Stretch="Uniform"/>
+                        </Grid>
+                        
+                        <!-- Settings -->
+                        <Grid Height="50" Margin="0,0,0,28">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Border Width="27" Height="27" Margin="0,0,10,0">
+                                <Canvas Width="27" Height="28">
+                                    <!-- Settings icon -->
+                                    <Path Data="M10.5697 22.4243L11.2272 23.9031C11.4226 24.3433 11.7416 24.7173 12.1454 24.9798C12.5492 25.2422 13.0205 25.3819 13.5022 25.3818C13.9838 25.3819 14.4551 25.2422 14.8589 24.9798C15.2627 24.7173 15.5817 24.3433 15.7772 23.9031L16.4347 22.4243C16.6687 21.8996 17.0624 21.4622 17.5597 21.1743C18.06 20.8857 18.6389 20.7628 19.2134 20.8231L20.8222 20.9943C21.301 21.045 21.7843 20.9556 22.2134 20.7371C22.6425 20.5185 22.999 20.1802 23.2397 19.7631C23.4806 19.3462 23.5954 18.8684 23.5701 18.3876C23.5448 17.9068 23.3805 17.4436 23.0972 17.0543L22.1447 15.7456C21.8055 15.2761 21.6243 14.711 21.6272 14.1318C21.6271 13.5542 21.81 12.9915 22.1497 12.5243L23.1022 11.2156C23.3855 10.8263 23.5498 10.3632 23.5751 9.88234C23.6004 9.40152 23.4856 8.92369 23.2447 8.50684C23.004 8.08973 22.6475 7.75139 22.2184 7.53284C21.7893 7.3143 21.306 7.22493 20.8272 7.27559L19.2184 7.44684C18.6439 7.50717 18.065 7.38422 17.5647 7.09559C17.0664 6.80612 16.6726 6.36636 16.4397 5.83934L15.7772 4.36059C15.5817 3.9204 15.2627 3.54639 14.8589 3.28391C14.4551 3.02143 13.9838 2.88176 13.5022 2.88184C13.0205 2.88176 12.5492 3.02143 12.1454 3.28391C11.7416 3.54639 11.4226 3.9204 11.2272 4.36059L10.5697 5.83934C10.3367 6.36636 9.9429 6.80612 9.44467 7.09559C8.94428 7.38422 8.36542 7.50717 7.79092 7.44684L6.17717 7.27559C5.69829 7.22493 5.215 7.3143 4.7859 7.53284C4.35679 7.75139 4.00031 8.08973 3.75967 8.50684C3.51871 8.92369 3.40392 9.40152 3.42922 9.88234C3.45451 10.3632 3.61881 10.8263 3.90217 11.2156L4.85467 12.5243C5.19435 12.9915 5.37727 13.5542 5.37717 14.1318C5.37727 14.7094 5.19435 15.2722 4.85467 15.7393L3.90217 17.0481C3.61881 17.4374 3.45451 17.9005 3.42922 18.3813C3.40392 18.8622 3.51871 19.34 3.75967 19.7568C4.00055 20.1737 4.35707 20.5119 4.78611 20.7304C5.21515 20.9489 5.69832 21.0384 6.17717 20.9881L7.78592 20.8168C8.36042 20.7565 8.93928 20.8794 9.43967 21.1681C9.93976 21.4567 10.3354 21.8966 10.5697 22.4243Z" 
+                                          Stroke="Black" 
+                                          StrokeThickness="1.5" 
+                                          StrokeLineJoin="Round" 
+                                          StrokeStartLineCap="Round"
+                                          StrokeEndLineCap="Round"
+                                          Fill="Transparent"/>
+                                    <Path Data="M13.5002 17.5068C15.3641 17.5068 16.8752 15.9958 16.8752 14.1318C16.8752 12.2679 15.3641 10.7568 13.5002 10.7568C11.6362 10.7568 10.1252 12.2679 10.1252 14.1318C10.1252 15.9958 11.6362 17.5068 13.5002 17.5068Z" 
+                                          Stroke="Black" 
+                                          StrokeThickness="1.5" 
+                                          StrokeLineJoin="Round" 
+                                          StrokeStartLineCap="Round"
+                                          StrokeEndLineCap="Round"
+                                          Fill="Transparent"/>
+                                </Canvas>
+                            </Border>
+                            
+                            <TextBlock Grid.Column="1" 
+                                       Text="Settings" 
+                                       FontSize="18"
+                                       Foreground="#212121"
+                                       VerticalAlignment="Center"/>
+                            
+                            <Path Grid.Column="2" 
+                                  Data="M7.25391 5.05911L13.0105 10.8157L7.25391 16.5723"
+                                  Stroke="#212121"
+                                  StrokeThickness="1.48026"
+                                  StrokeLineJoin="Round" 
+                                  StrokeStartLineCap="Round"
+                                  StrokeEndLineCap="Round"
+                                  Width="12"
+                                  Height="6"
+                                  Stretch="Uniform"/>
+                        </Grid>
+                        
+                        <!-- Help Center -->
+                        <Grid Height="50" Margin="0,0,0,28">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Border Width="27" Height="27" Margin="0,0,10,0">
+                                <Canvas Width="24" Height="23">
+                                    <!-- Help Center icon -->
+                                    <Path Data="M22.4688 11.448C22.4688 19.4347 19.8058 22.0977 11.8191 22.0977C3.8324 22.0977 1.16941 19.4347 1.16941 11.448C1.16941 3.46131 3.8324 0.798316 11.8191 0.798316C19.8058 0.798316 22.4688 3.46131 22.4688 11.448Z" 
+                                          Stroke="#212121" 
+                                          StrokeThickness="1.48026" 
+                                          StrokeLineJoin="Round" 
+                                          StrokeStartLineCap="Round"
+                                          StrokeEndLineCap="Round"
+                                          Fill="Transparent"/>
+                                    <Path Data="M11.815 15.9316V11.4473" 
+                                          Stroke="#212121" 
+                                          StrokeThickness="1.48026" 
+                                          StrokeLineJoin="Round" 
+                                          StrokeStartLineCap="Round"
+                                          StrokeEndLineCap="Round"
+                                          Fill="Transparent"/>
+                                    <Path Data="M11.8201 7.41751H11.8098" 
+                                          Stroke="#212121" 
+                                          StrokeThickness="1.48026" 
+                                          StrokeLineJoin="Round" 
+                                          StrokeStartLineCap="Round"
+                                          StrokeEndLineCap="Round"
+                                          Fill="Transparent"/>
+                                </Canvas>
+                            </Border>
+                            
+                            <TextBlock Grid.Column="1" 
+                                       Text="Help Center" 
+                                       FontSize="18"
+                                       Foreground="#212121"
+                                       VerticalAlignment="Center"/>
+                            
+                            <Path Grid.Column="2" 
+                                  Data="M7.25391 5.05911L13.0105 10.8157L7.25391 16.5723"
+                                  Stroke="#212121"
+                                  StrokeThickness="1.48026"
+                                  StrokeLineJoin="Round" 
+                                  StrokeStartLineCap="Round"
+                                  StrokeEndLineCap="Round"
+                                  Width="12"
+                                  Height="6"
+                                  Stretch="Uniform"/>
+                        </Grid>
+                        
+                        <!-- Invite Friends -->
+                        <Grid Height="50" Margin="0,0,0,28">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Border Width="27" Height="27" Margin="0,0,10,0">
+                                <Canvas Width="26" Height="22">
+                                    <!-- Invite Friends icon -->
+                                    <Path Data="M12.782 20.7144C9.05288 20.7144 5.86719 20.1502 5.86719 17.8913C5.86719 15.6325 9.03215 13.666 12.782 13.666C16.5111 13.666 19.6968 15.614 19.6968 17.8718C19.6968 20.1295 16.5318 20.7144 12.782 20.7144Z" 
+                                          Stroke="#212121" 
+                                          StrokeThickness="1.48026" 
+                                          StrokeLineJoin="Round" 
+                                          StrokeStartLineCap="Round"
+                                          StrokeEndLineCap="Round"
+                                          Fill="Transparent"/>
+                                    <Path Data="M12.7841 10.445C15.2318 10.445 17.2167 8.46132 17.2167 6.01362C17.2167 3.56592 15.2318 1.58105 12.7841 1.58105C10.3364 1.58105 8.35158 3.56592 8.35158 6.01362C8.34467 8.45211 10.3134 10.437 12.7531 10.445H12.7841Z" 
+                                          Stroke="#212121" 
+                                          StrokeThickness="1.48026" 
+                                          StrokeLineJoin="Round" 
+                                          StrokeStartLineCap="Round"
+                                          StrokeEndLineCap="Round"
+                                          Fill="Transparent"/>
+                                    <Path Data="M20.1403 9.22734C21.5645 8.84626 22.6145 7.54757 22.6145 6.00136C22.6145 4.38836 21.4713 3.04132 19.9492 2.73047" 
+                                          Stroke="#212121" 
+                                          StrokeThickness="1.48026" 
+                                          StrokeLineJoin="Round" 
+                                          StrokeStartLineCap="Round"
+                                          StrokeEndLineCap="Round"
+                                          Fill="Transparent"/>
+                                    <Path Data="M20.8086 12.8574C22.828 12.8574 24.5527 14.2263 24.5527 15.449C24.5527 16.1686 23.9574 16.9527 23.0548 17.1645" 
+                                          Stroke="#212121" 
+                                          StrokeThickness="1.48026" 
+                                          StrokeLineJoin="Round" 
+                                          StrokeStartLineCap="Round"
+                                          StrokeEndLineCap="Round"
+                                          Fill="Transparent"/>
+                                    <Path Data="M5.42845 9.22734C4.00313 8.84626 2.95312 7.54757 2.95312 6.00136C2.95312 4.38836 4.09753 3.04132 5.61842 2.73047" 
+                                          Stroke="#212121" 
+                                          StrokeThickness="1.48026" 
+                                          StrokeLineJoin="Round" 
+                                          StrokeStartLineCap="Round"
+                                          StrokeEndLineCap="Round"
+                                          Fill="Transparent"/>
+                                    <Path Data="M4.7597 12.8574C2.7403 12.8574 1.01562 14.2263 1.01562 15.449C1.01562 16.1686 1.61086 16.9527 2.51464 17.1645" 
+                                          Stroke="#212121" 
+                                          StrokeThickness="1.48026" 
+                                          StrokeLineJoin="Round" 
+                                          StrokeStartLineCap="Round"
+                                          StrokeEndLineCap="Round"
+                                          Fill="Transparent"/>
+                                </Canvas>
+                            </Border>
+                            
+                            <TextBlock Grid.Column="1" 
+                                       Text="Invite Friends" 
+                                       FontSize="18"
+                                       Foreground="#212121"
+                                       VerticalAlignment="Center"/>
+                            
+                            <Path Grid.Column="2" 
+                                  Data="M7.25391 5.05911L13.0105 10.8157L7.25391 16.5723"
+                                  Stroke="#212121"
+                                  StrokeThickness="1.48026"
+                                  StrokeLineJoin="Round" 
+                                  StrokeStartLineCap="Round"
+                                  StrokeEndLineCap="Round"
+                                  Width="12"
+                                  Height="6"
+                                  Stretch="Uniform"/>
+                        </Grid>
+                        
+                        <!-- Logout -->
+                        <Grid Height="50">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Border Width="27" Height="27" Margin="0,0,10,0">
+                                <Canvas Width="25" Height="24">
+                                    <!-- Logout icon -->
+                                    <Path Data="M24.0896 11.8501H10.2266" 
+                                          Stroke="#F75555" 
+                                          StrokeThickness="1.48026" 
+                                          StrokeLineJoin="Round" 
+                                          StrokeStartLineCap="Round"
+                                          StrokeEndLineCap="Round"
+                                          Fill="Transparent"/>
+                                    <Path Data="M20.7188 8.49316L24.0898 11.8504L20.7188 15.2076" 
+                                          Stroke="#F75555" 
+                                          StrokeThickness="1.48026" 
+                                          StrokeLineJoin="Round" 
+                                          StrokeStartLineCap="Round"
+                                          StrokeEndLineCap="Round"
+                                          Fill="Transparent"/>
+                                    <Path Data="M17.8359 6.67897C17.456 2.55726 15.9132 1.06055 9.77673 1.06055C1.60124 1.06055 1.60124 3.72009 1.60124 11.7102C1.60124 19.7003 1.60124 22.3599 9.77673 22.3599C15.9132 22.3599 17.456 20.8632 17.8359 16.7415" 
+                                          Stroke="#F75555" 
+                                          StrokeThickness="1.48026" 
+                                          StrokeLineJoin="Round" 
+                                          StrokeStartLineCap="Round"
+                                          StrokeEndLineCap="Round"
+                                          Fill="Transparent"/>
+                                </Canvas>
+                            </Border>
+                            
+                            <TextBlock Grid.Column="1" 
+                                       Text="Logout" 
+                                       FontSize="18"
+                                       Foreground="#F75555"
+                                       VerticalAlignment="Center"/>
+                        </Grid>
+                    </StackPanel>
                 </Grid>
             </StackPanel>
         </Grid>
