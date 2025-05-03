@@ -4,22 +4,17 @@ using System.Windows;
 
 namespace Atom.VPN.Demo
 {
-    public partial class AccountPage : Page
+    public partial class EditProfilePage : Page
     {
-        public AccountPage()
+        public EditProfilePage()
         {
             InitializeComponent();
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            if (NavigationService.CanGoBack)
+            if (NavigationService != null && NavigationService.CanGoBack)
                 NavigationService.GoBack();
-        }
-
-        private void EditProfileRow_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            NavigationService?.Navigate(new EditProfilePage());
         }
     }
 } 
