@@ -89,6 +89,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AccountPage.xaml.cs" />
     <Compile Include="Helpers\AtomHelper.cs" />
     <Compile Include="Interfaces\IConnection.cs" />
     <Compile Include="LoginPage.xaml.cs">
@@ -140,6 +141,10 @@
     <Compile Include="UserControls\ConnectWithPSK.xaml.cs">
       <DependentUpon>ConnectWithPSK.xaml</DependentUpon>
     </Compile>
+    <Page Include="AccountPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

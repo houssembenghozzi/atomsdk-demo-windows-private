@@ -151,7 +151,7 @@
                 <Grid Height="449.53">
                     <StackPanel>
                         <!-- Account -->
-                        <Grid Height="50" Margin="0,0,0,16">
+                        <Grid x:Name="AccountRow" Height="50" Margin="0,0,0,16" MouseDown="AccountRow_MouseDown">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>

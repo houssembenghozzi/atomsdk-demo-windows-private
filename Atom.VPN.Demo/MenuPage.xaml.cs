@@ -1,3 +1,4 @@
+using Atom.VPN.Demo;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,6 +23,11 @@ namespace Atom.VPN.Demo
             {
                 NavigationService.GoBack();
             }
+        }
+
+        private void AccountRow_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            NavigationService?.Navigate(new AccountPage());
         }
     }
 } 
