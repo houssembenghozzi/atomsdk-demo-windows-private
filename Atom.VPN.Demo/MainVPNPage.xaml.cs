@@ -274,15 +274,27 @@ namespace Atom.VPN.Demo
             {
                 buttonBackground.Fill = new SolidColorBrush(Color.FromRgb(76, 175, 80)); // Green color
             }
-            
-            // Change glow effect to green
-            var outerCircles = new string[] { "OuterCircle1", "OuterCircle2", "OuterCircle3", "OuterCircle4" };
-            foreach (var circleName in outerCircles)
+
+            // Keep animation circles visible and showing the animations
+            var animationCircles = new string[] { "AnimationCircle1", "AnimationCircle2", "AnimationCircle3" };
+            foreach (var circleName in animationCircles)
             {
-                var circle = GetTemplateChild(PowerButton, circleName) as Shape;
+                var circle = GetTemplateChild(PowerButton, circleName) as Ellipse;
                 if (circle != null)
                 {
-                    circle.Fill = new SolidColorBrush(Color.FromArgb(80, 76, 175, 80)); // Green with alpha
+                    circle.Visibility = Visibility.Visible;
+                    circle.Stroke = new SolidColorBrush(Colors.White);
+                }
+            }
+            
+            // Make sure wave animation is running
+            var powerButtonGrid = GetTemplateChild(PowerButton, "PowerButtonGrid") as Grid;
+            if (powerButtonGrid != null)
+            {
+                var waveAnimation = powerButtonGrid.Resources["WaveAnimation"] as Storyboard;
+                if (waveAnimation != null)
+                {
+                    waveAnimation.Begin();
                 }
             }
             
@@ -290,12 +302,12 @@ namespace Atom.VPN.Demo
             ConnectionInfoPanel.Visibility = Visibility.Visible;
             QuickLocationPanel.Visibility = Visibility.Collapsed;
             
-            // Animate the power button (pulse effect)
+            // Optional: Add a subtle pulse effect for the connected state
             var pulseAnimation = new DoubleAnimation
             {
                 From = 1.0,
-                To = 1.1,
-                Duration = TimeSpan.FromSeconds(1),
+                To = 1.05,
+                Duration = TimeSpan.FromSeconds(1.5),
                 AutoReverse = true,
                 RepeatBehavior = RepeatBehavior.Forever
             };
@@ -327,24 +339,25 @@ namespace Atom.VPN.Demo
                 var powerIcon = GetTemplateChild(PowerButton, "PowerIcon") as System.Windows.Shapes.Path;
                 if (powerIcon != null)
                 {
-                    powerIcon.Data = Geometry.Parse("M15,4V8H17V4H15M17,10H15V16H17V10M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6");
+                    powerIcon.Data = Geometry.Parse("M50.1054 35.1611V50.2134M59.6786 42.1454C61.5728 44.0402 62.8626 46.454 63.3849 49.0818C63.9073 51.7095 63.6388 54.4332 62.6133 56.9083C61.5878 59.3835 59.8515 61.499 57.6237 62.9873C55.396 64.4757 52.777 65.2701 50.0979 65.2701C47.4187 65.2701 44.7997 64.4757 42.572 62.9873C40.3443 61.499 38.6079 59.3835 37.5824 56.9083C36.5569 54.4332 36.2884 51.7095 36.8108 49.0818C37.3331 46.454 38.6229 44.0402 40.5171 42.1454");
                 }
                 
-                // Change button color back to dark
+                // Change button color back to gray as in the design
                 var buttonBackground = GetTemplateChild(PowerButton, "ButtonBackground") as Shape;
                 if (buttonBackground != null)
                 {
-                    buttonBackground.Fill = new SolidColorBrush(Color.FromRgb(34, 34, 34)); // Dark color #222222
+                    buttonBackground.Fill = new SolidColorBrush(Color.FromRgb(134, 139, 150)); // #868B96
                 }
                 
-                // Change glow effect to red
-                var outerCircles = new string[] { "OuterCircle1", "OuterCircle2", "OuterCircle3", "OuterCircle4" };
-                foreach (var circleName in outerCircles)
+                // Keep our animation circles visible
+                var animationCircles = new string[] { "AnimationCircle1", "AnimationCircle2", "AnimationCircle3" };
+                foreach (var circleName in animationCircles)
                 {
-                    var circle = GetTemplateChild(PowerButton, circleName) as Shape;
+                    var circle = GetTemplateChild(PowerButton, circleName) as Ellipse;
                     if (circle != null)
                     {
-                        circle.Fill = new SolidColorBrush(Color.FromArgb(80, 255, 26, 26)); // Red with alpha
+                        circle.Visibility = Visibility.Visible;
+                        circle.Stroke = new SolidColorBrush(Colors.White);
                     }
                 }
                 
@@ -352,7 +365,7 @@ namespace Atom.VPN.Demo
                 ConnectionInfoPanel.Visibility = Visibility.Collapsed;
                 QuickLocationPanel.Visibility = Visibility.Visible;
                 
-                // Stop animation
+                // Stop the pulsing animation but keep our wave animation
                 PowerButton.RenderTransform.BeginAnimation(ScaleTransform.ScaleXProperty, null);
                 PowerButton.RenderTransform.BeginAnimation(ScaleTransform.ScaleYProperty, null);
             }
@@ -373,6 +386,17 @@ namespace Atom.VPN.Demo
                 if (buttonBackground != null)
                 {
                     buttonBackground.Fill = new SolidColorBrush(Color.FromRgb(255, 152, 0)); // Orange color
+                }
+                
+                // Keep our animation circles visible during connecting state
+                var animationCircles = new string[] { "AnimationCircle1", "AnimationCircle2", "AnimationCircle3" };
+                foreach (var circleName in animationCircles)
+                {
+                    var circle = GetTemplateChild(PowerButton, circleName) as Ellipse;
+                    if (circle != null)
+                    {
+                        circle.Visibility = Visibility.Visible;
+                    }
                 }
                 
                 // Start the connection timer
