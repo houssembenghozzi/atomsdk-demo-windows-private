@@ -10,7 +10,24 @@
             </ResourceDictionary.MergedDictionaries>
             
             <!-- Define any global resources here -->
-            <BitmapImage x:Key="WorldMapImage" UriSource="/Atom.VPN.Demo;component/Resources/Images/world_map.png" />
+            <DrawingBrush x:Key="WorldMapImage" Stretch="UniformToFill" Opacity="0.15">
+                <DrawingBrush.Drawing>
+                    <DrawingGroup>
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <PathGeometry Figures="M69.8159 273.558C67.4989 272.691 66.8509 271.842 67.4012 270.395C67.6562 269.724 68.1459 269.175 68.4895 269.175C68.8331 269.175 70.3373 269.966 71.8321 270.932C73.3268 271.898 75.1546 272.908 75.8938 273.176L77.2378 273.664L75.5844 273.7C74.675 273.72 73.3408 273.822 72.6196 273.926C71.8984 274.031 70.6367 273.865 69.8159 273.558V273.558ZM64.5571 269.107C64.1208 268.863 63.3935 268.781 62.9408 268.925C62.3707 269.106 61.9305 268.836 61.5086 268.048C61.1736 267.422 60.5732 266.798 60.1743 266.66C59.2592 266.346 57.341 263.238 56.2733 260.34C55.7341 258.877 55.0089 257.865 54.148 257.375C52.6204 256.506 52.511 256.112 53.6934 255.737C55.0461 255.308 55.2978 252.923 54.1591 251.324" />
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="Transparent" Offset="0"/>
+                                    <GradientStop Color="#CCCCCC" Offset="0.477083"/>
+                                    <GradientStop Color="Transparent" Offset="1"/>
+                                </LinearGradientBrush>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
             <BitmapImage x:Key="LogoImage" UriSource="/Atom.VPN.Demo;component/Resources/Images/fortis_logo.png" />
         </ResourceDictionary>
     </Application.Resources>
