@@ -73,7 +73,7 @@
 
                 <!-- Security Section -->
                 <TextBlock Text="Security" FontWeight="Bold" FontSize="14" Foreground="#212121" Margin="0,0,0,8"/>
-                <Border Background="White" CornerRadius="12" Margin="0,0,0,8">
+                <Border Background="White" CornerRadius="12" Margin="0,0,0,8" MouseLeftButtonUp="ChangePasswordRow_Click">
                     <Grid Height="56">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>

@@ -28,6 +28,7 @@ namespace Atom.VPN.Demo
         private void AccountRow_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             NavigationService?.Navigate(new AccountPage());
+            e.Handled = true;
         }
     }
 } 

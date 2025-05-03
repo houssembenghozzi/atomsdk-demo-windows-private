@@ -21,5 +21,10 @@ namespace Atom.VPN.Demo
         {
             NavigationService?.Navigate(new EditProfilePage());
         }
+
+        private void ChangePasswordRow_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            NavigationService?.Navigate(new ChangePasswordPage());
+        }
     }
 } 
