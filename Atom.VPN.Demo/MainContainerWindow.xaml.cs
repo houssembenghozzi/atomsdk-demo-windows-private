@@ -104,5 +104,13 @@ namespace Atom.VPN.Demo
         {
             MainFrame.Navigate(new SplitTunnelingPage());
         }
+        
+        /// <summary>
+        /// Navigates to the help center page
+        /// </summary>
+        public void NavigateToHelpCenterPage()
+        {
+            MainFrame.Navigate(new HelpCenterPage());
+        }
     }
 } 

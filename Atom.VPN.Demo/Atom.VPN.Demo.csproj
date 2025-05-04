@@ -102,6 +102,9 @@
     <Compile Include="EditProfilePage.xaml.cs">
       <DependentUpon>EditProfilePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="HelpCenterPage.xaml.cs">
+      <DependentUpon>HelpCenterPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\AtomHelper.cs" />
     <Compile Include="Interfaces\IConnection.cs" />
     <Compile Include="LanguagePage.xaml.cs">
@@ -185,6 +188,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="EditProfilePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="HelpCenterPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
