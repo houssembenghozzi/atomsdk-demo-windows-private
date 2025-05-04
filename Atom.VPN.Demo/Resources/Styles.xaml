@@ -5,5 +5,40 @@
     <converters:InvertBoolToVisibilityConverter x:Key="InvertBoolToVis" />
     <BooleanToVisibilityConverter x:Key="BoolToVis" />
     <converters:InvertBooleanConverter x:Key="InvertBoolConverter" />
+    
+    <!-- Toggle Switch Style -->
+    <Style x:Key="ToggleSwitchStyle" TargetType="ToggleButton">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Grid Width="46" Height="24">
+                        <Border x:Name="BackgroundElement" 
+                               Background="#E6E6E6" 
+                               CornerRadius="12" 
+                               Width="46" 
+                               Height="24"/>
+                        <Border x:Name="ThumbElement" 
+                               Background="White" 
+                               CornerRadius="12" 
+                               Width="20" 
+                               Height="20" 
+                               HorizontalAlignment="Left" 
+                               Margin="2,2,0,0">
+                            <Border.Effect>
+                                <DropShadowEffect ShadowDepth="1" BlurRadius="2" Opacity="0.3" />
+                            </Border.Effect>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="BackgroundElement" Property="Background" Value="#E94057"/>
+                            <Setter TargetName="ThumbElement" Property="HorizontalAlignment" Value="Right"/>
+                            <Setter TargetName="ThumbElement" Property="Margin" Value="0,2,2,0"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
 </ResourceDictionary>

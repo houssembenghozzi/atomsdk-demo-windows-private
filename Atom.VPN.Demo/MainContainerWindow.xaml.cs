@@ -64,5 +64,21 @@ namespace Atom.VPN.Demo
         {
             MainFrame.Navigate(new MainVPNPage());
         }
+
+        /// <summary>
+        /// Navigates to the settings page
+        /// </summary>
+        public void NavigateToSettingsPage()
+        {
+            MainFrame.Navigate(new SettingsPage());
+        }
+
+        /// <summary>
+        /// Navigates to the account page
+        /// </summary>
+        public void NavigateToAccountPage()
+        {
+            MainFrame.Navigate(new AccountPage());
+        }
     }
 } 
