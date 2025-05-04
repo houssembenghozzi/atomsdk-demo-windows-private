@@ -1,0 +1,106 @@
+<Page x:Class="Atom.VPN.Demo.ManageSessionsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Background="#FAFAFA">
+    <Grid>
+        <Image Source="/Resources/icon/bg-light.svg"
+               Stretch="UniformToFill"
+               Opacity="0.07"
+               Panel.ZIndex="0"/>
+        <StackPanel Margin="24,40,24,24" VerticalAlignment="Top" Panel.ZIndex="1">
+            <!-- Header -->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,32">
+                <Button Width="32" Height="32" Background="Transparent" BorderThickness="0" Click="BackButton_Click">
+                    <Path Data="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"
+                          Fill="#323438" Width="24" Height="24"/>
+                </Button>
+                <TextBlock Text="Manage Active Sessions" FontWeight="Bold" FontSize="20" Foreground="#323438" VerticalAlignment="Center" Margin="8,0,0,0"/>
+            </StackPanel>
+            <!-- Sessions List -->
+            <StackPanel x:Name="SessionsList" Margin="0,0,0,32">
+                <!-- Example session card -->
+                <Border Background="White" CornerRadius="12" Margin="0,0,0,16" Padding="16,8,16,8">
+                    <Grid Margin="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock>
+                                <Run Text="Windows - epic56 "/>
+                                <Run Text="CURRENT DEVICE" Foreground="#00E676" FontWeight="Bold"/>
+                            </TextBlock>
+                            <TextBlock Text="Last Activity 7 minutes ago • Botad, GJ, India" Foreground="#757575" FontSize="13"/>
+                        </StackPanel>
+                        <Button Grid.Column="1" Width="32" Height="32" Background="Transparent" BorderThickness="0" VerticalAlignment="Center">
+                            <Path Data="M6,6 L18,18 M6,18 L18,6" Stroke="#757575" StrokeThickness="2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                        </Button>
+                    </Grid>
+                </Border>
+                <!-- Repeat for other sessions -->
+                <Border Background="White" CornerRadius="12" Margin="0,0,0,16" Padding="16,8,16,8">
+                    <Grid Margin="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="iPhone - epic56"/>
+                            <TextBlock Text="Last Activity 7 minutes ago • Botad, GJ, India" Foreground="#757575" FontSize="13"/>
+                        </StackPanel>
+                        <Button Grid.Column="1" Width="32" Height="32" Background="Transparent" BorderThickness="0" VerticalAlignment="Center">
+                            <Path Data="M6,6 L18,18 M6,18 L18,6" Stroke="#757575" StrokeThickness="2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                        </Button>
+                    </Grid>
+                </Border>
+                <Border Background="White" CornerRadius="12" Margin="0,0,0,16" Padding="16,8,16,8">
+                    <Grid Margin="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Mac - epic56"/>
+                            <TextBlock Text="Last Activity 7 minutes ago • Botad, GJ, India" Foreground="#757575" FontSize="13"/>
+                        </StackPanel>
+                        <Button Grid.Column="1" Width="32" Height="32" Background="Transparent" BorderThickness="0" VerticalAlignment="Center">
+                            <Path Data="M6,6 L18,18 M6,18 L18,6" Stroke="#757575" StrokeThickness="2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                        </Button>
+                    </Grid>
+                </Border>
+                <Border Background="White" CornerRadius="12" Margin="0,0,0,16" Padding="16,8,16,8">
+                    <Grid Margin="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Android - epic56"/>
+                            <TextBlock Text="Last Activity 7 minutes ago • Botad, GJ, India" Foreground="#757575" FontSize="13"/>
+                        </StackPanel>
+                        <Button Grid.Column="1" Width="32" Height="32" Background="Transparent" BorderThickness="0" VerticalAlignment="Center">
+                            <Path Data="M6,6 L18,18 M6,18 L18,6" Stroke="#757575" StrokeThickness="2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                        </Button>
+                    </Grid>
+                </Border>
+                <Border Background="White" CornerRadius="12" Margin="0,0,0,16" Padding="16,8,16,8">
+                    <Grid Margin="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="FireTV - epic56"/>
+                            <TextBlock Text="Last Activity 7 minutes ago • Botad, GJ, India" Foreground="#757575" FontSize="13"/>
+                        </StackPanel>
+                        <Button Grid.Column="1" Width="32" Height="32" Background="Transparent" BorderThickness="0" VerticalAlignment="Center">
+                            <Path Data="M6,6 L18,18 M6,18 L18,6" Stroke="#757575" StrokeThickness="2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                        </Button>
+                    </Grid>
+                </Border>
+            </StackPanel>
+            <!-- End all sessions button -->
+            <Button Content="End all sessions" Height="56" Background="#212121" Foreground="White" FontWeight="Bold" FontSize="18" BorderThickness="0" Margin="0,0,0,0"/>
+        </StackPanel>
+    </Grid>
+</Page> 

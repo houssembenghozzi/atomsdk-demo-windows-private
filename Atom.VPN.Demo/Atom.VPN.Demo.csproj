@@ -93,6 +93,9 @@
     <Compile Include="ChangePasswordPage.xaml.cs">
       <DependentUpon>ChangePasswordPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DeleteAccountConfirmationDialog.xaml.cs">
+      <DependentUpon>DeleteAccountConfirmationDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EditProfilePage.xaml.cs">
       <DependentUpon>EditProfilePage.xaml</DependentUpon>
     </Compile>
@@ -121,6 +124,9 @@
     </Compile>
     <Compile Include="AddShortcutDialog.xaml.cs">
       <DependentUpon>AddShortcutDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ManageSessionsPage.xaml.cs">
+      <DependentUpon>ManageSessionsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ResetPasswordPage.xaml.cs">
       <DependentUpon>ResetPasswordPage.xaml</DependentUpon>
@@ -152,6 +158,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ChangePasswordPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DeleteAccountConfirmationDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -190,6 +200,10 @@
     <Page Include="AddShortcutDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ManageSessionsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="ResetPasswordPage.xaml">
       <SubType>Designer</SubType>
