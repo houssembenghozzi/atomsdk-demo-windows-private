@@ -20,7 +20,12 @@ namespace Atom.VPN.Demo
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             UserConfirmedDeletion = true;
+            
+            // Show account deletion request confirmation dialog
+            AccountDeletionRequestDialog requestDialog = new AccountDeletionRequestDialog();
+            requestDialog.Owner = this.Owner; // Set the same owner
             this.Close();
+            requestDialog.ShowDialog();
         }
     }
 } 
