@@ -80,5 +80,29 @@ namespace Atom.VPN.Demo
         {
             MainFrame.Navigate(new AccountPage());
         }
+        
+        /// <summary>
+        /// Navigates to the protocol page
+        /// </summary>
+        public void NavigateToProtocolPage()
+        {
+            MainFrame.Navigate(new ProtocolPage());
+        }
+        
+        /// <summary>
+        /// Navigates to the language page
+        /// </summary>
+        public void NavigateToLanguagePage()
+        {
+            MainFrame.Navigate(new LanguagePage());
+        }
+        
+        /// <summary>
+        /// Navigates to the split tunneling page
+        /// </summary>
+        public void NavigateToSplitTunnelingPage()
+        {
+            MainFrame.Navigate(new SplitTunnelingPage());
+        }
     }
 } 

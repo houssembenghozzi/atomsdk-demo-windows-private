@@ -104,6 +104,9 @@
     </Compile>
     <Compile Include="Helpers\AtomHelper.cs" />
     <Compile Include="Interfaces\IConnection.cs" />
+    <Compile Include="LanguagePage.xaml.cs">
+      <DependentUpon>LanguagePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
@@ -131,6 +134,9 @@
     <Compile Include="ManageSessionsPage.xaml.cs">
       <DependentUpon>ManageSessionsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ProtocolPage.xaml.cs">
+      <DependentUpon>ProtocolPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ResetPasswordPage.xaml.cs">
       <DependentUpon>ResetPasswordPage.xaml</DependentUpon>
     </Compile>
@@ -147,6 +153,9 @@
     <Compile Include="Models\ResponseValidation.cs" />
     <Compile Include="SplashScreen.xaml.cs">
       <DependentUpon>SplashScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SplitTunnelingPage.xaml.cs">
+      <DependentUpon>SplitTunnelingPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="UINotifiers\UserControlBase.cs" />
     <Compile Include="UINotifiers\WindowBase.cs" />
@@ -176,6 +185,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="EditProfilePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="LanguagePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -212,6 +225,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ManageSessionsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ProtocolPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -258,6 +275,10 @@
     <Page Include="SplashScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SplitTunnelingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControls\ConnectWithDedicatedIP.xaml">
       <SubType>Designer</SubType>

@@ -6,7 +6,8 @@
       mc:Ignorable="d"
       d:DesignHeight="1000" d:DesignWidth="460"
       Title="SettingsPage"
-      Background="#FAFAFA">
+      Background="#FAFAFA"
+      Loaded="Page_Loaded">
 
     <Grid>
         <!-- Background world map image - light version -->
@@ -51,7 +52,7 @@
             <!-- Settings content -->
             <StackPanel Grid.Row="1" Width="408">
                 <!-- Protocol Setting -->
-                <Border Background="White" CornerRadius="12" Margin="0,0,0,8">
+                <Border Background="White" CornerRadius="12" Margin="0,0,0,8" MouseDown="ProtocolRow_MouseDown" Cursor="Hand">
                     <Grid Height="56">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -105,7 +106,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <StackPanel VerticalAlignment="Center" Margin="16,0,0,0">
+                        <StackPanel VerticalAlignment="Center" Margin="16,0,0,0" MouseDown="SplitTunnelingRow_MouseDown" Cursor="Hand">
                             <TextBlock Text="Split tunnelling" FontSize="16" Foreground="#212121"/>
                             <TextBlock Text="Manage Connection on a per-app basis" FontSize="12" Foreground="#757575"/>
                         </StackPanel>
@@ -114,7 +115,7 @@
                 </Border>
 
                 <!-- Language -->
-                <Border Background="White" CornerRadius="12" Margin="0,0,0,8">
+                <Border Background="White" CornerRadius="12" Margin="0,0,0,8" MouseDown="LanguageRow_MouseDown" Cursor="Hand">
                     <Grid Height="56">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>

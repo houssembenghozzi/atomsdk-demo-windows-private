@@ -4,6 +4,7 @@ using System.Windows.Navigation;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
+using System.Windows.Input;
 
 namespace Atom.VPN.Demo
 {
@@ -15,10 +16,197 @@ namespace Atom.VPN.Demo
             {
                 InitializeComponent();
                 EnsureRequiredResourcesExist();
+                UpdateProtocolText();
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error initializing SettingsPage: {ex.Message}");
+            }
+        }
+        
+        private void UpdateProtocolText()
+        {
+            try
+            {
+                // Get the selected protocol from App properties
+                if (App.Current.Properties.Contains("SelectedProtocol"))
+                {
+                    string protocol = App.Current.Properties["SelectedProtocol"] as string;
+                    
+                    // Find all TextBlocks in the Protocol border and update the one showing the protocol
+                    foreach (var border in FindVisualChildren<Border>(this))
+                    {
+                        if (border.Child is Grid grid)
+                        {
+                            // Find the protocol text block (column 1)
+                            foreach (var child in FindVisualChildren<TextBlock>(grid))
+                            {
+                                if (Grid.GetColumn(child) == 1)
+                                {
+                                    // Find the first TextBlock in the row that contains "Protocol"
+                                    TextBlock rowTitle = null;
+                                    foreach (var title in FindVisualChildren<TextBlock>(grid))
+                                    {
+                                        if (Grid.GetColumn(title) == 0 && title.Text == "Protocol")
+                                        {
+                                            rowTitle = title;
+                                            break;
+                                        }
+                                    }
+                                    
+                                    if (rowTitle != null)
+                                    {
+                                        child.Text = protocol ?? "Automatic";
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating protocol text: {ex.Message}");
+            }
+        }
+        
+        private void UpdateLanguageText()
+        {
+            try
+            {
+                // Get the selected language from App properties
+                if (App.Current.Properties.Contains("SelectedLanguage"))
+                {
+                    string language = App.Current.Properties["SelectedLanguage"] as string;
+                    
+                    // Find all TextBlocks in the Language border and update the one showing the language
+                    foreach (var border in FindVisualChildren<Border>(this))
+                    {
+                        if (border.Child is Grid grid)
+                        {
+                            // Find the language text block (column 1)
+                            TextBlock rowTitle = null;
+                            foreach (var title in FindVisualChildren<TextBlock>(grid))
+                            {
+                                if (Grid.GetColumn(title) == 0 && title.Text == "Language")
+                                {
+                                    rowTitle = title;
+                                    break;
+                                }
+                            }
+                            
+                            if (rowTitle != null)
+                            {
+                                foreach (var child in FindVisualChildren<TextBlock>(grid))
+                                {
+                                    if (Grid.GetColumn(child) == 1)
+                                    {
+                                        child.Text = language ?? "English (US)";
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating language text: {ex.Message}");
+            }
+        }
+        
+        private void UpdateSplitTunnelingText()
+        {
+            try
+            {
+                // Get the split tunneling mode from App properties
+                if (App.Current.Properties.Contains("SplitTunnelingMode"))
+                {
+                    string mode = App.Current.Properties["SplitTunnelingMode"] as string;
+                    string description = "";
+                    
+                    // Determine description based on mode
+                    switch (mode)
+                    {
+                        case "AllApps":
+                            description = "All apps use VPN";
+                            break;
+                        case "DoNotAllow":
+                            description = "Some apps excluded";
+                            break;
+                        case "OnlyAllow":
+                            description = "Selected apps only";
+                            break;
+                        default:
+                            description = "Selected apps only";
+                            break;
+                    }
+                    
+                    // Update the ToggleButton in the Split tunnelling row
+                    foreach (var border in FindVisualChildren<Border>(this))
+                    {
+                        if (border.Child is Grid grid)
+                        {
+                            bool isSplitTunnelingRow = false;
+                            
+                            // Find the split tunneling row
+                            foreach (var stackPanel in FindVisualChildren<StackPanel>(grid))
+                            {
+                                foreach (var textBlock in FindVisualChildren<TextBlock>(stackPanel))
+                                {
+                                    if (textBlock.Text == "Split tunnelling")
+                                    {
+                                        isSplitTunnelingRow = true;
+                                        break;
+                                    }
+                                }
+                                
+                                if (isSplitTunnelingRow)
+                                {
+                                    break;
+                                }
+                            }
+                            
+                            if (isSplitTunnelingRow)
+                            {
+                                // Update the toggle button state
+                                foreach (var toggleButton in FindVisualChildren<System.Windows.Controls.Primitives.ToggleButton>(grid))
+                                {
+                                    toggleButton.IsChecked = (mode != "AllApps");
+                                    break;
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating split tunneling text: {ex.Message}");
+            }
+        }
+        
+        // Helper method to find all visual children of a specific type
+        private static System.Collections.Generic.IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
+        {
+            if (depObj != null)
+            {
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+                {
+                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
+                    if (child != null && child is T)
+                    {
+                        yield return (T)child;
+                    }
+
+                    foreach (T childOfChild in FindVisualChildren<T>(child))
+                    {
+                        yield return childOfChild;
+                    }
+                }
             }
         }
         
@@ -149,6 +337,95 @@ namespace Atom.VPN.Demo
             {
                 Console.WriteLine($"Navigation error: {ex.Message}");
             }
+        }
+        
+        private void ProtocolRow_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                if (NavigationService != null)
+                {
+                    NavigationService.Navigate(new ProtocolPage());
+                    e.Handled = true;
+                }
+                else
+                {
+                    // Fallback if NavigationService is null
+                    MainContainerWindow mainWindow = Application.Current.MainWindow as MainContainerWindow;
+                    if (mainWindow != null && mainWindow.MainFrame != null)
+                    {
+                        mainWindow.MainFrame.Navigate(new ProtocolPage());
+                        e.Handled = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Navigation error: {ex.Message}");
+                e.Handled = true;
+            }
+        }
+        
+        private void LanguageRow_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                if (NavigationService != null)
+                {
+                    NavigationService.Navigate(new LanguagePage());
+                    e.Handled = true;
+                }
+                else
+                {
+                    // Fallback if NavigationService is null
+                    MainContainerWindow mainWindow = Application.Current.MainWindow as MainContainerWindow;
+                    if (mainWindow != null && mainWindow.MainFrame != null)
+                    {
+                        mainWindow.MainFrame.Navigate(new LanguagePage());
+                        e.Handled = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Navigation error: {ex.Message}");
+                e.Handled = true;
+            }
+        }
+        
+        private void SplitTunnelingRow_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                if (NavigationService != null)
+                {
+                    NavigationService.Navigate(new SplitTunnelingPage());
+                    e.Handled = true;
+                }
+                else
+                {
+                    // Fallback if NavigationService is null
+                    MainContainerWindow mainWindow = Application.Current.MainWindow as MainContainerWindow;
+                    if (mainWindow != null && mainWindow.MainFrame != null)
+                    {
+                        mainWindow.MainFrame.Navigate(new SplitTunnelingPage());
+                        e.Handled = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Navigation error: {ex.Message}");
+                e.Handled = true;
+            }
+        }
+        
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            // When the page is loaded, update the protocol and language texts
+            UpdateProtocolText();
+            UpdateLanguageText();
+            UpdateSplitTunnelingText();
         }
     }
 } 
