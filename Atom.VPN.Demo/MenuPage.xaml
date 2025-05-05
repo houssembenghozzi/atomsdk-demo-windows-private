@@ -199,7 +199,7 @@
                         </Grid>
                         
                         <!-- Settings -->
-                        <Grid Height="50" Margin="0,0,0,16">
+                        <Grid x:Name="SettingsRow" Height="50" Margin="0,0,0,16" MouseDown="SettingsRow_MouseDown">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
@@ -245,7 +245,7 @@
                         </Grid>
                         
                         <!-- Help Center -->
-                        <Grid Height="50" Margin="0,0,0,16">
+                        <Grid x:Name="HelpCenterRow" Height="50" Margin="0,0,0,16" MouseDown="HelpCenterRow_MouseDown">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>

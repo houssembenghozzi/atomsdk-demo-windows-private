@@ -89,15 +89,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AccountDeletionRequestDialog.xaml.cs">
+      <DependentUpon>AccountDeletionRequestDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AccountPage.xaml.cs" />
     <Compile Include="ChangePasswordPage.xaml.cs">
       <DependentUpon>ChangePasswordPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DeleteAccountConfirmationDialog.xaml.cs">
+      <DependentUpon>DeleteAccountConfirmationDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EditProfilePage.xaml.cs">
       <DependentUpon>EditProfilePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="HelpCenterPage.xaml.cs">
+      <DependentUpon>HelpCenterPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\AtomHelper.cs" />
     <Compile Include="Interfaces\IConnection.cs" />
+    <Compile Include="LanguagePage.xaml.cs">
+      <DependentUpon>LanguagePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
@@ -122,8 +134,17 @@
     <Compile Include="AddShortcutDialog.xaml.cs">
       <DependentUpon>AddShortcutDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ManageSessionsPage.xaml.cs">
+      <DependentUpon>ManageSessionsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProtocolPage.xaml.cs">
+      <DependentUpon>ProtocolPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ResetPasswordPage.xaml.cs">
       <DependentUpon>ResetPasswordPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="SignUpPage.xaml.cs">
       <DependentUpon>SignUpPage.xaml</DependentUpon>
@@ -136,6 +157,9 @@
     <Compile Include="SplashScreen.xaml.cs">
       <DependentUpon>SplashScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SplitTunnelingPage.xaml.cs">
+      <DependentUpon>SplitTunnelingPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UINotifiers\UserControlBase.cs" />
     <Compile Include="UINotifiers\WindowBase.cs" />
     <Compile Include="UserControls\ConnectWithDedicatedIP.xaml.cs">
@@ -147,6 +171,10 @@
     <Compile Include="UserControls\ConnectWithPSK.xaml.cs">
       <DependentUpon>ConnectWithPSK.xaml</DependentUpon>
     </Compile>
+    <Page Include="AccountDeletionRequestDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="AccountPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -155,7 +183,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="DeleteAccountConfirmationDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="EditProfilePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="HelpCenterPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="LanguagePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -191,9 +231,21 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ManageSessionsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ProtocolPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ResetPasswordPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="SignUpPage.xaml">
       <SubType>Designer</SubType>
@@ -230,6 +282,10 @@
     <Page Include="SplashScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SplitTunnelingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControls\ConnectWithDedicatedIP.xaml">
       <SubType>Designer</SubType>

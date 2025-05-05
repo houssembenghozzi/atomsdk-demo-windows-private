@@ -5,5 +5,111 @@
     <converters:InvertBoolToVisibilityConverter x:Key="InvertBoolToVis" />
     <BooleanToVisibilityConverter x:Key="BoolToVis" />
     <converters:InvertBooleanConverter x:Key="InvertBoolConverter" />
+    
+    <!-- Toggle Switch Style -->
+    <Style x:Key="ToggleSwitchStyle" TargetType="ToggleButton">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Grid Width="46" Height="24">
+                        <Border x:Name="BackgroundElement" 
+                               Background="#E6E6E6" 
+                               CornerRadius="12" 
+                               Width="46" 
+                               Height="24"/>
+                        <Border x:Name="ThumbElement" 
+                               Background="White" 
+                               CornerRadius="12" 
+                               Width="20" 
+                               Height="20" 
+                               HorizontalAlignment="Left" 
+                               Margin="2,2,0,0">
+                            <Border.Effect>
+                                <DropShadowEffect ShadowDepth="1" BlurRadius="2" Opacity="0.3" />
+                            </Border.Effect>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="BackgroundElement" Property="Background" Value="#E94057"/>
+                            <Setter TargetName="ThumbElement" Property="HorizontalAlignment" Value="Right"/>
+                            <Setter TargetName="ThumbElement" Property="Margin" Value="0,2,2,0"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Protocol Radio Button Style -->
+    <Style x:Key="ProtocolRadioButtonStyle" TargetType="RadioButton">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <Grid>
+                        <Ellipse x:Name="BorderCircle" 
+                                Width="22" 
+                                Height="22" 
+                                Stroke="#D8D8D8" 
+                                StrokeThickness="1.5"
+                                Fill="Transparent"/>
+                        <Ellipse x:Name="CheckedCircle" 
+                                Width="12" 
+                                Height="12" 
+                                Fill="#00D36D"
+                                Visibility="Collapsed"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="BorderCircle" Property="Stroke" Value="#00D36D"/>
+                            <Setter TargetName="CheckedCircle" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!-- App Add Button Style -->
+    <Style x:Key="AppAddButtonStyle" TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Ellipse Width="24" 
+                                Height="24" 
+                                Stroke="#E6E6E6" 
+                                StrokeThickness="1"
+                                Fill="White"/>
+                        <Path Data="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M13,7H11V11H7V13H11V17H13V13H17V11H13V7Z" 
+                              Fill="#757575"
+                              Width="24"
+                              Height="24"
+                              Stretch="Uniform"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!-- App Selected Button Style -->
+    <Style x:Key="AppSelectedButtonStyle" TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Ellipse Width="24" 
+                                Height="24" 
+                                Fill="#E94057"/>
+                        <Path Data="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" 
+                              Fill="White"
+                              Width="14"
+                              Height="14"
+                              Stretch="Uniform"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
 </ResourceDictionary>
