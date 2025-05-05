@@ -407,8 +407,50 @@ namespace Atom.VPN.Demo
         
         private void MenuButton_Click(object sender, RoutedEventArgs e)
         {
-            // Navigate to the MenuPage
-            NavigationService.Navigate(new MenuPage());
+            // Open the side menu
+            var containerWindow = Window.GetWindow(this) as MainContainerWindow;
+            if (containerWindow != null)
+            {
+                containerWindow.OpenMenu();
+            }
+        }
+        
+        // Add logout functionality
+        public void LogOut()
+        {
+            try
+            {
+                // Get the parent window
+                var parentWindow = Window.GetWindow(this) as MainContainerWindow;
+                
+                if (parentWindow != null)
+                {
+                    // Use page-based navigation instead of creating a new window
+                    parentWindow.NavigateToLoginPage();
+                }
+                else
+                {
+                    // Fallback to window-based approach if not in MainContainerWindow
+                    var loginWindow = new LoginWindow();
+                    loginWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                    loginWindow.Show();
+                    
+                    // Update the main application window
+                    var currentWindow = Window.GetWindow(this);
+                    if (currentWindow != null)
+                    {
+                        Application.Current.MainWindow = loginWindow;
+                        currentWindow.Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error logging out: {ex.Message}", 
+                               "Logout Error", 
+                               MessageBoxButton.OK, 
+                               MessageBoxImage.Error);
+            }
         }
         
         // Helper method to get named elements from a control template
