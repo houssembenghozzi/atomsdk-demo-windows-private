@@ -60,11 +60,16 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Border Width="27" Height="27" Margin="16,0,10,0" VerticalAlignment="Center">
-                            <Canvas Width="20" Height="20">
-                                <!-- Profile icon -->
-                                <Ellipse Width="20" Height="20" Stroke="#212121" StrokeThickness="1.5"/>
-                                <Ellipse Width="8" Height="8" Canvas.Left="6" Canvas.Top="4" Stroke="#212121" StrokeThickness="1.5"/>
-                            </Canvas>
+                            <Path Data="M8.62929 10.8649C11.4186 10.8649 13.6794 8.60413 13.6794 5.81481C13.6794 3.02548 11.4186 0.763672 8.62929 0.763672C5.83997 0.763672 3.57815 3.02548 3.57815 5.81481C3.56873 8.59471 5.8138 10.8555 8.5937 10.8649C8.60626 10.8649 8.61778 10.8649 8.62929 10.8649Z" 
+                                  Stroke="#212121" 
+                                  StrokeThickness="1.48026" 
+                                  StrokeLineJoin="Round" 
+                                  StrokeStartLineCap="Round"
+                                  StrokeEndLineCap="Round"
+                                  Fill="Transparent"
+                                  Width="20"
+                                  Height="20"
+                                  Stretch="Uniform"/>
                         </Border>
                         <TextBlock Grid.Column="1" Text="Edit Profile" FontSize="16" Foreground="#212121" VerticalAlignment="Center"/>
                         <Path Grid.Column="2" Data="M7.25391 5.05911L13.0105 10.8157L7.25391 16.5723" Stroke="#212121" StrokeThickness="1.48026" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Width="12" Height="6" Stretch="Uniform" VerticalAlignment="Center" Margin="0,0,16,0"/>
@@ -100,8 +105,16 @@
                         <Border Width="27" Height="27" Margin="16,0,10,0" VerticalAlignment="Center">
                             <Canvas Width="20" Height="20">
                                 <!-- Sessions icon -->
-                                <Ellipse Width="20" Height="20" Stroke="#212121" StrokeThickness="1.5"/>
-                                <Ellipse Width="8" Height="8" Canvas.Left="6" Canvas.Top="4" Stroke="#212121" StrokeThickness="1.5"/>
+                                <Path Data="M8.62929 10.8649C11.4186 10.8649 13.6794 8.60413 13.6794 5.81481C13.6794 3.02548 11.4186 0.763672 8.62929 0.763672C5.83997 0.763672 3.57815 3.02548 3.57815 5.81481C3.56873 8.59471 5.8138 10.8555 8.5937 10.8649C8.60626 10.8649 8.61778 10.8649 8.62929 10.8649Z" 
+                                      Stroke="#212121" 
+                                      StrokeThickness="1.48026" 
+                                      StrokeLineJoin="Round" 
+                                      StrokeStartLineCap="Round"
+                                      StrokeEndLineCap="Round"
+                                      Fill="Transparent"
+                                      Width="20"
+                                      Height="20"
+                                      Stretch="Uniform"/>
                             </Canvas>
                         </Border>
                         <TextBlock Grid.Column="1" Text="Manage Active Sessions" FontSize="16" Foreground="#212121" VerticalAlignment="Center"/>

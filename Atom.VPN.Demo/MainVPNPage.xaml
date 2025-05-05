@@ -15,9 +15,9 @@
 
     <Page.Resources>
         <!-- Font families -->
-        <FontFamily x:Key="GTWalsheimPro">/Atom.VPN.Demo;component/Resources/font/GT-Walsheim-Regular-Trial-BF651b7fc71a47d.otf#GT Walsheim Pro</FontFamily>
-        <FontFamily x:Key="GTWalsheimProBold">/Atom.VPN.Demo;component/Resources/font/GT-Walsheim-Bold-Trial-BF651b7fc737c57.otf#GT Walsheim Pro</FontFamily>
-        <FontFamily x:Key="GTWalsheimProMedium">/Atom.VPN.Demo;component/Resources/font/GT-Walsheim-Medium-Trial-BF651b7fc728fb3.otf#GT Walsheim Pro</FontFamily>
+        <FontFamily x:Key="WorkSansRegular">/Atom.VPN.Demo;component/Resources/font/WorkSans-Regular.ttf#Work Sans</FontFamily>
+        <FontFamily x:Key="WorkSansBold">/Atom.VPN.Demo;component/Resources/font/WorkSans-Bold.ttf#Work Sans</FontFamily>
+        <FontFamily x:Key="WorkSansMedium">/Atom.VPN.Demo;component/Resources/font/WorkSans-Medium.ttf#Work Sans</FontFamily>
         
         <!-- World Map Background -->
         <SolidColorBrush x:Key="WorldMapImage" Color="#FAFAFA" />
@@ -80,13 +80,13 @@
                                                Text="{Binding Path=Tag, RelativeSource={RelativeSource TemplatedParent}}" 
                                                FontSize="12" 
                                                Foreground="#AAAAAA"
-                                               FontFamily="{StaticResource GTWalsheimPro}"/>
+                                               FontFamily="{StaticResource WorkSansRegular}"/>
                                     <TextBlock x:Name="SubTitle" 
                                                Text="{TemplateBinding Content}" 
                                                FontSize="14" 
                                                Foreground="White" 
                                                FontWeight="SemiBold"
-                                               FontFamily="{StaticResource GTWalsheimProMedium}"/>
+                                               FontFamily="{StaticResource WorkSansMedium}"/>
                                 </StackPanel>
                                 
                                 <Path Grid.Column="2" 
@@ -302,7 +302,7 @@
                 <!-- Status text - Now under power button -->
                 <TextBlock x:Name="StatusText" 
                            Text="Not Connected" 
-                           FontFamily="{StaticResource GTWalsheimProBold}" 
+                           FontFamily="{StaticResource WorkSansBold}" 
                            FontSize="24" 
                            Foreground="#000000" 
                            HorizontalAlignment="Center"
@@ -311,7 +311,7 @@
                 
                 <TextBlock x:Name="DescriptionText" 
                            Text="Press on button to connect" 
-                           FontFamily="{StaticResource GTWalsheimPro}" 
+                           FontFamily="{StaticResource WorkSansRegular}" 
                            FontSize="16" 
                            Foreground="#BBBBBB" 
                            HorizontalAlignment="Center"
@@ -350,13 +350,13 @@
                                                            Text="{Binding Path=Tag, RelativeSource={RelativeSource TemplatedParent}}" 
                                                            FontSize="12" 
                                                            Foreground="#AAAAAA"
-                                                           FontFamily="{StaticResource GTWalsheimPro}"/>
+                                                           FontFamily="{StaticResource WorkSansRegular}"/>
                                                 <TextBlock x:Name="SubTitle" 
                                                            Text="{TemplateBinding Content}" 
                                                            FontSize="14" 
                                                            Foreground="#323438" 
                                                            FontWeight="SemiBold"
-                                                           FontFamily="{StaticResource GTWalsheimProMedium}"/>
+                                                           FontFamily="{StaticResource WorkSansMedium}"/>
                                             </StackPanel>
                                             
                                             <Path Grid.Column="2" 
@@ -426,7 +426,7 @@
                                         <TextBlock Text="App shortcuts" 
                                                    FontSize="14" 
                                                    Foreground="#333333" 
-                                                   FontFamily="{StaticResource GTWalsheimProMedium}" 
+                                                   FontFamily="{StaticResource WorkSansMedium}" 
                                                    Margin="0,0,0,8"/>
                                         
                                         <Grid x:Name="AppShortcutsPanel" Margin="0,0,0,0">
@@ -484,14 +484,14 @@
                                         <TextBlock Text="Connected IP" 
                                                    FontSize="14" 
                                                    Foreground="#333333" 
-                                                   FontFamily="{StaticResource GTWalsheimProMedium}" 
+                                                   FontFamily="{StaticResource WorkSansMedium}" 
                                                    Margin="0,0,0,8"/>
                                         
                                         <TextBlock x:Name="ConnectedIpText"
                                                    Text="198.25.255.36" 
                                                    FontSize="14" 
                                                    Foreground="#4CAF50" 
-                                                   FontFamily="{StaticResource GTWalsheimProMedium}"/>
+                                                   FontFamily="{StaticResource WorkSansMedium}"/>
                                     </StackPanel>
                                 </Grid>
                             </Border>
@@ -525,12 +525,17 @@
                                                 </Grid.ColumnDefinitions>
                                                 
                                                 <Grid Width="30" Height="30" Grid.Column="0">
-                                                    <Ellipse Fill="#222222" Width="30" Height="30"/>
-                                                    <Path Data="M12,3L1,9L12,15L21,10.09V17H23V9M5,13.18V17.18L12,21L19,17.18V13.18L12,17L5,13.18Z" 
-                                                          Fill="#FF9500" 
-                                                          Width="18" 
+                                                    <!-- Remove black background ellipse -->
+                                                    <Grid>
+                                                        <Path Data="M11.165 5.43037C11.1131 5.30805 11.0287 5.20309 10.9215 5.12736C10.8143 5.05163 10.6886 5.00817 10.5585 5.0019H7.36547L8.25086 1.617C8.27906 1.51108 8.28304 1.39992 8.26249 1.29217C8.24193 1.18442 8.1974 1.08298 8.13235 0.99572C8.0674 0.909302 7.98399 0.839268 7.88852 0.790992C7.79305 0.742715 7.68806 0.717478 7.58159 0.717216H2.70145C2.54405 0.711693 2.38947 0.760919 2.26288 0.856876C2.13629 0.952833 2.04514 1.08987 2.00429 1.24566L0.135888 8.3868C0.10769 8.49272 0.103713 8.60388 0.124268 8.71163C0.144823 8.81938 0.189356 8.92082 0.254406 9.00808C0.320068 9.09546 0.404593 9.16607 0.501356 9.21439C0.598119 9.26271 0.704491 9.28742 0.812136 9.28658H3.51016L2.24829 14.0997C2.20695 14.2549 2.21798 14.4199 2.2796 14.5679C2.34121 14.7158 2.44981 14.8382 2.58778 14.915C2.72576 14.9919 2.88503 15.0188 3.03978 14.9913C3.19454 14.9639 3.33572 14.8837 3.44044 14.7638L11.0395 6.19447C11.13 6.09298 11.19 5.96691 11.2122 5.83137C11.2345 5.69583 11.2181 5.5566 11.165 5.43037ZM4.33978 11.6289L5.08575 8.77242C5.11394 8.6665 5.11792 8.55535 5.09737 8.4476C5.07681 8.33985 5.03228 8.2384 4.96723 8.15114C4.90228 8.06473 4.81888 7.99469 4.72341 7.94641C4.62794 7.89814 4.52294 7.8729 4.41647 7.87264H1.73936L3.23129 2.14544H6.66831L5.78291 5.53034C5.75448 5.63822 5.75116 5.75141 5.77322 5.86084C5.79528 5.97026 5.84209 6.07286 5.9099 6.16038C5.97771 6.24789 6.06463 6.31789 6.16365 6.36474C6.26268 6.41159 6.37106 6.43399 6.48007 6.43013H8.96894L4.33978 11.6289Z" 
+                                                          Fill="#FF980E" 
+                                                          Width="15" 
                                                           Height="18" 
-                                                          Stretch="Uniform"/>
+                                                          Stretch="Uniform"
+                                                          VerticalAlignment="Center"/>
+                                                    </Grid>
+                                                    <!-- Vertical separator line -->
+                                                    <Rectangle Width="1" Height="25" Fill="#EEEEEE" HorizontalAlignment="Right" Margin="0,0,-10,0"/>
                                                 </Grid>
                                                 
                                                 <StackPanel Grid.Column="1" Margin="15,0,0,0">
@@ -538,13 +543,13 @@
                                                                Text="{Binding Path=Tag, RelativeSource={RelativeSource TemplatedParent}}" 
                                                                FontSize="12" 
                                                                Foreground="#AAAAAA"
-                                                               FontFamily="{StaticResource GTWalsheimPro}"/>
+                                                               FontFamily="{StaticResource WorkSansRegular}"/>
                                                     <TextBlock x:Name="SubTitle" 
                                                                Text="{TemplateBinding Content}" 
                                                                FontSize="14" 
                                                                Foreground="#323438" 
                                                                FontWeight="SemiBold"
-                                                               FontFamily="{StaticResource GTWalsheimProMedium}"/>
+                                                               FontFamily="{StaticResource WorkSansMedium}"/>
                                                 </StackPanel>
                                                 
                                                 <Path Grid.Column="2" 
@@ -585,12 +590,17 @@
                                                 </Grid.ColumnDefinitions>
                                                 
                                                 <Grid Width="30" Height="30" Grid.Column="0">
-                                                    <Ellipse Fill="#222222" Width="30" Height="30"/>
-                                                    <Path Data="M13,3A9,9 0 0,0 4,12H1L4.89,15.89L4.96,16.03L9,12H6A7,7 0 0,1 13,5A7,7 0 0,1 20,12A7,7 0 0,1 13,19C11.07,19 9.32,18.21 8.06,16.94L6.64,18.36C8.27,20 10.5,21 13,21A9,9 0 0,0 22,12A9,9 0 0,0 13,3Z" 
-                                                          Fill="#FFBB00" 
-                                                          Width="18" 
-                                                          Height="18" 
-                                                          Stretch="Uniform"/>
+                                                    <!-- Remove black background ellipse -->
+                                                    <Grid>
+                                                        <Path Data="M5.70372 2.52582C5.63076 2.5258 5.55852 2.54016 5.49111 2.56807C5.4237 2.59598 5.36245 2.6369 5.31086 2.68849C5.25927 2.74008 5.21835 2.80133 5.19044 2.86874C5.16253 2.93615 5.14817 3.00839 5.14819 3.08135V5.51667L3.79789 6.19616C3.73274 6.22893 3.67468 6.27421 3.62703 6.32942C3.57938 6.38463 3.54307 6.44869 3.52017 6.51793C3.49727 6.58717 3.48824 6.66025 3.49359 6.73298C3.49893 6.80571 3.51855 6.87668 3.55132 6.94184C3.58409 7.00699 3.62937 7.06505 3.68458 7.1127C3.73979 7.16035 3.80385 7.19666 3.87309 7.21956C3.94233 7.24245 4.01541 7.25149 4.08814 7.24614C4.16087 7.2408 4.23184 7.22118 4.297 7.18841L5.95328 6.35512C6.04528 6.30895 6.12263 6.23809 6.17666 6.15047C6.2307 6.06285 6.25929 5.96193 6.25925 5.85899V3.08135C6.25927 3.00839 6.24491 2.93615 6.217 2.86874C6.18909 2.80133 6.14817 2.74008 6.09658 2.68849C6.04499 2.6369 5.98374 2.59598 5.91634 2.56807C5.84893 2.54016 5.77668 2.5258 5.70372 2.52582ZM5.70372 0.303711C4.60499 0.303711 3.53093 0.629523 2.61737 1.23994C1.70381 1.85037 0.991777 2.71798 0.571311 3.73308C0.150845 4.74817 0.0408314 5.86515 0.255183 6.94277C0.469535 8.02039 0.998624 9.01025 1.77554 9.78717C2.55246 10.5641 3.54232 11.0932 4.61994 11.3075C5.69756 11.5219 6.81454 11.4119 7.82964 10.9914C8.84473 10.5709 9.71235 9.8589 10.3228 8.94534C10.9332 8.03178 11.259 6.95772 11.259 5.85899C11.2573 4.38616 10.6715 2.97413 9.63004 1.93268C8.58858 0.891224 7.17656 0.305396 5.70372 0.303711ZM5.70372 10.3032C4.82474 10.3032 3.96549 10.0426 3.23464 9.55423C2.50379 9.06589 1.93417 8.3718 1.59779 7.55972C1.26142 6.74765 1.17341 5.85406 1.34489 4.99197C1.51637 4.12987 1.93964 3.33799 2.56118 2.71645C3.18272 2.09491 3.9746 1.67164 4.8367 1.50016C5.69879 1.32868 6.59238 1.41669 7.40445 1.75306C8.21653 2.08944 8.91062 2.65906 9.39896 3.38991C9.8873 4.12076 10.1479 4.98001 10.1479 5.85899C10.1466 7.03726 9.67794 8.16688 8.84477 9.00004C8.01161 9.83321 6.88199 10.3019 5.70372 10.3032Z" 
+                                                          Fill="#FF980E" 
+                                                          Width="15" 
+                                                          Height="15" 
+                                                          Stretch="Uniform"
+                                                          VerticalAlignment="Center"/>
+                                                    </Grid>
+                                                    <!-- Vertical separator line -->
+                                                    <Rectangle Width="1" Height="25" Fill="#EEEEEE" HorizontalAlignment="Right" Margin="0,0,-10,0"/>
                                                 </Grid>
                                                 
                                                 <StackPanel Grid.Column="1" Margin="15,0,0,0">
@@ -598,13 +608,13 @@
                                                                Text="{Binding Path=Tag, RelativeSource={RelativeSource TemplatedParent}}" 
                                                                FontSize="12" 
                                                                Foreground="#AAAAAA"
-                                                               FontFamily="{StaticResource GTWalsheimPro}"/>
+                                                               FontFamily="{StaticResource WorkSansRegular}"/>
                                                     <TextBlock x:Name="SubTitle" 
                                                                Text="{TemplateBinding Content}" 
                                                                FontSize="14" 
                                                                Foreground="#323438" 
                                                                FontWeight="SemiBold"
-                                                               FontFamily="{StaticResource GTWalsheimProMedium}"/>
+                                                               FontFamily="{StaticResource WorkSansMedium}"/>
                                                 </StackPanel>
                                                 
                                                 <Path Grid.Column="2" 
@@ -643,25 +653,33 @@
                         
                         <!-- Ad Blocker Icon -->
                         <Grid Grid.Column="0" Width="40" Height="40">
-                            <Ellipse Fill="#222222" Width="40" Height="40"/>
-                            <Path Data="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9" 
-                                  Fill="#FF9500" 
-                                  Width="20" 
-                                  Height="20" 
+                            <!-- Removed Ellipse black background -->
+                            <Path Data="M21.3281 4.17187C16.4844 -0.671875 8.51562 -0.671875 3.67187 4.17187C-1.17188 9.01562 -1.17188 16.9844 3.67187 21.8281C8.51562 26.6719 16.4844 26.6719 21.3281 21.8281C26.25 16.9844 26.25 9.01562 21.3281 4.17187ZM19.1406 6.35938C22.4219 9.64062 22.7344 14.7188 20.1562 18.3906L7.10938 5.34375C10.7031 2.76562 15.8594 3.07812 19.1406 6.35938ZM5.85938 19.6406C2.57812 16.3594 2.26562 11.2031 4.84375 7.60938L17.8906 20.6562C14.2969 23.2344 9.14062 22.9219 5.85938 19.6406Z" 
+                                  Fill="#DC1E3D" 
+                                  Width="25" 
+                                  Height="26" 
                                   Stretch="Uniform"/>
                         </Grid>
                         
                         <!-- Ad Blocker Text -->
                         <StackPanel Grid.Column="1" Margin="15,0,0,0" VerticalAlignment="Center">
-                            <TextBlock Text="Ad Blocker" 
-                                       FontSize="16" 
-                                       Foreground="#323438" 
-                                       FontWeight="Bold"
-                                       FontFamily="{StaticResource GTWalsheimProBold}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Ad Blocker" 
+                                           FontSize="16" 
+                                           Foreground="#323438" 
+                                           FontWeight="Bold"
+                                           FontFamily="{StaticResource WorkSansBold}"/>
+                                <Path Data="M6.33203 10.333H7.66536V6.33301H6.33203V10.333ZM6.9987 0.333008C3.31536 0.333008 0.332031 3.31634 0.332031 6.99967C0.332031 10.683 3.31536 13.6663 6.9987 13.6663C10.682 13.6663 13.6654 10.683 13.6654 6.99967C13.6654 3.31634 10.682 0.333008 6.9987 0.333008ZM6.9987 12.333C4.0587 12.333 1.66536 9.93967 1.66536 6.99967C1.66536 4.05967 4.0587 1.66634 6.9987 1.66634C9.9387 1.66634 12.332 4.05967 12.332 6.99967C12.332 9.93967 9.9387 12.333 6.9987 12.333ZM6.33203 4.99967H7.66536V3.66634H6.33203V4.99967Z"
+                                      Fill="#464646"
+                                      Width="14"
+                                      Height="14"
+                                      Margin="5,0,0,0"
+                                      VerticalAlignment="Center"/>
+                            </StackPanel>
                             <TextBlock Text="Enabled" 
                                        FontSize="12" 
                                        Foreground="#76BC21" 
-                                       FontFamily="{StaticResource GTWalsheimPro}"/>
+                                       FontFamily="{StaticResource WorkSansRegular}"/>
                         </StackPanel>
                         
                         <!-- Toggle Switch -->
@@ -727,26 +745,28 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     
+                    <!-- Border with banner background -->
                     <Border Grid.Column="0" 
                             Width="40" 
                             Height="40" 
                             Background="#F9E7CB" 
                             CornerRadius="20">
-                        <Path Data="M12,1L21,5V11C21,16.55 17.16,21.74 12,23C6.84,21.74 3,16.55 3,11V5L12,1M12,3.18L5,6.3V11.22C5,15.54 8.25,19.82 12,20.82C15.75,19.82 19,15.54 19,11.22V6.3L12,3.18Z" 
-                              Fill="#FFB74D" 
-                              Width="24" 
-                              Height="24" 
+                        <!-- New Dedicated IP SVG icon -->
+                        <Path Data="M-1.13187 69.7431C-7.29329 70.9148 -13 66.191 -13 59.9192L-13 12.0808C-13 5.80898 -7.29329 1.0852 -1.13187 2.25686L56.9354 13.299C61.6534 14.1962 65.0673 18.3205 65.0673 23.123V48.8771C65.0673 53.6795 61.6534 57.8038 56.9354 58.701L-1.13187 69.7431Z M22.5779 25.6703L28.7611 31.2503L34.2698 24.2936C34.4241 24.0991 34.6191 23.9429 34.8404 23.8364C35.0617 23.73 35.3036 23.6761 35.548 23.6788C35.7925 23.6815 36.0331 23.7408 36.2522 23.8521C36.4712 23.9635 36.6628 24.1241 36.813 24.322L42.0698 31.2486L48.4528 25.5886C48.7035 25.3668 49.0142 25.2288 49.3435 25.1931C49.6727 25.1574 50.0047 25.2257 50.2951 25.3888C50.5854 25.5519 50.8203 25.8021 50.9682 26.1059C51.1161 26.4097 51.17 26.7525 51.1227 27.0886L48.6852 44.3336H22.3716L19.8967 27.167C19.8475 26.829 19.9008 26.4837 20.0494 26.1779C20.1979 25.8721 20.4345 25.6204 20.7271 25.4571C21.0197 25.2938 21.3542 25.2266 21.6853 25.2647C22.0163 25.3029 22.328 25.4445 22.5779 25.6703ZM22.4983 46.0003H48.4983V47.667C48.4983 48.109 48.3271 48.5329 48.0224 48.8455C47.7176 49.158 47.3043 49.3336 46.8733 49.3336H24.1233C23.6923 49.3336 23.279 49.158 22.9743 48.8455C22.6695 48.5329 22.4983 48.109 22.4983 47.667V46.0003Z"
+                              Fill="#FFA251" 
+                              Width="45" 
+                              Height="45" 
                               Stretch="Uniform"/>
                     </Border>
                     
                     <StackPanel Grid.Column="1" Margin="15,0,0,0">
                         <TextBlock Text="Dedicated IP" 
-                                   FontFamily="{StaticResource GTWalsheimProBold}" 
+                                   FontFamily="{StaticResource WorkSansBold}" 
                                    FontSize="16" 
                                    Foreground="#323438" 
                                    FontWeight="Bold"/>
                         <TextBlock Text="Get 50% off and access free dedicated IP" 
-                                   FontFamily="{StaticResource GTWalsheimPro}" 
+                                   FontFamily="{StaticResource WorkSansRegular}" 
                                    FontSize="12" 
                                    Foreground="#666666" 
                                    TextWrapping="Wrap"/>

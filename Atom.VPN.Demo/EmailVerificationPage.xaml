@@ -16,16 +16,16 @@
     
     <Window.Resources>
         <!-- Font families -->
-        <FontFamily x:Key="GTWalsheimPro">/Atom.VPN.Demo;component/Resources/font/GT-Walsheim-Regular-Trial-BF651b7fc71a47d.otf#GT Walsheim Pro</FontFamily>
-        <FontFamily x:Key="GTWalsheimProBold">/Atom.VPN.Demo;component/Resources/font/GT-Walsheim-Bold-Trial-BF651b7fc737c57.otf#GT Walsheim Pro</FontFamily>
-        <FontFamily x:Key="GTWalsheimProMedium">/Atom.VPN.Demo;component/Resources/font/GT-Walsheim-Medium-Trial-BF651b7fc728fb3.otf#GT Walsheim Pro</FontFamily>
+        <FontFamily x:Key="WorkSansRegular">/Atom.VPN.Demo;component/Resources/font/WorkSans-Regular.ttf#Work Sans</FontFamily>
+        <FontFamily x:Key="WorkSansBold">/Atom.VPN.Demo;component/Resources/font/WorkSans-Bold.ttf#Work Sans</FontFamily>
+        <FontFamily x:Key="WorkSansMedium">/Atom.VPN.Demo;component/Resources/font/WorkSans-Medium.ttf#Work Sans</FontFamily>
         <FontFamily x:Key="PlusJakartaSans">Segoe UI</FontFamily> <!-- Fallback for Plus Jakarta Sans -->
         
         <!-- OTP Input Box Style -->
         <Style x:Key="OTPDigitBoxStyle" TargetType="TextBox">
             <Setter Property="Width" Value="64"/>
             <Setter Property="Height" Value="64"/>
-            <Setter Property="FontFamily" Value="{StaticResource GTWalsheimProBold}"/>
+            <Setter Property="FontFamily" Value="{StaticResource WorkSansBold}"/>
             <Setter Property="FontSize" Value="24"/>
             <Setter Property="Foreground" Value="#212121"/>
             <Setter Property="TextAlignment" Value="Center"/>
@@ -67,7 +67,7 @@
                                 CornerRadius="30"
                                 Height="58">
                             <TextBlock Text="Submit" 
-                                       FontFamily="{StaticResource GTWalsheimProBold}" 
+                                       FontFamily="{StaticResource WorkSansBold}" 
                                        FontSize="18" 
                                        FontWeight="Bold" 
                                        Foreground="White" 
@@ -113,7 +113,7 @@
             <!-- Title Section -->
             <StackPanel Margin="0,0,0,30">
                 <TextBlock Text="Email Verification" 
-                           FontFamily="{StaticResource GTWalsheimProBold}" 
+                           FontFamily="{StaticResource WorkSansBold}" 
                            FontSize="24" 
                            FontWeight="Bold" 
                            Foreground="#323438" 
@@ -123,7 +123,7 @@
                            SnapsToDevicePixels="True"/>
                 <TextBlock x:Name="InstructionsText"
                            Text="Please enter the OTP that was sent to your email address &quot;email@email.com&quot;" 
-                           FontFamily="{StaticResource GTWalsheimPro}" 
+                           FontFamily="{StaticResource WorkSansRegular}" 
                            FontSize="16" 
                            Foreground="#323438"
                            TextWrapping="Wrap"

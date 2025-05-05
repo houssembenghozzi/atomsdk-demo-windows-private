@@ -265,7 +265,8 @@ namespace Atom.VPN.Demo
             var powerIcon = GetTemplateChild(PowerButton, "PowerIcon") as System.Windows.Shapes.Path;
             if (powerIcon != null)
             {
-                powerIcon.Data = Geometry.Parse("M13,3H11V13H13V3M13,17H11V21H13V17Z M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2Z");
+                // Keep the same power icon for consistency between states
+                powerIcon.Data = Geometry.Parse("M50.1054 35.1611V50.2134M59.6786 42.1454C61.5728 44.0402 62.8626 46.454 63.3849 49.0818C63.9073 51.7095 63.6388 54.4332 62.6133 56.9083C61.5878 59.3835 59.8515 61.499 57.6237 62.9873C55.396 64.4757 52.777 65.2701 50.0979 65.2701C47.4187 65.2701 44.7997 64.4757 42.572 62.9873C40.3443 61.499 38.6079 59.3835 37.5824 56.9083C36.5569 54.4332 36.2884 51.7095 36.8108 49.0818C37.3331 46.454 38.6229 44.0402 40.5171 42.1454");
             }
             
             // Change button color to green

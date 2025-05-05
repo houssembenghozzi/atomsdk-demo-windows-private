@@ -16,9 +16,9 @@
     
     <Window.Resources>
         <!-- Font families -->
-        <FontFamily x:Key="GTWalsheimPro">/Atom.VPN.Demo;component/Resources/font/GT-Walsheim-Regular-Trial-BF651b7fc71a47d.otf#GT Walsheim Pro</FontFamily>
-        <FontFamily x:Key="GTWalsheimProBold">/Atom.VPN.Demo;component/Resources/font/GT-Walsheim-Bold-Trial-BF651b7fc737c57.otf#GT Walsheim Pro</FontFamily>
-        <FontFamily x:Key="GTWalsheimProMedium">/Atom.VPN.Demo;component/Resources/font/GT-Walsheim-Medium-Trial-BF651b7fc728fb3.otf#GT Walsheim Pro</FontFamily>
+        <FontFamily x:Key="WorkSansRegular">/Atom.VPN.Demo;component/Resources/font/WorkSans-Regular.ttf#Work Sans</FontFamily>
+        <FontFamily x:Key="WorkSansBold">/Atom.VPN.Demo;component/Resources/font/WorkSans-Bold.ttf#Work Sans</FontFamily>
+        <FontFamily x:Key="WorkSansMedium">/Atom.VPN.Demo;component/Resources/font/WorkSans-Medium.ttf#Work Sans</FontFamily>
         <FontFamily x:Key="PlusJakartaSans">Segoe UI</FontFamily> <!-- Fallback for Plus Jakarta Sans -->
         
         <!-- Text box styles -->
@@ -45,7 +45,7 @@
                                            x:Name="Placeholder" 
                                            Text="email@email.com" 
                                            Foreground="#BEBEBE" 
-                                           FontFamily="{StaticResource GTWalsheimPro}" 
+                                           FontFamily="{StaticResource WorkSansRegular}" 
                                            FontSize="16"/>
                             </Grid>
                         </Border>
@@ -73,7 +73,7 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Setter Property="FontFamily" Value="{StaticResource GTWalsheimPro}"/>
+            <Setter Property="FontFamily" Value="{StaticResource WorkSansRegular}"/>
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="Foreground" Value="#323438"/>
             <Setter Property="Background" Value="Transparent"/>
@@ -106,7 +106,7 @@
                                            x:Name="Placeholder" 
                                            Text="Password" 
                                            Foreground="#BEBEBE" 
-                                           FontFamily="{StaticResource GTWalsheimProMedium}" 
+                                           FontFamily="{StaticResource WorkSansMedium}" 
                                            FontSize="14"
                                            FontWeight="Medium"/>
                                 <Button Grid.Column="3" x:Name="ShowPasswordButton" Background="Transparent" BorderThickness="0" Cursor="Hand">
@@ -128,7 +128,7 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Setter Property="FontFamily" Value="{StaticResource GTWalsheimProMedium}"/>
+            <Setter Property="FontFamily" Value="{StaticResource WorkSansMedium}"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Foreground" Value="#323438"/>
             <Setter Property="Background" Value="Transparent"/>
@@ -161,7 +161,7 @@
                                            x:Name="Placeholder" 
                                            Text="Password" 
                                            Foreground="#BEBEBE" 
-                                           FontFamily="{StaticResource GTWalsheimProMedium}" 
+                                           FontFamily="{StaticResource WorkSansMedium}" 
                                            FontSize="14"
                                            FontWeight="Medium"/>
                                 <Button Grid.Column="3" x:Name="HidePasswordButton" Background="Transparent" BorderThickness="0" Cursor="Hand">
@@ -193,7 +193,7 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Setter Property="FontFamily" Value="{StaticResource GTWalsheimProMedium}"/>
+            <Setter Property="FontFamily" Value="{StaticResource WorkSansMedium}"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Foreground" Value="#323438"/>
             <Setter Property="Background" Value="Transparent"/>
@@ -213,7 +213,7 @@
                                 CornerRadius="30"
                                 Height="58">
                             <TextBlock Text="Sign up" 
-                                       FontFamily="{StaticResource GTWalsheimProBold}" 
+                                       FontFamily="{StaticResource WorkSansBold}" 
                                        FontSize="18" 
                                        FontWeight="Bold" 
                                        Foreground="White" 
@@ -318,7 +318,7 @@
             <!-- Title Section -->
             <StackPanel Margin="0,0,0,30">
                 <TextBlock Text="Create New Account" 
-                           FontFamily="{StaticResource GTWalsheimProBold}" 
+                           FontFamily="{StaticResource WorkSansBold}" 
                            FontSize="24" 
                            FontWeight="Bold" 
                            Foreground="#323438" 
@@ -327,7 +327,7 @@
                            UseLayoutRounding="True"
                            SnapsToDevicePixels="True"/>
                 <TextBlock Text="Please enter your details." 
-                           FontFamily="{StaticResource GTWalsheimPro}" 
+                           FontFamily="{StaticResource WorkSansRegular}" 
                            FontSize="16" 
                            Foreground="#323438"
                            TextOptions.TextFormattingMode="Display"
