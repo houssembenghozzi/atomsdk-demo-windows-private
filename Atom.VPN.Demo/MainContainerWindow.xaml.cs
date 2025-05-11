@@ -17,11 +17,18 @@ namespace Atom.VPN.Demo
             // Set this window as the application's main window
             Application.Current.MainWindow = this;
             
-            // Navigate to the login page initially
-            NavigateToLoginPage();
+            // Set window properties
+            this.Title = "Atom VPN";
+            this.Height = 700;
+            this.Width = 460;
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.ResizeMode = ResizeMode.NoResize;
             
             // Handle navigation events
             MainFrame.Navigated += MainFrame_Navigated;
+            
+            // Handle closing event
+            this.Closed += MainContainerWindow_Closed;
         }
 
         private void MainFrame_Navigated(object sender, NavigationEventArgs e)
@@ -31,6 +38,30 @@ namespace Atom.VPN.Demo
             {
                 this.Title = $"Atom VPN - {page.Title}";
             }
+        }
+
+        private void MainContainerWindow_Closed(object sender, EventArgs e)
+        {
+            // Close the application when main window is closed
+            Application.Current.Shutdown();
+        }
+
+        /// <summary>
+        /// Opens the application menu
+        /// </summary>
+        public void OpenMenu()
+        {
+            // Navigate to the menu page
+            MainFrame.Navigate(new MenuPage());
+        }
+        
+        /// <summary>
+        /// Logs the user out and returns to the login screen
+        /// </summary>
+        public void LogOut()
+        {
+            // Navigate to the login page
+            NavigateToLoginPage();
         }
 
         /// <summary>

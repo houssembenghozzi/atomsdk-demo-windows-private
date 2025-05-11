@@ -66,10 +66,10 @@ namespace Atom.VPN.Demo
                     var parentWindow = Window.GetWindow(this);
                     
                     // Check what type of window we're in
-                    if (parentWindow is MainContainerWindow mainContainerWindow)
+                    if (parentWindow is MainContainerWindow mcWindow)
                     {
                         // Navigate to login page using MainContainerWindow
-                        mainContainerWindow.NavigateToLoginPage();
+                        mcWindow.NavigateToLoginPage();
                     }
                     else if (parentWindow is LoginWindow loginWindow)
                     {
@@ -100,10 +100,10 @@ namespace Atom.VPN.Demo
                 var parentWindow = Window.GetWindow(this);
                 
                 // Check what type of window we're in
-                if (parentWindow is MainContainerWindow mainContainerWindow)
+                if (parentWindow is MainContainerWindow mcWindow)
                 {
                     // Navigate to login page using MainContainerWindow
-                    mainContainerWindow.NavigateToLoginPage();
+                    mcWindow.NavigateToLoginPage();
                 }
                 else if (parentWindow is LoginWindow loginWindow)
                 {

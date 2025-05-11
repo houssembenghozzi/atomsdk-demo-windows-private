@@ -130,9 +130,13 @@ namespace Atom.VPN.Demo
 
         private void ChangeEmail_Click(object sender, RoutedEventArgs e)
         {
-            // Go back to sign up page
-            SignUpPage signUpPage = new SignUpPage();
-            signUpPage.Show();
+            // Create a MainContainerWindow that will host the SignUpPage
+            var mainContainer = new MainContainerWindow();
+            mainContainer.NavigateToSignUpPage();
+            mainContainer.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            mainContainer.Show();
+            
+            // Close verification window
             this.Close();
         }
 

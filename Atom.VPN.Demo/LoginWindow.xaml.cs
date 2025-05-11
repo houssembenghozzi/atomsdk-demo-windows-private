@@ -72,6 +72,18 @@ namespace Atom.VPN.Demo
             _mainFrame.Navigate(new ForgotPasswordPage());
         }
         
+        // Helper method to show the ForgotPasswordWindow
+        public void ShowForgotPasswordWindow()
+        {
+            // Create and show the forgot password window
+            var forgotPasswordWindow = new ForgotPasswordWindow();
+            forgotPasswordWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            forgotPasswordWindow.Show();
+            
+            // Close this window to prevent multiple windows
+            this.Close();
+        }
+        
         // Helper method to navigate to the SignUpPage
         public void NavigateToSignUpPage()
         {

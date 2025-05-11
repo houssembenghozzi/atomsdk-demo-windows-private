@@ -9,7 +9,7 @@ namespace Atom.VPN.Demo
     /// <summary>
     /// Interaction logic for SignUpPage.xaml
     /// </summary>
-    public partial class SignUpPage : Window
+    public partial class SignUpPage : Page
     {
         private TextBox passwordTextBox;
         
@@ -69,9 +69,18 @@ namespace Atom.VPN.Demo
                 }
                 
                 var placeholder = textBox.Template.FindName("Placeholder", textBox) as TextBlock;
-                if (placeholder != null && string.IsNullOrEmpty(textBox.Text))
+                if (placeholder != null)
                 {
+                    // Only show placeholder if there's no text
+                    if (string.IsNullOrEmpty(textBox.Text))
+                    {
+                        placeholder.Visibility = Visibility.Visible;
                     placeholder.Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(190, 190, 190));
+                    }
+                    else
+                    {
+                        placeholder.Visibility = Visibility.Collapsed;
+                    }
                 }
             }
             else if (sender is PasswordBox passwordBox)
@@ -83,9 +92,18 @@ namespace Atom.VPN.Demo
                 }
                 
                 var placeholder = passwordBox.Template.FindName("Placeholder", passwordBox) as TextBlock;
-                if (placeholder != null && passwordBox.Password.Length == 0)
+                if (placeholder != null)
                 {
+                    // Only show placeholder if there's no password
+                    if (passwordBox.Password.Length == 0)
+                    {
+                        placeholder.Visibility = Visibility.Visible;
                     placeholder.Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(190, 190, 190));
+                    }
+                    else
+                    {
+                        placeholder.Visibility = Visibility.Collapsed;
+                    }
                 }
             }
         }
@@ -95,54 +113,63 @@ namespace Atom.VPN.Demo
             this.Loaded += (s, e) =>
             {
                 // Initialize the text box field from the XAML element
-                passwordTextBox = PasswordTextBox;
-                
-                // Get the show password button from password box template
+                passwordTextBox = PasswordTextBox; // Ensure PasswordTextBox is accessible
+
+                // Get the show password button from PasswordBox template
                 if (PasswordBox != null && PasswordBox.Template != null && 
                     PasswordBox.Template.FindName("ShowPasswordButton", PasswordBox) is Button showPasswordButton)
                 {
                     showPasswordButton.Click += (sender, args) => 
                     {
-                        // Show the text version and hide the password version
-                        passwordTextBox.Text = PasswordBox.Password;
-                        PasswordBox.Visibility = Visibility.Collapsed;
-                        passwordTextBox.Visibility = Visibility.Visible;
-                        passwordTextBox.Focus();
-                        args.Handled = true;
+                        if (PasswordBox != null && passwordTextBox != null)
+                        {
+                            // Show the text version and hide the password version
+                            passwordTextBox.Text = PasswordBox.Password;
+                            PasswordBox.Visibility = Visibility.Collapsed;
+                            passwordTextBox.Visibility = Visibility.Visible;
+                            passwordTextBox.Focus(); // Keep focus on the field
+                            args.Handled = true;
+                        }
                     };
                 }
 
-                // Get the hide password button from text box template
+                // Get the hide password button from TextBox template
                 if (passwordTextBox != null && passwordTextBox.Template != null && 
                     passwordTextBox.Template.FindName("HidePasswordButton", passwordTextBox) is Button hidePasswordButton)
                 {
                     hidePasswordButton.Click += (sender, args) => 
                     {
-                        // Show the password version and hide the text version
-                        PasswordBox.Password = passwordTextBox.Text;
-                        passwordTextBox.Visibility = Visibility.Collapsed;
-                        PasswordBox.Visibility = Visibility.Visible;
-                        PasswordBox.Focus();
-                        args.Handled = true;
+                        if (PasswordBox != null && passwordTextBox != null)
+                        {
+                            // Show the password version and hide the text version
+                            PasswordBox.Password = passwordTextBox.Text;
+                            passwordTextBox.Visibility = Visibility.Collapsed;
+                            PasswordBox.Visibility = Visibility.Visible;
+                            PasswordBox.Focus(); // Keep focus on the field
+                            args.Handled = true;
+                        }
                     };
                 }
 
-                // Sync password changes
-                PasswordBox.PasswordChanged += (sender, args) => 
+                // Sync password changes between PasswordBox and TextBox
+                if (PasswordBox != null && passwordTextBox != null)
                 {
-                    if (passwordTextBox.Visibility == Visibility.Visible)
+                    PasswordBox.PasswordChanged += (sender, args) => 
                     {
-                        passwordTextBox.Text = PasswordBox.Password;
-                    }
-                };
+                        if (passwordTextBox.Visibility == Visibility.Visible)
+                        {
+                            passwordTextBox.Text = PasswordBox.Password;
+                        }
+                    };
 
-                passwordTextBox.TextChanged += (sender, args) => 
-                {
-                    if (PasswordBox.Visibility == Visibility.Visible)
+                    passwordTextBox.TextChanged += (sender, args) => 
                     {
-                        PasswordBox.Password = passwordTextBox.Text;
-                    }
-                };
+                        if (PasswordBox.Visibility == Visibility.Visible)
+                        {
+                            PasswordBox.Password = passwordTextBox.Text;
+                        }
+                    };
+                }
             };
         }
 
@@ -198,13 +225,48 @@ namespace Atom.VPN.Demo
                 return;
             }
 
-            // In a real app, you would register the user here
-            // For this demo, navigate to email verification
             try
             {
-                EmailVerificationPage verificationPage = new EmailVerificationPage(email);
-                verificationPage.Show();
-                this.Close();
+                // Disable inputs to prevent additional clicks
+                EmailTextBox.IsEnabled = false;
+                PasswordBox.IsEnabled = false;
+                PasswordTextBox.IsEnabled = false;
+                TermsCheckbox.IsEnabled = false;
+                
+                // Show success message
+                SuccessMessage.Text = $"An email verification has been sent to {email}. Please follow the instructions. Redirecting...";
+                SuccessMessage.Visibility = Visibility.Visible;
+                
+                // Use a timer to delay navigation so the user can see the success message
+                var timer = new System.Windows.Threading.DispatcherTimer();
+                timer.Interval = TimeSpan.FromSeconds(3);
+                timer.Tick += (s, args) => {
+                    timer.Stop();
+                    
+                    // Get the parent window
+                    var parentWindow = Window.GetWindow(this);
+                    
+                    // Navigate to login
+                    if (parentWindow is MainContainerWindow mcWindow)
+                    {
+                        mcWindow.NavigateToLoginPage();
+                    }
+                    else
+                    {
+                        // Fallback to window-based approach
+                        var loginWindow = new LoginWindow();
+                        loginWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                        loginWindow.Show();
+                        
+                        // Close the current window
+                        if (parentWindow != null)
+                        {
+                            Application.Current.MainWindow = loginWindow;
+                            parentWindow.Close();
+                        }
+                    }
+                };
+                timer.Start();
             }
             catch (Exception ex)
             {
@@ -242,27 +304,31 @@ namespace Atom.VPN.Demo
 
         private void SignIn_Click(object sender, RoutedEventArgs e)
         {
-            // Navigate to the login page
             try
             {
-                LoginWindow loginWindow = new LoginWindow();
+                // Get the parent window
+                var parentWindow = Window.GetWindow(this);
+                
+                // Check what type of window we're in
+                if (parentWindow is MainContainerWindow mcWindow)
+                {
+                    // Navigate to login page using MainContainerWindow
+                    mcWindow.NavigateToLoginPage();
+                }
+                else
+                {
+                    // Navigate to LoginWindow
+                    var loginWindow = new LoginWindow();
+                    loginWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                 loginWindow.Show();
-                this.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void Back_Click(object sender, RoutedEventArgs e)
-        {
-            // Navigate back to the login page
-            try
-            {
-                LoginWindow loginWindow = new LoginWindow();
-                loginWindow.Show();
-                this.Close();
+                    
+                    // Close the parent window
+                    if (parentWindow != null)
+                    {
+                        Application.Current.MainWindow = loginWindow;
+                        parentWindow.Close();
+                    }
+                }
             }
             catch (Exception ex)
             {

@@ -99,5 +99,34 @@ namespace Atom.VPN.Demo
                 e.Handled = true;
             }
         }
+
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Get the parent window
+                var mainWindow = Window.GetWindow(this) as MainContainerWindow;
+                
+                if (mainWindow != null)
+                {
+                    // Call the logout method
+                    mainWindow.LogOut();
+                }
+                else
+                {
+                    MessageBox.Show("Unable to find the main window to log out.", 
+                                   "Logout Error", 
+                                   MessageBoxButton.OK, 
+                                   MessageBoxImage.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error logging out: {ex.Message}", 
+                               "Logout Error", 
+                               MessageBoxButton.OK, 
+                               MessageBoxImage.Error);
+            }
+        }
     }
 } 

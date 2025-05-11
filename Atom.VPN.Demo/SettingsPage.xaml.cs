@@ -125,22 +125,22 @@ namespace Atom.VPN.Demo
                 if (App.Current.Properties.Contains("SplitTunnelingMode"))
                 {
                     string mode = App.Current.Properties["SplitTunnelingMode"] as string;
-                    string description = "";
+                    string modeDescription = "";
                     
                     // Determine description based on mode
                     switch (mode)
                     {
                         case "AllApps":
-                            description = "All apps use VPN";
+                            modeDescription = "All apps use VPN";
                             break;
                         case "DoNotAllow":
-                            description = "Some apps excluded";
+                            modeDescription = "Some apps excluded";
                             break;
                         case "OnlyAllow":
-                            description = "Selected apps only";
+                            modeDescription = "Selected apps only";
                             break;
                         default:
-                            description = "Selected apps only";
+                            modeDescription = "Selected apps only";
                             break;
                     }
                     
@@ -165,6 +165,15 @@ namespace Atom.VPN.Demo
                                 
                                 if (isSplitTunnelingRow)
                                 {
+                                    // Find and update the description text if it exists
+                                    foreach (var textBlock in FindVisualChildren<TextBlock>(stackPanel))
+                                    {
+                                        if (textBlock.Text != "Split tunnelling" && textBlock.FontSize < 16)
+                                        {
+                                            textBlock.Text = modeDescription;
+                                            break;
+                                        }
+                                    }
                                     break;
                                 }
                             }
@@ -326,10 +335,10 @@ namespace Atom.VPN.Demo
                 else
                 {
                     // Fallback if NavigationService is null or can't go back
-                    MainContainerWindow mainWindow = Application.Current.MainWindow as MainContainerWindow;
-                    if (mainWindow != null)
+                    var containerWindow = Application.Current.MainWindow as MainContainerWindow;
+                    if (containerWindow != null)
                     {
-                        mainWindow.NavigateToMainVPNPage();
+                        containerWindow.NavigateToMainVPNPage();
                     }
                 }
             }
@@ -351,10 +360,10 @@ namespace Atom.VPN.Demo
                 else
                 {
                     // Fallback if NavigationService is null
-                    MainContainerWindow mainWindow = Application.Current.MainWindow as MainContainerWindow;
-                    if (mainWindow != null && mainWindow.MainFrame != null)
+                    var containerWindow = Application.Current.MainWindow as MainContainerWindow;
+                    if (containerWindow != null && containerWindow.MainFrame != null)
                     {
-                        mainWindow.MainFrame.Navigate(new ProtocolPage());
+                        containerWindow.MainFrame.Navigate(new ProtocolPage());
                         e.Handled = true;
                     }
                 }
@@ -378,10 +387,10 @@ namespace Atom.VPN.Demo
                 else
                 {
                     // Fallback if NavigationService is null
-                    MainContainerWindow mainWindow = Application.Current.MainWindow as MainContainerWindow;
-                    if (mainWindow != null && mainWindow.MainFrame != null)
+                    var containerWindow = Application.Current.MainWindow as MainContainerWindow;
+                    if (containerWindow != null && containerWindow.MainFrame != null)
                     {
-                        mainWindow.MainFrame.Navigate(new LanguagePage());
+                        containerWindow.MainFrame.Navigate(new LanguagePage());
                         e.Handled = true;
                     }
                 }
@@ -405,10 +414,10 @@ namespace Atom.VPN.Demo
                 else
                 {
                     // Fallback if NavigationService is null
-                    MainContainerWindow mainWindow = Application.Current.MainWindow as MainContainerWindow;
-                    if (mainWindow != null && mainWindow.MainFrame != null)
+                    var containerWindow = Application.Current.MainWindow as MainContainerWindow;
+                    if (containerWindow != null && containerWindow.MainFrame != null)
                     {
-                        mainWindow.MainFrame.Navigate(new SplitTunnelingPage());
+                        containerWindow.MainFrame.Navigate(new SplitTunnelingPage());
                         e.Handled = true;
                     }
                 }

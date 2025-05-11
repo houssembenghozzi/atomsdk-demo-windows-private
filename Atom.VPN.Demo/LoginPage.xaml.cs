@@ -149,9 +149,25 @@ namespace Atom.VPN.Demo
                 }
                 else if (parentWindow is LoginWindow loginWindow)
                 {
-                    // For LoginWindow, we need to create a new MainContainerWindow to show the main VPN page
-                    var newMainWindow = new MainContainerWindow();
-                    newMainWindow.Show();
+                    // For LoginWindow, convert it to a MainContainerWindow by
+                    // creating a MainContainerWindow and transferring properties
+                    var containerWindow = new MainContainerWindow();
+                    
+                    // Copy relevant properties
+                    containerWindow.Height = loginWindow.Height;
+                    containerWindow.Width = loginWindow.Width;
+                    containerWindow.Left = loginWindow.Left;
+                    containerWindow.Top = loginWindow.Top;
+                    containerWindow.WindowStartupLocation = loginWindow.WindowStartupLocation;
+                    
+                    // Navigate to main VPN page
+                    containerWindow.NavigateToMainVPNPage();
+                    
+                    // Set as main application window
+                    Application.Current.MainWindow = containerWindow;
+                    
+                    // Show the container window
+                    containerWindow.Show();
                     
                     // Close the login window
                     loginWindow.Close();
@@ -185,8 +201,13 @@ namespace Atom.VPN.Demo
                 }
                 else if (parentWindow is LoginWindow loginWindow)
                 {
-                    // Navigate to forgot password page using LoginWindow
-                    loginWindow.NavigateToForgotPasswordPage();
+                    // Create and show ForgotPasswordWindow directly
+                    var forgotPasswordWindow = new ForgotPasswordWindow();
+                    forgotPasswordWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                    forgotPasswordWindow.Show();
+                    
+                    // Close the login window to prevent multiple windows
+                    loginWindow.Close();
                 }
                 else
                 {
@@ -217,8 +238,27 @@ namespace Atom.VPN.Demo
                 }
                 else if (parentWindow is LoginWindow loginWindow)
                 {
-                    // Navigate to sign up page using LoginWindow
-                    loginWindow.NavigateToSignUpPage();
+                    // Convert LoginWindow to MainContainerWindow to maintain page-based flow
+                    var containerWindow = new MainContainerWindow();
+                    
+                    // Copy relevant properties
+                    containerWindow.Height = loginWindow.Height;
+                    containerWindow.Width = loginWindow.Width;
+                    containerWindow.Left = loginWindow.Left;
+                    containerWindow.Top = loginWindow.Top;
+                    containerWindow.WindowStartupLocation = loginWindow.WindowStartupLocation;
+                    
+                    // Navigate to sign up page
+                    containerWindow.NavigateToSignUpPage();
+                    
+                    // Set as main application window
+                    Application.Current.MainWindow = containerWindow;
+                    
+                    // Show the container window
+                    containerWindow.Show();
+                    
+                    // Close the login window
+                    loginWindow.Close();
                 }
                 else
                 {

@@ -185,8 +185,9 @@ namespace Atom.VPN.Demo
             
             try
             {
-                // Create the login window instead of login page
+                // Create the login window
                 var loginWindow = new LoginWindow();
+                loginWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                 
                 // Make sure the login window is created successfully before closing the splash screen
                 loginWindow.Closed += (s, args) => 
