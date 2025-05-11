@@ -29,16 +29,15 @@ namespace Atom.VPN.Demo
         {
             try
             {
-                if (NavigationService != null)
+                MainContainerWindow mainWindow = Application.Current.MainWindow as MainContainerWindow;
+                if (mainWindow != null)
                 {
-                    NavigationService.Navigate(new AccountPage());
+                    mainWindow.NavigateToEditProfilePage();
                     e.Handled = true;
                 }
-                else
+                else if (NavigationService != null)
                 {
-                    // Fallback if NavigationService is null
-                    MainContainerWindow mainWindow = Application.Current.MainWindow as MainContainerWindow;
-                    mainWindow?.NavigateToAccountPage();
+                    NavigationService.Navigate(new EditProfilePage());
                     e.Handled = true;
                 }
             }

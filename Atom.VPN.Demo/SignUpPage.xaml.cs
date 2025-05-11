@@ -114,7 +114,7 @@ namespace Atom.VPN.Demo
             {
                 // Initialize the text box field from the XAML element
                 passwordTextBox = PasswordTextBox; // Ensure PasswordTextBox is accessible
-
+                
                 // Get the show password button from PasswordBox template
                 if (PasswordBox != null && PasswordBox.Template != null && 
                     PasswordBox.Template.FindName("ShowPasswordButton", PasswordBox) is Button showPasswordButton)
@@ -122,13 +122,13 @@ namespace Atom.VPN.Demo
                     showPasswordButton.Click += (sender, args) => 
                     {
                         if (PasswordBox != null && passwordTextBox != null)
-                        {
-                            // Show the text version and hide the password version
-                            passwordTextBox.Text = PasswordBox.Password;
-                            PasswordBox.Visibility = Visibility.Collapsed;
-                            passwordTextBox.Visibility = Visibility.Visible;
+                    {
+                        // Show the text version and hide the password version
+                        passwordTextBox.Text = PasswordBox.Password;
+                        PasswordBox.Visibility = Visibility.Collapsed;
+                        passwordTextBox.Visibility = Visibility.Visible;
                             passwordTextBox.Focus(); // Keep focus on the field
-                            args.Handled = true;
+                        args.Handled = true;
                         }
                     };
                 }
@@ -140,13 +140,13 @@ namespace Atom.VPN.Demo
                     hidePasswordButton.Click += (sender, args) => 
                     {
                         if (PasswordBox != null && passwordTextBox != null)
-                        {
-                            // Show the password version and hide the text version
-                            PasswordBox.Password = passwordTextBox.Text;
-                            passwordTextBox.Visibility = Visibility.Collapsed;
-                            PasswordBox.Visibility = Visibility.Visible;
+                    {
+                        // Show the password version and hide the text version
+                        PasswordBox.Password = passwordTextBox.Text;
+                        passwordTextBox.Visibility = Visibility.Collapsed;
+                        PasswordBox.Visibility = Visibility.Visible;
                             PasswordBox.Focus(); // Keep focus on the field
-                            args.Handled = true;
+                        args.Handled = true;
                         }
                     };
                 }
@@ -156,19 +156,19 @@ namespace Atom.VPN.Demo
                 {
                     PasswordBox.PasswordChanged += (sender, args) => 
                     {
-                        if (passwordTextBox.Visibility == Visibility.Visible)
-                        {
-                            passwordTextBox.Text = PasswordBox.Password;
-                        }
-                    };
-
-                    passwordTextBox.TextChanged += (sender, args) => 
+                    if (passwordTextBox.Visibility == Visibility.Visible)
                     {
-                        if (PasswordBox.Visibility == Visibility.Visible)
-                        {
-                            PasswordBox.Password = passwordTextBox.Text;
-                        }
-                    };
+                        passwordTextBox.Text = PasswordBox.Password;
+                    }
+                };
+
+                passwordTextBox.TextChanged += (sender, args) => 
+                {
+                    if (PasswordBox.Visibility == Visibility.Visible)
+                    {
+                        PasswordBox.Password = passwordTextBox.Text;
+                    }
+                };
                 }
             };
         }

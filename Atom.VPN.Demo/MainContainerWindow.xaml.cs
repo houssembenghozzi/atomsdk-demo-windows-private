@@ -143,5 +143,13 @@ namespace Atom.VPN.Demo
         {
             MainFrame.Navigate(new HelpCenterPage());
         }
+
+        /// <summary>
+        /// Navigates to the edit profile page
+        /// </summary>
+        public void NavigateToEditProfilePage()
+        {
+            MainFrame.Navigate(new EditProfilePage());
+        }
     }
 } 

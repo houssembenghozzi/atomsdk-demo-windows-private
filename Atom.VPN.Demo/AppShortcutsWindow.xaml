@@ -60,7 +60,7 @@
                                     <!-- App Icon -->
                                     <Image Grid.Column="0" 
                                            Source="{Binding Key, Converter={StaticResource IconConverter}}" 
-                                           Width="40" 
+                                            Width="40" 
                                            Height="40"/>
                                     
                                     <!-- App Name -->

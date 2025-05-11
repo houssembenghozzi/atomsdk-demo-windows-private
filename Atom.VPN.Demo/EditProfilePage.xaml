@@ -15,6 +15,7 @@
                 </Button>
                 <TextBlock Text="Edit Profile" FontWeight="Bold" FontSize="20" Foreground="#323438" VerticalAlignment="Center" Margin="8,0,0,0"/>
             </StackPanel>
+            <!-- Name -->
             <Border Background="White" CornerRadius="12" Margin="0,0,0,16">
                 <Grid Height="56">
                     <Grid.ColumnDefinitions>
@@ -22,14 +23,23 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Viewbox Width="24" Height="24" Margin="16,0,8,0" VerticalAlignment="Center">
-                        <Canvas Width="20" Height="20">
-                            <Ellipse Width="20" Height="20" Stroke="#212121" StrokeThickness="1.5"/>
-                            <Ellipse Width="8" Height="8" Canvas.Left="6" Canvas.Top="4" Stroke="#212121" StrokeThickness="1.5"/>
-                        </Canvas>
+                        <Rectangle Width="20" Height="20">
+                            <Rectangle.Fill>
+                                <ImageBrush ImageSource="/Resources/icon/profile.ico"/>
+                            </Rectangle.Fill>
+                        </Rectangle>
                     </Viewbox>
-                    <TextBox Grid.Column="1" Text="Andrew Ainsley" FontSize="16" Foreground="#212121" BorderThickness="0" Background="Transparent" VerticalAlignment="Center"/>
+                    <TextBox x:Name="NameTextBox"
+                             Grid.Column="1"
+                             Text=""
+                             FontSize="16"
+                             Foreground="#212121"
+                             BorderThickness="0"
+                             Background="Transparent"
+                             VerticalAlignment="Center"/>
                 </Grid>
             </Border>
+            <!-- Country -->
             <Border Background="White" CornerRadius="12" Margin="0,0,0,16">
                 <Grid Height="56">
                     <Grid.ColumnDefinitions>
@@ -37,36 +47,88 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Viewbox Width="24" Height="24" Margin="16,0,8,0" VerticalAlignment="Center">
-                        <Canvas Width="20" Height="20">
-                            <Rectangle Width="20" Height="14" Stroke="#212121" StrokeThickness="1.5"/>
-                            <Line X1="2" Y1="2" X2="18" Y2="12" Stroke="#212121" StrokeThickness="1.5"/>
-                            <Line X1="18" Y1="2" X2="2" Y2="12" Stroke="#212121" StrokeThickness="1.5"/>
-                        </Canvas>
+                        <Rectangle Width="20" Height="20">
+                            <Rectangle.Fill>
+                                <ImageBrush ImageSource="/Resources/icon/global.ico"/>
+                            </Rectangle.Fill>
+                        </Rectangle>
                     </Viewbox>
-                    <TextBox Grid.Column="1" Text="andrew_ainsley@yourdomain.com" FontSize="16" Foreground="#212121" BorderThickness="0" Background="Transparent" VerticalAlignment="Center"/>
+                    <Grid Grid.Column="1" VerticalAlignment="Center" Margin="0,0,12,0">
+                        <ComboBox x:Name="CountryComboBox" 
+                              FontSize="16" 
+                              Foreground="#212121" 
+                              BorderThickness="0" 
+                              Background="Transparent" 
+                              VerticalAlignment="Center"
+                              SelectionChanged="CountryComboBox_SelectionChanged"
+                              IsEditable="True"
+                              StaysOpenOnEdit="True"
+                              IsTextSearchEnabled="True"
+                              TextSearch.TextPath="Name">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" FontSize="14" Foreground="#212121"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                            <ComboBox.Resources>
+                                <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="White"/>
+                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#F0F0F0"/>
+                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="#212121"/>
+                                <Style TargetType="{x:Type ComboBoxItem}">
+                                    <Setter Property="Background" Value="White"/>
+                                    <Setter Property="Padding" Value="8,6"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#F0F0F0"/>
+                                            <Setter Property="Foreground" Value="#212121"/>
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="#E3E3E3"/>
+                                            <Setter Property="Foreground" Value="#212121"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ComboBox.Resources>
+                        </ComboBox>
+                    </Grid>
                 </Grid>
             </Border>
+            <!-- Email -->
+            <Border Background="White" CornerRadius="12" Margin="0,0,0,16">
+                <Grid Height="56">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Viewbox Width="24" Height="24" Margin="16,0,8,0" VerticalAlignment="Center">
+                        <Rectangle Width="20" Height="20">
+                            <Rectangle.Fill>
+                                <ImageBrush ImageSource="/Resources/icon/sms.ico"/>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </Viewbox>
+                    <TextBox x:Name="EmailTextBox" Grid.Column="1" Text="" FontSize="16" Foreground="#212121" BorderThickness="0" Background="Transparent" VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+            <!-- Phone -->
             <Border Background="White" CornerRadius="12" Margin="0,0,0,32">
                 <Grid Height="56">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <Viewbox Width="24" Height="24" Margin="16,0,8,0" VerticalAlignment="Center">
-                        <Canvas Width="20" Height="20">
-                            <Ellipse Width="20" Height="20" Stroke="#212121" StrokeThickness="1.5"/>
-                        </Canvas>
+                         <Rectangle Width="20" Height="20">
+                            <Rectangle.Fill>
+                                <ImageBrush ImageSource="/Resources/icon/sms.ico"/>
+                            </Rectangle.Fill>
+                        </Rectangle>
                     </Viewbox>
-                    <ComboBox Grid.Column="1" SelectedIndex="0" FontSize="16" Foreground="#212121" BorderThickness="0" Background="Transparent" VerticalAlignment="Center">
-                        <ComboBoxItem Content="United States"/>
-                        <ComboBoxItem Content="Canada"/>
-                        <ComboBoxItem Content="United Kingdom"/>
-                    </ComboBox>
-                    <Path Grid.Column="2" Data="M7.25391 5.05911L13.0105 10.8157L7.25391 16.5723" Stroke="#212121" StrokeThickness="1.48026" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Width="12" Height="6" Stretch="Uniform" VerticalAlignment="Center" Margin="0,0,16,0"/>
+                    <TextBox x:Name="PhoneTextBox" Grid.Column="1" Text="" FontSize="16" Foreground="#212121" BorderThickness="0" Background="Transparent" VerticalAlignment="Center"/>
                 </Grid>
             </Border>
-            <Button Content="Save" Height="56" Background="#212121" Foreground="White" FontWeight="Bold" FontSize="18" BorderThickness="0" Margin="0,0,0,0"/>
+            
+            <Button x:Name="SaveButton" Content="Save" Height="56" Background="#212121" Foreground="White" FontWeight="Bold" FontSize="18" BorderThickness="0" Margin="0,0,0,0"/>
         </StackPanel>
     </Grid>
 </Page> 
