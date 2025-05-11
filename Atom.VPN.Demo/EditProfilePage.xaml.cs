@@ -100,69 +100,36 @@ namespace Atom.VPN.Demo
                 
             if (countries != null)
             {
-                CountryComboBox.ItemsSource = countries.Select(c => c.Name).ToList();
+                // Clear any existing items
+                CountryComboBox.Items.Clear();
                 
-                // Setup ComboBox filtering when typing
-                CountryComboBox.IsEditable = true;
-                CountryComboBox.StaysOpenOnEdit = true;
-                CountryComboBox.IsTextSearchEnabled = true;
-                
-                // Add event handler for text filtering
-                CountryComboBox.KeyUp += CountryComboBox_KeyUp;
+                // Add countries as ComboBoxItems for better styling and search
+                foreach (var country in countries)
+                {
+                    string countryName = GetCountryInfoProperty(country, "Name");
+                    if (!string.IsNullOrEmpty(countryName))
+                    {
+                        ComboBoxItem item = new ComboBoxItem();
+                        item.Content = countryName;
+                        item.Tag = country; // Store the country object for later reference
+                        CountryComboBox.Items.Add(item);
+                    }
+                }
             }
             else
             {
                 // Fallback - hardcode a few countries for testing
-                CountryComboBox.ItemsSource = new List<string> { "United States", "Canada", "United Kingdom", "Australia" };
-            }
-        }
-        
-        private void CountryComboBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            ComboBox comboBox = (ComboBox)sender;
-            
-            if (comboBox.IsDropDownOpen)
-            {
-                // Get the search text from the editable part
-                string searchText = comboBox.Text.ToLower();
-                
-                // Get the original list
-                var originalList = GetOriginalCountryList();
-                
-                // Filter the countries based on the search text
-                if (!string.IsNullOrEmpty(searchText))
+                CountryComboBox.Items.Clear();
+                string[] fallbackCountries = { "United States", "Canada", "United Kingdom", "Australia" };
+                foreach (string country in fallbackCountries)
                 {
-                    var filteredItems = originalList.Where(c => c.ToLower().Contains(searchText)).ToList();
-                    comboBox.ItemsSource = filteredItems;
-                    
-                    // Keep the dropdown open during filtering
-                    comboBox.IsDropDownOpen = true;
-                }
-                else
-                {
-                    // If empty, show all
-                    comboBox.ItemsSource = originalList;
+                    ComboBoxItem item = new ComboBoxItem();
+                    item.Content = country;
+                    CountryComboBox.Items.Add(item);
                 }
             }
         }
         
-        private List<string> GetOriginalCountryList()
-        {
-            // Try to get the original countries list
-            var countries = typeof(Atom.VPN.Demo.CountryData).Assembly.GetType("Atom.VPN.Demo.CountryData")
-                ?.GetProperty("AllCountries")?.GetValue(null) as System.Collections.Generic.List<Atom.VPN.Demo.CountryInfo>;
-                
-            if (countries != null)
-            {
-                return countries.Select(c => c.Name).ToList();
-            }
-            else
-            {
-                // Fallback
-                return new List<string> { "United States", "Canada", "United Kingdom", "Australia" };
-            }
-        }
-
         private async void EditProfilePage_Loaded(object sender, RoutedEventArgs e)
         {
             _isCountryComboBoxLoaded = false; // Reset flag
@@ -204,17 +171,28 @@ namespace Atom.VPN.Demo
                         // Convert country code to name and select in ComboBox
                         string countryName = GetCountryNameByCode(userData.Country ?? "");
                         
-                        // Force the text to show regardless of whether it's in the list
-                        if (CountryComboBox.IsEditable)
+                        // Find and select the ComboBoxItem with this country name
+                        SelectCountryByName(countryName);
+                        
+                        // Set phone code based on country
+                        UpdateCountryCode(countryName);
+                        
+                        // Set phone number without country code
+                        if (!string.IsNullOrEmpty(userData.Phone))
                         {
-                            CountryComboBox.Text = countryName;
+                            string phoneCode = GetCountryCodeFromCountryName(countryName);
+                            if (!string.IsNullOrEmpty(phoneCode) && userData.Phone.StartsWith(phoneCode))
+                            {
+                                // Remove country code from phone number
+                                PhoneTextBox.Text = userData.Phone.Substring(phoneCode.Length).Trim();
+                            }
+                            else
+                            {
+                                // Keep phone as is if no country code found
+                                PhoneTextBox.Text = userData.Phone;
+                            }
                         }
                         
-                        // Also try to select in the list if it exists
-                        CountryComboBox.SelectedItem = countryName;
-                        
-                        // If countryName was the code itself (not found), ComboBox won't select. Handle as needed.
-
                     }
                     else
                     {
@@ -242,6 +220,24 @@ namespace Atom.VPN.Demo
             }
         }
 
+        private void UpdateCountryCode(string countryName)
+        {
+            // Get phone code for selected country
+            string phoneCode = GetCountryCodeFromCountryName(countryName);
+            
+            // Update the country code display
+            CountryCodeTextBlock.Text = !string.IsNullOrEmpty(phoneCode) ? phoneCode : "+00";
+        }
+        
+        private string GetCountryCodeFromCountryName(string countryName)
+        {
+            if (string.IsNullOrEmpty(countryName))
+                return "";
+                
+            var countryInfo = GetCountryInfoByName(countryName);
+            return GetCountryInfoProperty(countryInfo, "PhoneCode") ?? "";
+        }
+
         private void CountryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (!_isCountryComboBoxLoaded || CountryComboBox.SelectedItem == null) // Check flag and if an item is selected
@@ -249,78 +245,26 @@ namespace Atom.VPN.Demo
                 return;
             }
 
-            string selectedCountryName = CountryComboBox.SelectedItem.ToString();
-            var selectedCountryInfo = GetCountryInfoByName(selectedCountryName);
-
-            if (selectedCountryInfo != null)
+            if (CountryComboBox.SelectedItem is ComboBoxItem selectedItem)
             {
-                string phoneCode = GetCountryInfoProperty(selectedCountryInfo, "PhoneCode");
+                string selectedCountryName = selectedItem.Content.ToString();
                 
-                if (!string.IsNullOrEmpty(phoneCode))
+                // Update the country code display
+                UpdateCountryCode(selectedCountryName);
+            }
+        }
+
+        private void SelectCountryByName(string countryName)
+        {
+            if (string.IsNullOrEmpty(countryName))
+                return;
+                
+            foreach (ComboBoxItem item in CountryComboBox.Items)
+            {
+                if (item.Content.ToString() == countryName)
                 {
-                    // Get current phone number
-                    string currentPhone = PhoneTextBox.Text;
-                    
-                    // Check if the current phone number starts with any known country code
-                    bool hasKnownPrefix = false;
-                    string existingPrefix = "";
-                    
-                    try
-                    {
-                        var countriesField = typeof(Atom.VPN.Demo.CountryData).Assembly
-                            .GetType("Atom.VPN.Demo.CountryData")?
-                            .GetField("AllCountries");
-                            
-                        if (countriesField != null)
-                        {
-                            var countries = countriesField.GetValue(null) as System.Collections.IEnumerable;
-                            if (countries != null)
-                            {
-                                foreach (var country in countries)
-                                {
-                                    var countryPhoneCode = country.GetType().GetProperty("PhoneCode")?.GetValue(country) as string;
-                                    if (!string.IsNullOrEmpty(countryPhoneCode) && currentPhone.StartsWith(countryPhoneCode))
-                                    {
-                                        hasKnownPrefix = true;
-                                        existingPrefix = countryPhoneCode;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    catch 
-                    {
-                        // Fallback to simple check for common prefixes if reflection fails
-                        // Add common prefixes here for checking
-                        string[] commonPrefixes = new[] { "+1", "+44", "+61", "+33", "+49", "+86", "+91" };
-                        foreach (string prefix in commonPrefixes)
-                        {
-                            if (currentPhone.StartsWith(prefix))
-                            {
-                                hasKnownPrefix = true;
-                                existingPrefix = prefix;
-                                break;
-                            }
-                        }
-                    }
-                    
-                    // Update the phone number
-                    if (string.IsNullOrEmpty(currentPhone))
-                    {
-                        // If empty, just set the new code
-                        PhoneTextBox.Text = phoneCode;
-                    }
-                    else if (hasKnownPrefix)
-                    {
-                        // Replace only the prefix part
-                        PhoneTextBox.Text = phoneCode + currentPhone.Substring(existingPrefix.Length);
-                    }
-                    else
-                    {
-                        // If no known prefix, add the new country code in front of existing number
-                        PhoneTextBox.Text = phoneCode + " " + currentPhone;
-                    }
+                    CountryComboBox.SelectedItem = item;
+                    break;
                 }
             }
         }
@@ -339,23 +283,42 @@ namespace Atom.VPN.Demo
             SaveButton.Content = "Saving...";
 
             // Get selected country code from ComboBox
-            string selectedCountryName = CountryComboBox.SelectedItem?.ToString();
             string countryCodeToSave = null;
-            if (!string.IsNullOrEmpty(selectedCountryName))
+            
+            if (CountryComboBox.SelectedItem is ComboBoxItem selectedItem)
             {
-                var selectedCountryInfo = GetCountryInfoByName(selectedCountryName);
-                if (selectedCountryInfo != null)
+                string selectedCountryName = selectedItem.Content.ToString();
+                
+                // Try to get from Tag first (which would contain the actual CountryInfo object)
+                if (selectedItem.Tag != null)
                 {
-                    countryCodeToSave = GetCountryInfoProperty(selectedCountryInfo, "Code");
+                    countryCodeToSave = GetCountryInfoProperty(selectedItem.Tag, "Code");
                 }
+                
+                // If Tag wasn't available, look up by name
+                if (string.IsNullOrEmpty(countryCodeToSave))
+                {
+                    var selectedCountryInfo = GetCountryInfoByName(selectedCountryName);
+                    if (selectedCountryInfo != null)
+                    {
+                        countryCodeToSave = GetCountryInfoProperty(selectedCountryInfo, "Code");
+                    }
+                }
+            }
+
+            // Get the full phone number with country code
+            string fullPhoneNumber = CountryCodeTextBlock.Text;
+            if (!string.IsNullOrEmpty(PhoneTextBox.Text))
+            {
+                fullPhoneNumber += " " + PhoneTextBox.Text.Trim();
             }
 
             var updateRequest = new UpdateProfileRequest
             {
                 Name = NameTextBox.Text,
                 Email = EmailTextBox.Text,
-                Phone = PhoneTextBox.Text,
-                Country = countryCodeToSave 
+                Country = countryCodeToSave,
+                Phone = fullPhoneNumber.Trim()
             };
 
             try
