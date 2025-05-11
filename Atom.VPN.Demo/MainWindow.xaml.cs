@@ -31,6 +31,33 @@ namespace Atom.VPN.Demo
             SecretKey = "17355649429f7d4adbe993a8d227bc580c8f369b";
             
             // Note: InitializeSDK will now be called by the SplashScreen
+            
+            // Load SVG image
+            Loaded += MainWindow_Loaded;
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Find the SVG image control and set its source using our helper
+                var svgImage = this.FindName("svgImage") as Image;
+                if (svgImage != null)
+                {
+                    // Try finding the SVG file in multiple locations
+                    string svgPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "sample.svg");
+                    if (!System.IO.File.Exists(svgPath))
+                    {
+                        // Try the relative path
+                        svgPath = "Resources/sample.svg";
+                    }
+                    svgImage.Source = Helpers.SvgHelper.ConvertSvgToImageSource(svgPath);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading SVG: {ex.Message}");
+            }
         }
 
         AtomManager atomManagerInstance;

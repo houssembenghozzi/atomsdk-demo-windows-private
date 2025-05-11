@@ -58,16 +58,10 @@
                                     </Grid.ColumnDefinitions>
                                     
                                     <!-- App Icon -->
-                                    <Border x:Name="AppIconBorder" 
-                                            Grid.Column="0" 
+                                    <Image Grid.Column="0" 
+                                           Source="{Binding Key, Converter={StaticResource IconConverter}}" 
                                             Width="40" 
-                                            Height="40" 
-                                            CornerRadius="20">
-                                        <Image x:Name="AppIcon" 
-                                               Source="{Binding Key, Converter={StaticResource IconConverter}}" 
-                                               Width="25" 
-                                               Height="25"/>
-                                    </Border>
+                                           Height="40"/>
                                     
                                     <!-- App Name -->
                                     <TextBlock Grid.Column="1" 
