@@ -84,41 +84,67 @@ namespace Atom.VPN.Demo
         public EditProfilePage()
         {
             InitializeComponent();
+            
+            // Populate the country dropdown first
+            PopulateCountryComboBox();
+            
+            // Then set up event handlers
             Loaded += EditProfilePage_Loaded;
             SaveButton.Click += SaveButton_Click;
-            PopulateCountryComboBox();
         }
 
         private void PopulateCountryComboBox()
         {
-            // Test with the test helper
-            string test = Atom.VPN.Demo.TestHelper.GetTestString();
+            // Clear any existing items first
+            CountryComboBox.Items.Clear();
             
-            // Try explicit assembly qualification
-            var countries = typeof(Atom.VPN.Demo.CountryData).Assembly.GetType("Atom.VPN.Demo.CountryData")
-                ?.GetProperty("AllCountries")?.GetValue(null) as System.Collections.Generic.List<Atom.VPN.Demo.CountryInfo>;
-                
-            if (countries != null)
+            try
             {
-                // Clear any existing items
-                CountryComboBox.Items.Clear();
+                // Get the countries list directly
+                var countries = CountryData.AllCountries;
                 
-                // Add countries as ComboBoxItems for better styling and search
-                foreach (var country in countries)
+                if (countries != null && countries.Count > 0)
                 {
-                    string countryName = GetCountryInfoProperty(country, "Name");
-                    if (!string.IsNullOrEmpty(countryName))
+                    // Add countries to the ComboBox
+                    foreach (var country in countries)
+                    {
+                        if (!string.IsNullOrEmpty(country.Name))
+                        {
+                            ComboBoxItem item = new ComboBoxItem();
+                            item.Content = country.Name;
+                            item.Tag = country; // Store the country object for later reference
+                            CountryComboBox.Items.Add(item);
+                        }
+                    }
+                    
+                    // Set a default selected item if none is selected
+                    if (CountryComboBox.SelectedIndex == -1 && CountryComboBox.Items.Count > 0)
+                    {
+                        // Select first item as default
+                        CountryComboBox.SelectedIndex = 0;
+                    }
+                }
+                else
+                {
+                    // Fallback - hardcode a few countries for testing
+                    string[] fallbackCountries = { "United States", "Canada", "United Kingdom", "Australia" };
+                    foreach (string country in fallbackCountries)
                     {
                         ComboBoxItem item = new ComboBoxItem();
-                        item.Content = countryName;
-                        item.Tag = country; // Store the country object for later reference
+                        item.Content = country;
                         CountryComboBox.Items.Add(item);
+                    }
+                    
+                    // Set a default selected item
+                    if (CountryComboBox.Items.Count > 0)
+                    {
+                        CountryComboBox.SelectedIndex = 0;
                     }
                 }
             }
-            else
+            catch (Exception ex)
             {
-                // Fallback - hardcode a few countries for testing
+                // In case of any error, use the fallback countries
                 CountryComboBox.Items.Clear();
                 string[] fallbackCountries = { "United States", "Canada", "United Kingdom", "Australia" };
                 foreach (string country in fallbackCountries)
@@ -126,6 +152,12 @@ namespace Atom.VPN.Demo
                     ComboBoxItem item = new ComboBoxItem();
                     item.Content = country;
                     CountryComboBox.Items.Add(item);
+                }
+                
+                // Set a default selected item
+                if (CountryComboBox.Items.Count > 0)
+                {
+                    CountryComboBox.SelectedIndex = 0;
                 }
             }
         }
@@ -240,7 +272,9 @@ namespace Atom.VPN.Demo
 
         private void CountryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!_isCountryComboBoxLoaded || CountryComboBox.SelectedItem == null) // Check flag and if an item is selected
+            // Remove the flag check that was preventing initial clicks from working
+            // Only validate that an item is actually selected
+            if (CountryComboBox.SelectedItem == null)
             {
                 return;
             }
@@ -248,8 +282,7 @@ namespace Atom.VPN.Demo
             if (CountryComboBox.SelectedItem is ComboBoxItem selectedItem)
             {
                 string selectedCountryName = selectedItem.Content.ToString();
-                
-                // Update the country code display
+                // Update country code for phone
                 UpdateCountryCode(selectedCountryName);
             }
         }
@@ -259,13 +292,27 @@ namespace Atom.VPN.Demo
             if (string.IsNullOrEmpty(countryName))
                 return;
                 
-            foreach (ComboBoxItem item in CountryComboBox.Items)
+            // Ensure the ComboBox has items
+            if (CountryComboBox.Items.Count == 0)
             {
-                if (item.Content.ToString() == countryName)
+                PopulateCountryComboBox(); // Repopulate if needed
+            }
+                
+            // Find and select the ComboBoxItem with this country name
+            for (int i = 0; i < CountryComboBox.Items.Count; i++)
+            {
+                if (CountryComboBox.Items[i] is ComboBoxItem item && 
+                    item.Content.ToString().Equals(countryName, StringComparison.OrdinalIgnoreCase))
                 {
-                    CountryComboBox.SelectedItem = item;
-                    break;
+                    CountryComboBox.SelectedIndex = i;
+                    return;
                 }
+            }
+            
+            // If country not found, select the first item as fallback
+            if (CountryComboBox.Items.Count > 0 && CountryComboBox.SelectedIndex == -1)
+            {
+                CountryComboBox.SelectedIndex = 0;
             }
         }
 
