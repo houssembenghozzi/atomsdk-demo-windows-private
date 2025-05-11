@@ -1,6 +1,6 @@
 ﻿ # ATOM VPN SDK demo for Windows Desktop Applications
 
-﻿
+
 This is a demo application for Windows Desktop Applications with basic usage of ATOM VPN SDK which will help the developers to create smooth applications over ATOM SDK quickly.
 
 ## SDK Features covered in this Demo
@@ -23,7 +23,7 @@ This is a demo application for Windows Desktop Applications with basic usage of 
 * Minimum .Net Framework 4.5 required
 * Compatible with ATOM SDK Version 3.0 and onwards 
 
-## Supported Protocols
+## Supported Protocols 
 
 * IKEv2
 * TCP
