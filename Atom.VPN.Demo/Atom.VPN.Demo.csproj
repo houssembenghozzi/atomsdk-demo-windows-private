@@ -106,6 +106,7 @@
       <DependentUpon>HelpCenterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AtomHelper.cs" />
+    <Compile Include="Helpers\SvgHelper.cs" />
     <Compile Include="Interfaces\IConnection.cs" />
     <Compile Include="LanguagePage.xaml.cs">
       <DependentUpon>LanguagePage.xaml</DependentUpon>
@@ -335,13 +336,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\ic_atom.ico" />
-    <Resource Include="Resources\Images\world_map.png" />
-    <Resource Include="Resources\Images\fortis_logo.png" />
-    <Resource Include="Resources\Images\fortis_icon.png" />
-    <Resource Include="Resources\icon\mail.svg" />
-    <Resource Include="Resources\icon\lock.svg" />
-    <Resource Include="Resources\icon\eye.svg" />
-    <Resource Include="Resources\icon\eye-slash.svg" />
+    <Resource Include="Resources\fortis_logo.png" />
+    <Resource Include="Resources\world_map.png" />
+    <Content Include="Resources\sample.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
