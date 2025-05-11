@@ -158,13 +158,13 @@ namespace Atom.VPN.Demo
                     {
                     if (passwordTextBox.Visibility == Visibility.Visible)
                     {
-                        passwordTextBox.Text = PasswordBox.Password;
-                    }
-                };
+                        if (passwordTextBox.Visibility == Visibility.Visible)
+                        {
+                            passwordTextBox.Text = PasswordBox.Password;
+                        }
+                    };
 
-                passwordTextBox.TextChanged += (sender, args) => 
-                {
-                    if (PasswordBox.Visibility == Visibility.Visible)
+                    passwordTextBox.TextChanged += (sender, args) => 
                     {
                         PasswordBox.Password = passwordTextBox.Text;
                     }
