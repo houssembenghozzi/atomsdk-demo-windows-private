@@ -56,27 +56,34 @@
         
         <Style x:Key="PlanCardSelectedStyle" TargetType="Border" BasedOn="{StaticResource PlanCardStyle}">
             <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Background" Value="#1F1F1F"/>
             <Setter Property="BorderBrush">
                 <Setter.Value>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                        <GradientStop Color="#6A11CB" Offset="0"/>
-                        <GradientStop Color="#2575FC" Offset="1"/>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="#FD1414" Offset="0"/>
+                        <GradientStop Color="#6863F7" Offset="1"/>
                     </LinearGradientBrush>
                 </Setter.Value>
             </Setter>
         </Style>
         
-        <Style x:Key="SavePercentStyle" TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="{StaticResource WorkSansMedium}"/>
-            <Setter Property="FontSize" Value="11"/>
-            <Setter Property="Foreground" Value="#4CAF50"/>
-            <Setter Property="Background" Value="#E8F5E9"/>
+        <Style x:Key="SavePercentStyle" TargetType="Border">
+            <Setter Property="Background" Value="#16D770"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="CornerRadius" Value="4"/>
             <Setter Property="Padding" Value="6,3"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        
+        <Style x:Key="SavePercentTextStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource WorkSansBold}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="TextAlignment" Value="Center"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="CornerRadius" Value="4"/>
+            <Setter Property="LineHeight" Value="14"/>
         </Style>
         
         <Style x:Key="NextButtonStyle" TargetType="Button">
@@ -88,6 +95,7 @@
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Width" Value="240"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Visibility" Value="Collapsed"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -106,48 +114,78 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
+        <Style x:Key="FeatureTextStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource WorkSansBold}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="LineHeight" Value="19.6"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
     </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
+        <!-- Global gap from top -->
+        <Rectangle Grid.Row="0" Height="25" Fill="Transparent"/>
+        
         <!-- Header with back button -->
-        <Grid Grid.Row="0" Margin="0,5,0,15">
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
             <Button x:Name="BackButton" 
+                    Grid.Column="0"
                     Style="{StaticResource BackButtonStyle}"
                     HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Margin="15,0,0,0"
                     Click="BackButton_Click"/>
                 
-            <TextBlock Text="Subscription" 
+            <TextBlock Grid.Column="1"
+                       Text="Subscription" 
                        FontFamily="{StaticResource WorkSansBold}" 
                        FontSize="20" 
+                       FontWeight="Bold"
+                       LineHeight="29"
                        HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
+                       VerticalAlignment="Center"
+                       Margin="-40,0,0,0"/>
         </Grid>
         
         <!-- Feature section -->
-        <StackPanel Grid.Row="1" Margin="25,0">
+        <StackPanel Grid.Row="2" Margin="25,20,25,0">
             <TextBlock Text="Unlimited access" 
                        FontFamily="{StaticResource WorkSansBold}"
-                       FontSize="24" 
+                       FontSize="30"
+                       FontWeight="Bold"
+                       LineHeight="36"
                        HorizontalAlignment="Center"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"
                        Margin="0,0,0,4"/>
                        
-            <TextBlock Text="to all feature" 
+            <TextBlock Text="to all features" 
                        FontFamily="{StaticResource WorkSansBold}"
-                       FontSize="24" 
+                       FontSize="30"
+                       FontWeight="Bold"
+                       LineHeight="36"
                        HorizontalAlignment="Center"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"
                        Margin="0,0,0,20"/>
             
             <!-- Features -->
-            <StackPanel>
+            <StackPanel Margin="0,10,0,0">
                 <!-- Feature 1 -->
-                <Grid Margin="0,5">
+                <Grid Margin="0,6">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
@@ -155,20 +193,18 @@
                     
                     <Path Grid.Column="0" 
                           Data="M12,2L1,21H23M12,6L19.53,19H4.47" 
-                          Fill="#FFB300" 
-                          Width="16" 
-                          Height="16"
+                          Fill="#FFCA28" 
+                          Width="18" 
+                          Height="18"
                           Margin="0,0,15,0"/>
                           
                     <TextBlock Grid.Column="1" 
                                Text="Anonymous surfing" 
-                               FontFamily="{StaticResource WorkSansMedium}"
-                               FontSize="14" 
-                               VerticalAlignment="Center"/>
+                               Style="{StaticResource FeatureTextStyle}"/>
                 </Grid>
                 
                 <!-- Feature 2 -->
-                <Grid Margin="0,5">
+                <Grid Margin="0,6">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
@@ -176,20 +212,18 @@
                     
                     <Path Grid.Column="0" 
                           Data="M11.99,18.54L4.62,12.81L3,14.07L12,21.07L21,14.07L19.37,12.8L11.99,18.54M12,16L19.36,10.27L21,9L12,2L3,9L4.63,10.27L12,16"
-                          Fill="#FFB300" 
-                          Width="16" 
-                          Height="16"
+                          Fill="#FFCA28" 
+                          Width="18" 
+                          Height="18"
                           Margin="0,0,15,0"/>
                           
                     <TextBlock Grid.Column="1" 
                                Text="The fastest servers" 
-                               FontFamily="{StaticResource WorkSansMedium}"
-                               FontSize="14" 
-                               VerticalAlignment="Center"/>
+                               Style="{StaticResource FeatureTextStyle}"/>
                 </Grid>
                 
                 <!-- Feature 3 -->
-                <Grid Margin="0,5">
+                <Grid Margin="0,6">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
@@ -197,16 +231,14 @@
                     
                     <Path Grid.Column="0" 
                           Data="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M17.13,17C15.92,18.85 14.11,20.24 12,20.92C9.89,20.24 8.08,18.85 6.87,17C6.53,16.5 6.24,16 6,15.47C6,13.82 8.71,12.47 12,12.47C15.29,12.47 18,13.79 18,15.47C17.76,16 17.47,16.5 17.13,17Z"
-                          Fill="#FFB300" 
-                          Width="16" 
-                          Height="16"
+                          Fill="#FFCA28" 
+                          Width="18" 
+                          Height="18"
                           Margin="0,0,15,0"/>
                           
                     <TextBlock Grid.Column="1" 
                                Text="Traffic via encrypted tunnel" 
-                               FontFamily="{StaticResource WorkSansMedium}"
-                               FontSize="14" 
-                               VerticalAlignment="Center"/>
+                               Style="{StaticResource FeatureTextStyle}"/>
                 </Grid>
             </StackPanel>
             
@@ -216,203 +248,182 @@
                     Margin="0,20,0,20" />
         </StackPanel>
         
-        <!-- Subscription plans -->
-        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Margin="25,0">
-            <StackPanel>
-                <!-- 1 Month Plan -->
-                <Border x:Name="Plan1Month" 
-                        Style="{StaticResource PlanCardStyle}"
-                        Tag="plan1Month"
-                        MouseDown="PlanCard_MouseDown">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        
-                        <StackPanel Grid.Column="0">
-                            <TextBlock Text="1 Month" 
+        <!-- Subscription plans (without ScrollViewer) -->
+        <StackPanel Grid.Row="3" Margin="25,0,25,20">
+            <!-- 1 Month Plan -->
+            <Border x:Name="Plan1Month" 
+                    Style="{StaticResource PlanCardStyle}"
+                    Tag="plan1Month"
+                    MouseDown="PlanCard_MouseDown">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="1 Month" 
+                                   FontFamily="{StaticResource WorkSansBold}"
+                                   FontSize="16"/>
+                        <TextBlock Text="1 Billed monthly" 
+                                   FontFamily="{StaticResource WorkSansRegular}"
+                                   Foreground="#757575"
+                                   FontSize="14"
+                                   Margin="0,4,0,0"/>
+                    </StackPanel>
+                    
+                    <TextBlock Grid.Column="1" 
+                               Text="$4.99" 
+                               FontFamily="{StaticResource WorkSansBold}"
+                               FontSize="20"
+                               VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+
+            <!-- 6 Months Plan -->
+            <Border x:Name="Plan6Months" 
+                    Style="{StaticResource PlanCardStyle}"
+                    Tag="plan6Months"
+                    MouseDown="PlanCard_MouseDown">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <StackPanel Grid.Column="0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <TextBlock Grid.Column="0"
+                                       Text="6 Months" 
                                        FontFamily="{StaticResource WorkSansBold}"
                                        FontSize="16"/>
-                            <TextBlock Text="1 Billed monthly" 
-                                       FontFamily="{StaticResource WorkSansRegular}"
-                                       Foreground="#757575"
-                                       FontSize="14"
-                                       Margin="0,4,0,0"/>
-                        </StackPanel>
+                                       
+                            <Border Grid.Column="1" 
+                                    Style="{StaticResource SavePercentStyle}"
+                                    Margin="10,0,0,0">
+                                <TextBlock Text="Save 15%" 
+                                           Style="{StaticResource SavePercentTextStyle}"/>
+                            </Border>
+                        </Grid>
                         
-                        <TextBlock Grid.Column="1" 
-                                   Text="$4.99" 
-                                   FontFamily="{StaticResource WorkSansBold}"
-                                   FontSize="20"
-                                   VerticalAlignment="Center"/>
-                    </Grid>
-                </Border>
+                        <TextBlock Text="Save $10 annually" 
+                                   FontFamily="{StaticResource WorkSansRegular}"
+                                   Foreground="#757575"
+                                   FontSize="14"
+                                   Margin="0,4,0,0"/>
+                    </StackPanel>
+                    
+                    <TextBlock Grid.Column="1" 
+                               Text="$25.99" 
+                               FontFamily="{StaticResource WorkSansBold}"
+                               FontSize="20"
+                               VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
 
-                <!-- 6 Months Plan -->
-                <Border x:Name="Plan6Months" 
-                        Style="{StaticResource PlanCardStyle}"
-                        Tag="plan6Months"
-                        MouseDown="PlanCard_MouseDown">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        
-                        <StackPanel Grid.Column="0">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                
-                                <TextBlock Grid.Column="0"
-                                           Text="6 Months" 
-                                           FontFamily="{StaticResource WorkSansBold}"
-                                           FontSize="16"/>
-                                           
-                                <Border Grid.Column="1" 
-                                        Background="#E8F5E9" 
-                                        CornerRadius="4" 
-                                        Padding="6,3" 
-                                        Margin="10,0,0,0"
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Left">
-                                    <TextBlock Text="Save 15%" 
-                                               FontFamily="{StaticResource WorkSansMedium}"
-                                               Foreground="#4CAF50"
-                                               FontSize="11"/>
-                                </Border>
-                            </Grid>
+            <!-- 12 Months Plan -->
+            <Border x:Name="Plan12Months" 
+                    Style="{StaticResource PlanCardStyle}"
+                    Tag="plan12Months"
+                    MouseDown="PlanCard_MouseDown">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <StackPanel Grid.Column="0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
                             
-                            <TextBlock Text="Save $10 annually" 
-                                       FontFamily="{StaticResource WorkSansRegular}"
-                                       Foreground="#757575"
-                                       FontSize="14"
-                                       Margin="0,4,0,0"/>
-                        </StackPanel>
+                            <TextBlock Grid.Column="0"
+                                       Text="12 Months" 
+                                       FontFamily="{StaticResource WorkSansBold}"
+                                       FontSize="16"/>
+                                       
+                            <Border Grid.Column="1" 
+                                    Style="{StaticResource SavePercentStyle}"
+                                    Margin="10,0,0,0">
+                                <TextBlock Text="Save 30%" 
+                                           Style="{StaticResource SavePercentTextStyle}"/>
+                            </Border>
+                        </Grid>
                         
-                        <TextBlock Grid.Column="1" 
-                                   Text="$25.99" 
-                                   FontFamily="{StaticResource WorkSansBold}"
-                                   FontSize="20"
-                                   VerticalAlignment="Center"/>
-                    </Grid>
-                </Border>
+                        <TextBlock Text="Save $20 annually" 
+                                   FontFamily="{StaticResource WorkSansRegular}"
+                                   Foreground="#757575"
+                                   FontSize="14"
+                                   Margin="0,4,0,0"/>
+                    </StackPanel>
+                    
+                    <TextBlock Grid.Column="1" 
+                               Text="$49.99" 
+                               FontFamily="{StaticResource WorkSansBold}"
+                               FontSize="20"
+                               VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
 
-                <!-- 12 Months Plan -->
-                <Border x:Name="Plan12Months" 
-                        Style="{StaticResource PlanCardStyle}"
-                        Tag="plan12Months"
-                        MouseDown="PlanCard_MouseDown">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        
-                        <StackPanel Grid.Column="0">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                
-                                <TextBlock Grid.Column="0"
-                                           Text="12 Months" 
-                                           FontFamily="{StaticResource WorkSansBold}"
-                                           FontSize="16"/>
-                                           
-                                <Border Grid.Column="1" 
-                                        Background="#E8F5E9" 
-                                        CornerRadius="4" 
-                                        Padding="6,3" 
-                                        Margin="10,0,0,0"
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Left">
-                                    <TextBlock Text="Save 30%" 
-                                               FontFamily="{StaticResource WorkSansMedium}"
-                                               Foreground="#4CAF50"
-                                               FontSize="11"/>
-                                </Border>
-                            </Grid>
+            <!-- 15 Months Plan -->
+            <Border x:Name="Plan15Months" 
+                    Style="{StaticResource PlanCardStyle}"
+                    Tag="plan15Months"
+                    MouseDown="PlanCard_MouseDown">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <StackPanel Grid.Column="0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
                             
-                            <TextBlock Text="Save $20 annually" 
-                                       FontFamily="{StaticResource WorkSansRegular}"
-                                       Foreground="#757575"
-                                       FontSize="14"
-                                       Margin="0,4,0,0"/>
-                        </StackPanel>
+                            <TextBlock Grid.Column="0"
+                                       Text="15 Months" 
+                                       FontFamily="{StaticResource WorkSansBold}"
+                                       FontSize="16"/>
+                                       
+                            <Border Grid.Column="1" 
+                                    Style="{StaticResource SavePercentStyle}"
+                                    Margin="10,0,0,0">
+                                <TextBlock Text="Save 30%" 
+                                           Style="{StaticResource SavePercentTextStyle}"/>
+                            </Border>
+                        </Grid>
                         
-                        <TextBlock Grid.Column="1" 
-                                   Text="$49.99" 
-                                   FontFamily="{StaticResource WorkSansBold}"
-                                   FontSize="20"
-                                   VerticalAlignment="Center"/>
-                    </Grid>
-                </Border>
-
-                <!-- 15 Months Plan -->
-                <Border x:Name="Plan15Months" 
-                        Style="{StaticResource PlanCardStyle}"
-                        Tag="plan15Months"
-                        MouseDown="PlanCard_MouseDown">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        
-                        <StackPanel Grid.Column="0">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                
-                                <TextBlock Grid.Column="0"
-                                           Text="15 Months" 
-                                           FontFamily="{StaticResource WorkSansBold}"
-                                           FontSize="16"/>
-                                           
-                                <Border Grid.Column="1" 
-                                        Background="#E8F5E9" 
-                                        CornerRadius="4" 
-                                        Padding="6,3" 
-                                        Margin="10,0,0,0"
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Left">
-                                    <TextBlock Text="Save 30%" 
-                                               FontFamily="{StaticResource WorkSansMedium}"
-                                               Foreground="#4CAF50"
-                                               FontSize="11"/>
-                                </Border>
-                            </Grid>
-                            
-                            <TextBlock Text="Save $30 annually" 
-                                       FontFamily="{StaticResource WorkSansRegular}"
-                                       Foreground="#757575"
-                                       FontSize="14"
-                                       Margin="0,4,0,0"/>
-                        </StackPanel>
-                        
-                        <TextBlock Grid.Column="1" 
-                                   Text="$69.99" 
-                                   FontFamily="{StaticResource WorkSansBold}"
-                                   FontSize="20"
-                                   VerticalAlignment="Center"/>
-                    </Grid>
-                </Border>
-            </StackPanel>
-        </ScrollViewer>
-        
-        <!-- Next button -->
-        <Button x:Name="NextButton" 
-                Grid.Row="3" 
-                Content="Next" 
-                Style="{StaticResource NextButtonStyle}"
-                Margin="0,15,0,20"
-                Click="NextButton_Click"/>
+                        <TextBlock Text="Save $30 annually" 
+                                   FontFamily="{StaticResource WorkSansRegular}"
+                                   Foreground="#757575"
+                                   FontSize="14"
+                                   Margin="0,4,0,0"/>
+                    </StackPanel>
+                    
+                    <TextBlock Grid.Column="1" 
+                               Text="$69.99" 
+                               FontFamily="{StaticResource WorkSansBold}"
+                               FontSize="20"
+                               VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+            
+            <!-- Next button -->
+            <Button x:Name="NextButton" 
+                    Content="Next" 
+                    Style="{StaticResource NextButtonStyle}"
+                    Margin="0,15,0,0"
+                    Click="NextButton_Click"/>
+        </StackPanel>
     </Grid>
 </Page> 

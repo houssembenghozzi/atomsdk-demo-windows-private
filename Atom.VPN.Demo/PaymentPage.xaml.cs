@@ -43,8 +43,9 @@ namespace Atom.VPN.Demo
             InitializeComponent();
             Debug.WriteLine($"{TAG}: Page Created");
             
-            // Set initial selection (1 Month plan)
-            PlanCard_MouseDown(Plan1Month, null);
+            // Initially, no plan is selected and the Next button is hidden
+            // The Next button's visibility is set to Collapsed in XAML
+            NextButton.Visibility = Visibility.Collapsed;
         }
         
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -91,6 +92,9 @@ namespace Atom.VPN.Demo
                         card.Style = FindResource("PlanCardStyle") as Style;
                     }
                 }
+                
+                // Show the Next button when a plan is selected
+                NextButton.Visibility = Visibility.Visible;
             }
         }
         
@@ -103,9 +107,8 @@ namespace Atom.VPN.Demo
         {
             if (selectedPlanPrice == 0.0 || selectedPlanCard == null)
             {
-                // Fallback to 1-month plan if no plan selected
-                selectedPlanPrice = 4.99;
-                selectedPlanName = "1 Month";
+                // No plan selected, don't proceed
+                return;
             }
             
             // Create and show the AddOn dialog
