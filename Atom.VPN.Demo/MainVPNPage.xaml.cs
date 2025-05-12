@@ -407,12 +407,14 @@ namespace Atom.VPN.Demo
         
         private void MenuButton_Click(object sender, RoutedEventArgs e)
         {
-            // Open the side menu
-            var containerWindow = Window.GetWindow(this) as MainContainerWindow;
-            if (containerWindow != null)
-            {
-                containerWindow.OpenMenu();
-            }
+            // Navigate to menu page
+            NavigationService.Navigate(new MenuPage());
+        }
+        
+        private void DedicatedIpCard_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            // Navigate to the payment page for dedicated IP subscription
+            NavigationService.Navigate(new PaymentPage());
         }
         
         // Add logout functionality

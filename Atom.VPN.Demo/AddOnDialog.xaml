@@ -1,0 +1,238 @@
+<Window x:Class="Atom.VPN.Demo.AddOnDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Atom.VPN.Demo"
+        mc:Ignorable="d"
+        Title="Add-ons"
+        Height="380" 
+        Width="400"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        AllowsTransparency="True">
+
+    <Window.Resources>
+        <!-- Font families -->
+        <FontFamily x:Key="WorkSansRegular">/Atom.VPN.Demo;component/Resources/font/WorkSans-Regular.ttf#Work Sans</FontFamily>
+        <FontFamily x:Key="WorkSansBold">/Atom.VPN.Demo;component/Resources/font/WorkSans-Bold.ttf#Work Sans</FontFamily>
+        <FontFamily x:Key="WorkSansMedium">/Atom.VPN.Demo;component/Resources/font/WorkSans-Medium.ttf#Work Sans</FontFamily>
+        <FontFamily x:Key="WorkSansSemiBold">/Atom.VPN.Demo;component/Resources/font/WorkSans-SemiBold.ttf#Work Sans</FontFamily>
+        
+        <!-- Toggle Button Style -->
+        <Style x:Key="ToggleSwitchStyle" TargetType="ToggleButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Grid>
+                            <Border x:Name="BackgroundElement" 
+                                    Background="#E6E6E6" 
+                                    Width="46" 
+                                    Height="24" 
+                                    CornerRadius="12"/>
+                            <Border x:Name="ThumbElement" 
+                                    Background="White" 
+                                    Width="20" 
+                                    Height="20" 
+                                    CornerRadius="10"
+                                    HorizontalAlignment="Left"
+                                    Margin="2,2,0,0">
+                                <Border.Effect>
+                                    <DropShadowEffect ShadowDepth="1" BlurRadius="2" Opacity="0.3" />
+                                </Border.Effect>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="BackgroundElement" Property="Background" Value="#212121"/>
+                                <Setter TargetName="ThumbElement" Property="HorizontalAlignment" Value="Right"/>
+                                <Setter TargetName="ThumbElement" Property="Margin" Value="0,2,2,0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Button Style -->
+        <Style x:Key="PayButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#212121"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="{StaticResource WorkSansMedium}"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Padding" Value="20,14"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Margin" Value="0,20,0,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="25"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#000000"/>
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Border Background="White" 
+            CornerRadius="10" 
+            BorderBrush="#EEEEEE" 
+            BorderThickness="1"
+            Effect="{Binding ElementName=shadowBorder, Path=Effect}">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Header with close button -->
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock Grid.Column="0" 
+                           Text="Add-ons" 
+                           FontFamily="{StaticResource WorkSansBold}" 
+                           FontSize="20" 
+                           Margin="0,0,0,15"/>
+                
+                <Button Grid.Column="1" 
+                        Background="Transparent" 
+                        BorderThickness="0" 
+                        Padding="5"
+                        Click="CloseButton_Click">
+                    <Path Data="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" 
+                          Fill="#757575" 
+                          Width="16" 
+                          Height="16" 
+                          Stretch="Uniform"/>
+                </Button>
+            </Grid>
+            
+            <!-- Main content -->
+            <StackPanel Grid.Row="1" Margin="0,10,0,0">
+                <!-- Selected Plan Summary -->
+                <Border Background="#F5F5F5" 
+                        CornerRadius="8" 
+                        Padding="15" 
+                        Margin="0,0,0,20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBlock x:Name="PlanNameText" 
+                                   Grid.Column="0" 
+                                   Text="1 Month Plan" 
+                                   FontFamily="{StaticResource WorkSansMedium}" 
+                                   FontSize="16"/>
+                        
+                        <TextBlock x:Name="PlanPriceText" 
+                                   Grid.Column="1" 
+                                   Text="$4.99" 
+                                   FontFamily="{StaticResource WorkSansBold}" 
+                                   FontSize="16"/>
+                    </Grid>
+                </Border>
+                
+                <!-- Add-ons Options -->
+                <TextBlock Text="Available Add-ons" 
+                           FontFamily="{StaticResource WorkSansBold}" 
+                           FontSize="16" 
+                           Margin="0,0,0,15"/>
+                
+                <!-- Dedicated IP Option -->
+                <Border Background="White" 
+                        BorderBrush="#EEEEEE" 
+                        BorderThickness="1" 
+                        CornerRadius="8" 
+                        Padding="15" 
+                        Margin="0,0,0,15">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        
+                        <StackPanel Grid.Column="0" Grid.Row="0">
+                            <TextBlock Text="Dedicated IP" 
+                                       FontFamily="{StaticResource WorkSansMedium}" 
+                                       FontSize="16"/>
+                            <TextBlock Text="Get your own static IP address" 
+                                       FontFamily="{StaticResource WorkSansRegular}" 
+                                       FontSize="14" 
+                                       Foreground="#757575" 
+                                       Margin="0,5,0,0"/>
+                        </StackPanel>
+                        
+                        <TextBlock Grid.Column="1" Grid.Row="0" 
+                                   Text="$5.00/mo" 
+                                   FontFamily="{StaticResource WorkSansMedium}" 
+                                   FontSize="16" 
+                                   VerticalAlignment="Top"/>
+                        
+                        <ToggleButton x:Name="DedicatedIpToggle" 
+                                      Grid.Column="1" Grid.Row="1" 
+                                      Style="{StaticResource ToggleSwitchStyle}" 
+                                      Margin="0,10,0,0" 
+                                      VerticalAlignment="Center"
+                                      Checked="DedicatedIpToggle_CheckedChanged"
+                                      Unchecked="DedicatedIpToggle_CheckedChanged"/>
+                    </Grid>
+                </Border>
+                
+                <!-- Total Summary -->
+                <Border Background="#F5F5F5" 
+                        CornerRadius="8" 
+                        Padding="15" 
+                        Margin="0,20,0,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBlock Grid.Column="0" 
+                                   Text="Total" 
+                                   FontFamily="{StaticResource WorkSansBold}" 
+                                   FontSize="18"/>
+                        
+                        <TextBlock x:Name="TotalPriceText" 
+                                   Grid.Column="1" 
+                                   Text="$4.99" 
+                                   FontFamily="{StaticResource WorkSansBold}" 
+                                   FontSize="18"/>
+                    </Grid>
+                </Border>
+            </StackPanel>
+            
+            <!-- Payment Button -->
+            <Button x:Name="PayButton" 
+                    Grid.Row="2" 
+                    Content="Pay Now" 
+                    Style="{StaticResource PayButtonStyle}"
+                    HorizontalAlignment="Center"
+                    Width="200"
+                    Margin="0,20,0,0"
+                    Click="PayButton_Click"/>
+        </Grid>
+    </Border>
+</Window> 

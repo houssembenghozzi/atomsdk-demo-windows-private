@@ -737,7 +737,9 @@
                     Background="#F0F8EB" 
                     CornerRadius="15" 
                     Padding="15" 
-                    Margin="0,20,0,0">
+                    Margin="0,20,0,0"
+                    MouseDown="DedicatedIpCard_MouseDown"
+                    Cursor="Hand">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
