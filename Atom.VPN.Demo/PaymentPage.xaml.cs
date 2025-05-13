@@ -24,6 +24,9 @@ namespace Atom.VPN.Demo
         private double selectedPlanPrice = 0.0;
         private string selectedPlanName = "";
         private Border selectedPlanCard = null;
+        private const double DEDICATED_IP_PRICE = 4.99;
+        private bool includeDedicatedIp = false;
+        private double totalPrice = 0.0;
         
         // Dictionary to store plan pricing
         private readonly Dictionary<string, double> planPrices = new Dictionary<string, double>
@@ -50,6 +53,9 @@ namespace Atom.VPN.Demo
             
             // Initially, no plan is selected and the Next button should be hidden
             NextButton.Visibility = Visibility.Collapsed;
+            
+            // Hide the add-on panel initially
+            AddOnPanel.Visibility = Visibility.Collapsed;
         }
         
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -75,6 +81,7 @@ namespace Atom.VPN.Demo
                 // Store selected plan details
                 selectedPlanPrice = planPrices[planId];
                 selectedPlanName = planNames[planId];
+                totalPrice = selectedPlanPrice; // Initialize total price
                 
                 Debug.WriteLine($"{TAG}: Selected plan: {selectedPlanName}, Price: ${selectedPlanPrice}");
                 
@@ -142,71 +149,185 @@ namespace Atom.VPN.Demo
         
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
-            ShowAddOnOverlay();
+            if (selectedPlanPrice == 0.0 || selectedPlanCard == null)
+            {
+                // No plan selected, don't proceed
+                MessageBox.Show("Please select a subscription plan to continue.", "Selection Required", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            
+            // Update the add-on panel with selected plan details
+            UpdateAddOnPanel();
+            
+            // Show the add-on panel with animation
+            ShowAddOnPanel();
         }
         
-        private void ShowAddOnOverlay()
+        private void UpdateAddOnPanel()
         {
             try
             {
-                if (selectedPlanPrice == 0.0 || selectedPlanCard == null)
-                {
-                    // No plan selected, don't proceed
-                    MessageBox.Show("Please select a subscription plan to continue.", "Selection Required", MessageBoxButton.OK, MessageBoxImage.Information);
-                    return;
-                }
-
-                // Create a completely new overlay page
-                // Create a simple page for the addon
-                Frame overlayFrame = new Frame();
-                AddOnPage addOnPage = new AddOnPage(selectedPlanPrice, selectedPlanName);
+                // Update selected plan information
+                SelectedPlanNameText.Text = selectedPlanName;
+                SelectedPlanPriceText.Text = $"${selectedPlanPrice:F2}";
                 
-                // Navigate to the add-on page
-                overlayFrame.Navigate(addOnPage);
+                // Reset dedicated IP toggle
+                DedicatedIpToggle.IsChecked = includeDedicatedIp = false;
+                DedicatedIPRow.Visibility = Visibility.Collapsed;
                 
-                // Create a new window to host the overlayFrame
-                Window overlayWindow = new Window
-                {
-                    Content = overlayFrame,
-                    SizeToContent = SizeToContent.WidthAndHeight,
-                    WindowStyle = WindowStyle.None,
-                    ResizeMode = ResizeMode.NoResize,
-                    ShowInTaskbar = false,
-                    Owner = Window.GetWindow(this),
-                    WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                    AllowsTransparency = true,
-                    Background = Brushes.Transparent,
-                    Topmost = true
-                };
+                // Update total price (initially just the plan price)
+                totalPrice = selectedPlanPrice;
+                TotalPriceText.Text = $"${totalPrice:F2}";
                 
-                // Set up the Page's size
-                addOnPage.Width = 420;
-                addOnPage.Height = 650;
-                
-                // Add drop shadow effect
-                addOnPage.Effect = new DropShadowEffect
-                {
-                    Color = Colors.Black,
-                    Direction = 270,
-                    ShadowDepth = 5,
-                    BlurRadius = 10,
-                    Opacity = 0.3
-                };
-                
-                // Listen for when the user completes or cancels the add-on selection
-                addOnPage.OnComplete += (sender, args) => 
-                {
-                    // Close the overlay window
-                    overlayWindow.Close();
-                };
-                
-                // Show the window as a dialog
-                overlayWindow.ShowDialog();
+                Debug.WriteLine($"{TAG}: Add-on panel updated with {selectedPlanName} at ${selectedPlanPrice:F2}");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"{TAG}: Error showing add-on overlay - {ex.Message}");
-                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Debug.WriteLine($"{TAG}: Error updating add-on panel - {ex.Message}");
+            }
+        }
+        
+        private void ShowAddOnPanel()
+        {
+            try
+            {
+                // Make the panel visible
+                AddOnPanel.Visibility = Visibility.Visible;
+                
+                // Find the animation
+                Storyboard fadeIn = FindResource("FadeInStoryboard") as Storyboard;
+                
+                if (fadeIn != null)
+                {
+                    // Set the target
+                    Storyboard.SetTarget(fadeIn, AddOnPanel);
+                    
+                    // Start the animation
+                    fadeIn.Begin();
+                }
+                
+                Debug.WriteLine($"{TAG}: Showing add-on panel with animation");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"{TAG}: Error showing add-on panel - {ex.Message}");
+                
+                // Fallback if animation fails
+                AddOnPanel.Opacity = 1;
+                AddOnPanel.Visibility = Visibility.Visible;
+            }
+        }
+        
+        private void HideAddOnPanel()
+        {
+            try
+            {
+                // Find the animation
+                Storyboard fadeOut = FindResource("FadeOutStoryboard") as Storyboard;
+                
+                if (fadeOut != null)
+                {
+                    // Set the target
+                    Storyboard.SetTarget(fadeOut, AddOnPanel);
+                    
+                    // Add a completed event handler to hide the panel after animation completes
+                    EventHandler onCompleted = null;
+                    onCompleted = (s, e) => 
+                    {
+                        fadeOut.Completed -= onCompleted;
+                        AddOnPanel.Visibility = Visibility.Collapsed;
+                    };
+                    
+                    fadeOut.Completed += onCompleted;
+                    
+                    // Start the animation
+                    fadeOut.Begin();
+                    
+                    Debug.WriteLine($"{TAG}: Hiding add-on panel with animation");
+                }
+                else
+                {
+                    // Fallback if animation not found
+                    AddOnPanel.Visibility = Visibility.Collapsed;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"{TAG}: Error hiding add-on panel - {ex.Message}");
+                
+                // Fallback if animation fails
+                AddOnPanel.Visibility = Visibility.Collapsed;
+            }
+        }
+        
+        private void AddOnBackButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Hide the add-on panel
+            HideAddOnPanel();
+        }
+        
+        private void DedicatedIpToggle_CheckedChanged(object sender, RoutedEventArgs e)
+        {
+            // Update the dedicated IP flag
+            includeDedicatedIp = DedicatedIpToggle.IsChecked ?? false;
+            
+            // Show or hide the dedicated IP row in the summary section
+            DedicatedIPRow.Visibility = includeDedicatedIp ? Visibility.Visible : Visibility.Collapsed;
+            
+            // Update total price
+            UpdateTotalPrice();
+            
+            Debug.WriteLine($"{TAG}: Dedicated IP toggle changed to {includeDedicatedIp}");
+        }
+        
+        private void UpdateTotalPrice()
+        {
+            // Calculate the total price
+            totalPrice = selectedPlanPrice;
+            
+            if (includeDedicatedIp)
+            {
+                totalPrice += DEDICATED_IP_PRICE;
+            }
+            
+            // Update the UI
+            TotalPriceText.Text = $"${totalPrice:F2}";
+            
+            Debug.WriteLine($"{TAG}: Total price updated to ${totalPrice:F2}");
+        }
+        
+        private void PayButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string dedicatedIpText = includeDedicatedIp ? "with Dedicated IP" : "without add-ons";
+                MessageBox.Show(
+                    $"Processing payment of ${totalPrice:F2} for {selectedPlanName} {dedicatedIpText}",
+                    "Payment Processing",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+                
+                // Here you would implement the actual payment processing
+                
+                // Navigate back to main VPN page
+                if (NavigationService != null && NavigationService.CanGoBack)
+                {
+                    NavigationService.GoBack();
+                }
+                else
+                {
+                    // Fallback if NavigationService is null or can't go back
+                    var containerWindow = Application.Current.MainWindow as MainContainerWindow;
+                    if (containerWindow != null)
+                    {
+                        containerWindow.NavigateToMainVPNPage();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"{TAG}: Error processing payment - {ex.Message}");
+                MessageBox.Show($"Error processing payment: {ex.Message}", "Payment Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

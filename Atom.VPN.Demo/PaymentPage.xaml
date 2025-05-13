@@ -89,11 +89,10 @@
         <Style x:Key="NextButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#212121"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontFamily" Value="{StaticResource WorkSansMedium}"/>
+            <Setter Property="FontFamily" Value="{StaticResource WorkSansBold}"/>
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="Padding" Value="20,14"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Width" Value="240"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -142,139 +141,261 @@
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
+        
+        <!-- Animations for sliding panel -->
+        <Storyboard x:Key="FadeInStoryboard">
+            <DoubleAnimation Storyboard.TargetProperty="Opacity" 
+                             From="0" To="1" 
+                             Duration="0:0:0.2"/>
+        </Storyboard>
+        
+        <Storyboard x:Key="FadeOutStoryboard">
+            <DoubleAnimation Storyboard.TargetProperty="Opacity" 
+                             From="1" To="0" 
+                             Duration="0:0:0.2"/>
+        </Storyboard>
+        
+        <!-- Toggle Switch Style for add-ons -->
+        <Style x:Key="ToggleSwitchStyle" TargetType="CheckBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <Grid>
+                            <Border x:Name="BackgroundElement" 
+                                    Background="#E0E0E0" 
+                                    CornerRadius="10" 
+                                    Width="46" Height="24"/>
+                            <Border x:Name="ThumbElement" 
+                                    Background="White" 
+                                    CornerRadius="10" 
+                                    Width="20" Height="20" 
+                                    HorizontalAlignment="Left" 
+                                    Margin="2,0,0,0"
+                                    RenderTransformOrigin="0.5,0.5">
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="4" 
+                                                      ShadowDepth="1" 
+                                                      Opacity="0.2"
+                                                      Color="#000000"/>
+                                </Border.Effect>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="BackgroundElement" Property="Background" Value="#16D770"/>
+                                <Setter TargetName="ThumbElement" Property="Margin" Value="24,0,0,0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Style for close button in the add-on dialog -->
+        <Style x:Key="CloseButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="36"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="18">
+                            <Path Data="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" 
+                                  Fill="#555555" 
+                                  Width="14" 
+                                  Height="14" 
+                                  Stretch="Uniform"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#F0F0F0"/>
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Style for the Add-on dialog -->
+        <Style x:Key="AddOnDialogStyle" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="16"/>
+            <Setter Property="Width" Value="400"/>
+            <Setter Property="MaxHeight" Value="550"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect ShadowDepth="2" 
+                                      BlurRadius="15" 
+                                      Opacity="0.2" 
+                                      Color="Black"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Style for Pay button -->
+        <Style x:Key="PayButtonStyle" TargetType="Button" BasedOn="{StaticResource NextButtonStyle}">
+            <Setter Property="Background" Value="#212121"/>
+            <Setter Property="Height" Value="52"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Width" Value="Auto"/>
+        </Style>
+        
+        <!-- Addon item style -->
+        <Style x:Key="AddOnItemStyle" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#EEEEEE"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="16"/>
+            <Setter Property="Margin" Value="0,0,0,12"/>
+        </Style>
     </Page.Resources>
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-
-        <!-- Global gap from top -->
-        <Rectangle Grid.Row="0" Height="25" Fill="Transparent"/>
-        
-        <!-- Header with back button - fixed spacing -->
-        <Grid Grid.Row="1" Margin="15,0,15,10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            
-            <Button x:Name="BackButton" 
-                    Grid.Column="0"
-                    Style="{StaticResource BackButtonStyle}"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    Click="BackButton_Click"/>
-                
-            <TextBlock Grid.Column="1"
-                       Text="Subscription" 
-                       FontFamily="{StaticResource WorkSansBold}" 
-                       FontSize="20" 
-                       FontWeight="Bold"
-                       LineHeight="29"
-                       HorizontalAlignment="Left"
-                       Margin="15,0,0,0"
-                       VerticalAlignment="Center"/>
-        </Grid>
-        
-        <!-- Feature section with center-aligned features -->
-        <StackPanel Grid.Row="2" Margin="25,10,25,0">
-            <TextBlock Text="Unlimited access" 
-                       FontFamily="{StaticResource WorkSansBold}"
-                       FontSize="30"
-                       FontWeight="Bold"
-                       LineHeight="36"
-                       HorizontalAlignment="Center"
-                       TextAlignment="Center"
-                       VerticalAlignment="Center"
-                       Margin="0,0,0,4"/>
-                       
-            <TextBlock Text="to all features" 
-                       FontFamily="{StaticResource WorkSansBold}"
-                       FontSize="30"
-                       FontWeight="Bold"
-                       LineHeight="36"
-                       HorizontalAlignment="Center"
-                       TextAlignment="Center"
-                       VerticalAlignment="Center"
-                       Margin="0,0,0,20"/>
-            
-            <!-- Features - center aligned -->
-            <StackPanel Margin="0,0,0,0" HorizontalAlignment="Center">
-                <!-- Feature 1 -->
-                <Grid Margin="0,6" HorizontalAlignment="Center">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <Path Grid.Column="0" 
-                          Data="M12,2L1,21H23M12,6L19.53,19H4.47" 
-                          Fill="#FFCA28" 
-                          Width="18" 
-                          Height="18"
-                          Margin="0,0,15,0"/>
-                          
-                    <TextBlock Grid.Column="1" 
-                               Text="Anonymous surfing" 
-                               Style="{StaticResource FeatureTextStyle}"/>
-                </Grid>
-                
-                <!-- Feature 2 -->
-                <Grid Margin="0,6" HorizontalAlignment="Center">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <Path Grid.Column="0" 
-                          Data="M11.99,18.54L4.62,12.81L3,14.07L12,21.07L21,14.07L19.37,12.8L11.99,18.54M12,16L19.36,10.27L21,9L12,2L3,9L4.63,10.27L12,16"
-                          Fill="#FFCA28" 
-                          Width="18" 
-                          Height="18"
-                          Margin="0,0,15,0"/>
-                          
-                    <TextBlock Grid.Column="1" 
-                               Text="The fastest servers" 
-                               Style="{StaticResource FeatureTextStyle}"/>
-                </Grid>
-                
-                <!-- Feature 3 -->
-                <Grid Margin="0,6" HorizontalAlignment="Center">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <Path Grid.Column="0" 
-                          Data="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M17.13,17C15.92,18.85 14.11,20.24 12,20.92C9.89,20.24 8.08,18.85 6.87,17C6.53,16.5 6.24,16 6,15.47C6,13.82 8.71,12.47 12,12.47C15.29,12.47 18,13.79 18,15.47C17.76,16 17.47,16.5 17.13,17Z"
-                          Fill="#FFCA28" 
-                          Width="18" 
-                          Height="18"
-                          Margin="0,0,15,0"/>
-                          
-                    <TextBlock Grid.Column="1" 
-                               Text="Traffic via encrypted tunnel" 
-                               Style="{StaticResource FeatureTextStyle}"/>
-                </Grid>
-            </StackPanel>
-            
-            <!-- Small gap between features and plans - reduced -->
-            <Rectangle Height="10" Fill="Transparent" />
-        </StackPanel>
-        
-        <!-- Subscription plans with ScrollViewer -->
-        <Grid Grid.Row="3" Margin="25,0,25,5" Height="360">
+        <!-- Main Content Container -->
+        <Grid x:Name="MainContentContainer">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
+
+            <!-- Global gap from top -->
+            <Rectangle Grid.Row="0" Height="15" Fill="Transparent"/>
             
-            <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" Padding="0,0,0,5" MaxHeight="310">
-                <StackPanel>
+            <!-- Header with back button - fixed spacing -->
+            <Grid Grid.Row="1" Margin="25,0,25,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Button x:Name="BackButton" 
+                        Grid.Column="0"
+                        Style="{StaticResource BackButtonStyle}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Padding="0,10"
+                        Click="BackButton_Click"/>
+                    
+                <TextBlock Grid.Column="1"
+                           Text="Subscription" 
+                           FontFamily="{StaticResource WorkSansBold}" 
+                           FontSize="20" 
+                           FontWeight="Bold"
+                           LineHeight="29"
+                           HorizontalAlignment="Left"
+                           Margin="15,0,0,0"
+                           VerticalAlignment="Center"/>
+            </Grid>
+            
+            <!-- Feature section with center-aligned features -->
+            <StackPanel Grid.Row="2" Margin="25,15,25,0">
+                <TextBlock Text="Unlimited access" 
+                           FontFamily="{StaticResource WorkSansBold}"
+                           FontSize="28"
+                           FontWeight="Bold"
+                           LineHeight="34"
+                           HorizontalAlignment="Center"
+                           TextAlignment="Center"
+                           VerticalAlignment="Center"
+                           Margin="0,0,0,2"/>
+                           
+                <TextBlock Text="to all features" 
+                           FontFamily="{StaticResource WorkSansBold}"
+                           FontSize="28"
+                           FontWeight="Bold"
+                           LineHeight="34"
+                           HorizontalAlignment="Center"
+                           TextAlignment="Center"
+                           VerticalAlignment="Center"
+                           Margin="0,0,0,10"/>
+                
+                <!-- Features - centered with consistent text alignment -->
+                <StackPanel Margin="0,0,0,0" HorizontalAlignment="Center">
+                    <!-- Feature 1 -->
+                    <Grid Margin="0,5,0,4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <!-- Simple solid star icon -->
+                        <TextBlock Grid.Column="0" 
+                                  Text="★"
+                                  FontSize="20"
+                                  Foreground="#FFCA28" 
+                                  Margin="0,0,12,0"
+                                  VerticalAlignment="Center"/>
+                              
+                        <TextBlock Grid.Column="1" 
+                                   Text="Anonymous surfing" 
+                                   Style="{StaticResource FeatureTextStyle}"
+                                   VerticalAlignment="Center"/>
+                    </Grid>
+                    
+                    <!-- Feature 2 -->
+                    <Grid Margin="0,0,0,4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <!-- Simple solid star icon -->
+                        <TextBlock Grid.Column="0" 
+                                  Text="★"
+                                  FontSize="20"
+                                  Foreground="#FFCA28" 
+                                  Margin="0,0,12,0"
+                                  VerticalAlignment="Center"/>
+                              
+                        <TextBlock Grid.Column="1" 
+                                   Text="The fastest servers" 
+                                   Style="{StaticResource FeatureTextStyle}"
+                                   VerticalAlignment="Center"/>
+                    </Grid>
+                    
+                    <!-- Feature 3 -->
+                    <Grid Margin="0,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <!-- Simple solid star icon -->
+                        <TextBlock Grid.Column="0" 
+                                  Text="★"
+                                  FontSize="20"
+                                  Foreground="#FFCA28" 
+                                  Margin="0,0,12,0"
+                                  VerticalAlignment="Center"/>
+                              
+                        <TextBlock Grid.Column="1" 
+                                   Text="Traffic via encrypted tunnel" 
+                                   Style="{StaticResource FeatureTextStyle}"
+                                   VerticalAlignment="Center"/>
+                    </Grid>
+                </StackPanel>
+                
+                <!-- Small gap between features and plans - reduced -->
+                <Rectangle Height="2" Fill="Transparent" />
+            </StackPanel>
+            
+            <!-- Subscription plans without ScrollViewer -->
+            <Grid Grid.Row="3" Margin="25,0,25,15">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <StackPanel Grid.Row="0">
                     <!-- 1 Month Plan -->
                     <Border x:Name="Plan1Month" 
                             Style="{StaticResource PlanCardStyle}"
@@ -293,7 +414,7 @@
                                            FontSize="16"/>
                                 <TextBlock x:Name="Plan1MonthSubtitle" 
                                            Text="1 Billed monthly" 
-                                           FontFamily="{StaticResource WorkSansRegular}"
+                                           FontFamily="{StaticResource WorkSansBold}"
                                            Foreground="#757575"
                                            FontSize="14"
                                            Margin="0,4,0,0"/>
@@ -327,7 +448,7 @@
                                 
                                 <TextBlock x:Name="Plan6MonthsSubtitle" 
                                            Text="Save 15%" 
-                                           FontFamily="{StaticResource WorkSansRegular}"
+                                           FontFamily="{StaticResource WorkSansBold}"
                                            Foreground="#16D770"
                                            FontSize="14"
                                            Margin="0,4,0,0"/>
@@ -361,7 +482,7 @@
                                 
                                 <TextBlock x:Name="Plan12MonthsSubtitle" 
                                            Text="Save 30%" 
-                                           FontFamily="{StaticResource WorkSansRegular}"
+                                           FontFamily="{StaticResource WorkSansBold}"
                                            Foreground="#16D770"
                                            FontSize="14"
                                            Margin="0,4,0,0"/>
@@ -395,7 +516,7 @@
                                 
                                 <TextBlock x:Name="Plan15MonthsSubtitle" 
                                            Text="Save 30%" 
-                                           FontFamily="{StaticResource WorkSansRegular}"
+                                           FontFamily="{StaticResource WorkSansBold}"
                                            Foreground="#16D770"
                                            FontSize="14"
                                            Margin="0,4,0,0"/>
@@ -410,17 +531,189 @@
                         </Grid>
                     </Border>
                 </StackPanel>
-            </ScrollViewer>
+                
+                <!-- Next button - Initially hidden, shown when a plan is selected -->
+                <Button x:Name="NextButton" 
+                        Grid.Row="1"
+                        Content="Next" 
+                        Style="{StaticResource NextButtonStyle}"
+                        Margin="0,20,0,10"
+                        Height="52"
+                        Width="Auto"
+                        HorizontalAlignment="Stretch"
+                        Visibility="Collapsed"
+                        Click="NextButton_Click"/>
+            </Grid>
+        </Grid>
+        
+        <!-- Add-On Sliding Panel -->
+        <Grid x:Name="AddOnPanel" 
+              Background="#80000000" 
+              Opacity="0"
+              Visibility="Collapsed"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Stretch">
             
-            <!-- Next button - Initially hidden, shown when a plan is selected -->
-            <Button x:Name="NextButton" 
-                    Grid.Row="1"
-                    Content="Next" 
-                    Style="{StaticResource NextButtonStyle}"
-                    Margin="0,5,0,0"
-                    Height="45"
-                    Visibility="Collapsed"
-                    Click="NextButton_Click"/>
+            <!-- Modal Dialog -->
+            <Border Style="{StaticResource AddOnDialogStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <!-- Header with title and close button -->
+                    <Grid Grid.Row="0" Margin="20,20,20,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBlock Grid.Column="0"
+                                   Text="Add-on" 
+                                   FontFamily="{StaticResource WorkSansBold}" 
+                                   FontSize="22" 
+                                   FontWeight="Bold"
+                                   VerticalAlignment="Center"/>
+                        
+                        <Button x:Name="CloseButton" 
+                                Grid.Column="1"
+                                Style="{StaticResource CloseButtonStyle}"
+                                Click="AddOnBackButton_Click"/>
+                    </Grid>
+                    
+                    <!-- Content -->
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="20,0,20,0">
+                        <StackPanel>
+                            <!-- Dedicated IP Add-On option -->
+                            <Border Style="{StaticResource AddOnItemStyle}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <CheckBox x:Name="DedicatedIpToggle" 
+                                              Grid.Column="0" 
+                                              Style="{StaticResource ToggleSwitchStyle}" 
+                                              VerticalAlignment="Center"
+                                              Margin="0,0,12,0"
+                                              Checked="DedicatedIpToggle_CheckedChanged" 
+                                              Unchecked="DedicatedIpToggle_CheckedChanged"/>
+                                    
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                        <TextBlock Text="Dedicated IP" 
+                                                   FontFamily="{StaticResource WorkSansBold}" 
+                                                   FontSize="16"/>
+                                        
+                                        <TextBlock Text="Premium single IP for all VPN connections" 
+                                                   FontFamily="{StaticResource WorkSansRegular}" 
+                                                   FontSize="14" 
+                                                   Foreground="#757575" 
+                                                   Margin="0,4,0,0"/>
+                                    </StackPanel>
+                                    
+                                    <TextBlock Grid.Column="2" 
+                                               Text="$4.99" 
+                                               FontFamily="{StaticResource WorkSansBold}" 
+                                               FontSize="16" 
+                                               VerticalAlignment="Center"/>
+                                </Grid>
+                            </Border>
+                            
+                            <!-- Summary Section -->
+                            <TextBlock Text="Summary" 
+                                       FontFamily="{StaticResource WorkSansBold}" 
+                                       FontSize="18" 
+                                       Margin="0,20,0,15"/>
+                            
+                            <!-- Selected Plan -->
+                            <Grid Margin="0,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <TextBlock x:Name="SelectedPlanNameText" 
+                                           Grid.Column="0" 
+                                           Text="6 Months" 
+                                           FontFamily="{StaticResource WorkSansRegular}" 
+                                           FontSize="16"/>
+                                
+                                <TextBlock x:Name="SelectedPlanPriceText" 
+                                           Grid.Column="1" 
+                                           Text="$25.99" 
+                                           FontFamily="{StaticResource WorkSansRegular}" 
+                                           FontSize="16"/>
+                            </Grid>
+                            
+                            <!-- Dedicated IP row (only shown when selected) -->
+                            <Grid x:Name="DedicatedIPRow" Margin="0,0,0,10" Visibility="Collapsed">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                    <TextBlock Text="Dedicated IP" 
+                                               FontFamily="{StaticResource WorkSansRegular}" 
+                                               FontSize="16"/>
+                                    
+                                    <Border Background="#F0F0F0" 
+                                            CornerRadius="4" 
+                                            Padding="6,2" 
+                                            Margin="8,0,0,0" 
+                                            VerticalAlignment="Center">
+                                        <TextBlock Text="Add-on" 
+                                                   FontFamily="{StaticResource WorkSansRegular}" 
+                                                   FontSize="12" 
+                                                   Foreground="#757575"/>
+                                    </Border>
+                                </StackPanel>
+                                
+                                <TextBlock Grid.Column="1" 
+                                           Text="+$4.99" 
+                                           FontFamily="{StaticResource WorkSansRegular}" 
+                                           FontSize="16"/>
+                            </Grid>
+                            
+                            <!-- Total row -->
+                            <Border BorderThickness="0,1,0,0" 
+                                    BorderBrush="#EEEEEE" 
+                                    Padding="0,16,0,0" 
+                                    Margin="0,10,0,20">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <TextBlock Grid.Column="0" 
+                                               Text="Total" 
+                                               FontFamily="{StaticResource WorkSansBold}" 
+                                               FontSize="18"/>
+                                    
+                                    <TextBlock x:Name="TotalPriceText" 
+                                               Grid.Column="1" 
+                                               Text="$30.98" 
+                                               FontFamily="{StaticResource WorkSansBold}" 
+                                               FontSize="18"/>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+                    
+                    <!-- Pay button -->
+                    <Button x:Name="PayButton" 
+                            Grid.Row="2" 
+                            Content="Pay" 
+                            Style="{StaticResource PayButtonStyle}"
+                            Margin="20,0,20,20"
+                            Click="PayButton_Click"/>
+                </Grid>
+            </Border>
         </Grid>
     </Grid>
 </Page> 
