@@ -149,6 +149,9 @@
     <Compile Include="AddOnDialog.xaml.cs">
       <DependentUpon>AddOnDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AddOnPage.xaml.cs">
+      <DependentUpon>AddOnPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ResetPasswordPage.xaml.cs">
       <DependentUpon>ResetPasswordPage.xaml</DependentUpon>
     </Compile>
@@ -253,6 +256,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="AddOnDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AddOnPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
