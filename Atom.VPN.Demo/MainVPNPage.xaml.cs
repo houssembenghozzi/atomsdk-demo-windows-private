@@ -35,9 +35,13 @@ namespace Atom.VPN.Demo
             // Set initial visibility
             ConnectionInfoPanel.Visibility = Visibility.Collapsed;
             QuickLocationPanel.Visibility = Visibility.Visible;
+            AppShortcutsPanel.Visibility = Visibility.Collapsed; // Ensure app shortcuts hidden initially
             
             // Initialize app shortcuts
             InitializeAppShortcuts();
+            
+            // Start the animation for the power button rings
+            StartPowerButtonAnimation();
         }
         
         private void InitializeAppShortcuts()
@@ -248,6 +252,40 @@ namespace Atom.VPN.Demo
             }
         }
         
+        private void StartPowerButtonAnimation()
+        {
+            // Get the power button grid and start the wave animation
+            var powerButtonGrid = GetTemplateChild(PowerButton, "PowerButtonGrid") as Grid;
+            if (powerButtonGrid != null)
+            {
+                var waveAnimation = powerButtonGrid.Resources["WaveAnimation"] as Storyboard;
+                
+                if (waveAnimation != null)
+                {
+                    // Set initial properties before starting animation
+                    var animationCircles = new[] { "AnimationCircle1", "AnimationCircle2", "AnimationCircle3" };
+                    foreach (var circleName in animationCircles)
+                    {
+                        var circle = GetTemplateChild(PowerButton, circleName) as Ellipse;
+                        if (circle != null)
+                        {
+                            // Set initial state
+                            circle.Stroke = new SolidColorBrush(_isConnected ? 
+                                Color.FromRgb(76, 175, 80) : // Green color when connected
+                                Color.FromRgb(134, 139, 150));  // Gray color when disconnected
+
+                            // Make sure the circle is initially visible but with 0 opacity
+                            circle.Visibility = Visibility.Visible;
+                            circle.Opacity = 0;
+                        }
+                    }
+                    
+                    // Start the animation
+                    waveAnimation.Begin(PowerButton, true);
+                }
+            }
+        }
+        
         private void ConnectionTimer_Tick(object sender, EventArgs e)
         {
             _connectionTimer.Stop();
@@ -276,7 +314,7 @@ namespace Atom.VPN.Demo
                 buttonBackground.Fill = new SolidColorBrush(Color.FromRgb(76, 175, 80)); // Green color
             }
 
-            // Keep animation circles visible and showing the animations
+            // Update animation circles to green when connected
             var animationCircles = new string[] { "AnimationCircle1", "AnimationCircle2", "AnimationCircle3" };
             foreach (var circleName in animationCircles)
             {
@@ -284,7 +322,7 @@ namespace Atom.VPN.Demo
                 if (circle != null)
                 {
                     circle.Visibility = Visibility.Visible;
-                    circle.Stroke = new SolidColorBrush(Colors.White);
+                    circle.Stroke = new SolidColorBrush(Color.FromRgb(76, 175, 80)); // Green color
                 }
             }
             
@@ -302,6 +340,9 @@ namespace Atom.VPN.Demo
             // Show connection info panel and hide quick location panel
             ConnectionInfoPanel.Visibility = Visibility.Visible;
             QuickLocationPanel.Visibility = Visibility.Collapsed;
+            
+            // Show app shortcuts panel when connected
+            AppShortcutsPanel.Visibility = Visibility.Visible;
             
             // Optional: Add a subtle pulse effect for the connected state
             var pulseAnimation = new DoubleAnimation
@@ -350,7 +391,7 @@ namespace Atom.VPN.Demo
                     buttonBackground.Fill = new SolidColorBrush(Color.FromRgb(134, 139, 150)); // #868B96
                 }
                 
-                // Keep our animation circles visible
+                // Set animation circles to gray color when disconnected
                 var animationCircles = new string[] { "AnimationCircle1", "AnimationCircle2", "AnimationCircle3" };
                 foreach (var circleName in animationCircles)
                 {
@@ -358,9 +399,12 @@ namespace Atom.VPN.Demo
                     if (circle != null)
                     {
                         circle.Visibility = Visibility.Visible;
-                        circle.Stroke = new SolidColorBrush(Colors.White);
+                        circle.Stroke = new SolidColorBrush(Color.FromRgb(134, 139, 150)); // Gray color #868B96
                     }
                 }
+                
+                // Hide app shortcuts panel when disconnected
+                AppShortcutsPanel.Visibility = Visibility.Collapsed;
                 
                 // Hide connection info panel and show quick location panel
                 ConnectionInfoPanel.Visibility = Visibility.Collapsed;
@@ -389,7 +433,7 @@ namespace Atom.VPN.Demo
                     buttonBackground.Fill = new SolidColorBrush(Color.FromRgb(255, 152, 0)); // Orange color
                 }
                 
-                // Keep our animation circles visible during connecting state
+                // Update animation circles to orange during connecting state
                 var animationCircles = new string[] { "AnimationCircle1", "AnimationCircle2", "AnimationCircle3" };
                 foreach (var circleName in animationCircles)
                 {
@@ -397,6 +441,7 @@ namespace Atom.VPN.Demo
                     if (circle != null)
                     {
                         circle.Visibility = Visibility.Visible;
+                        circle.Stroke = new SolidColorBrush(Color.FromRgb(255, 152, 0)); // Orange color
                     }
                 }
                 
