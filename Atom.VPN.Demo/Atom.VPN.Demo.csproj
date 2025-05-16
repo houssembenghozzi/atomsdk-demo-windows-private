@@ -146,6 +146,9 @@
     <Compile Include="ManageSessionsPage.xaml.cs">
       <DependentUpon>ManageSessionsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PaymentPage.xaml.cs">
+      <DependentUpon>PaymentPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ProtocolPage.xaml.cs">
       <DependentUpon>ProtocolPage.xaml</DependentUpon>
     </Compile>

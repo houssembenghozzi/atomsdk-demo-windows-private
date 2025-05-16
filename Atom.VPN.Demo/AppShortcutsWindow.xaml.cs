@@ -15,8 +15,6 @@ namespace Atom.VPN.Demo
     public partial class AppShortcutsWindow : Window
     {
         public Dictionary<string, string> AppShortcuts { get; private set; }
-        private Window _ownerWindow;
-        private UIElement _originalContent;
         
         public AppShortcutsWindow(Dictionary<string, string> shortcuts)
         {

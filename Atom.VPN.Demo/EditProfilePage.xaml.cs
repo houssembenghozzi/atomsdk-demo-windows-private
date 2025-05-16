@@ -79,7 +79,6 @@ namespace Atom.VPN.Demo
     public partial class EditProfilePage : Page
     {
         private static readonly HttpClient client = new HttpClient();
-        private bool _isCountryComboBoxLoaded = false; // Flag to prevent premature SelectionChanged event
 
         public EditProfilePage()
         {
@@ -144,9 +143,7 @@ namespace Atom.VPN.Demo
         
         private async void EditProfilePage_Loaded(object sender, RoutedEventArgs e)
         {
-            _isCountryComboBoxLoaded = false; // Reset flag
             await LoadUserProfileAsync();
-            _isCountryComboBoxLoaded = true; // Set flag after loading profile data
         }
 
         private async Task LoadUserProfileAsync()
