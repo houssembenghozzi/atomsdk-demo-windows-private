@@ -60,16 +60,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Border Width="27" Height="27" Margin="16,0,10,0" VerticalAlignment="Center">
-                            <Path Data="M8.62929 10.8649C11.4186 10.8649 13.6794 8.60413 13.6794 5.81481C13.6794 3.02548 11.4186 0.763672 8.62929 0.763672C5.83997 0.763672 3.57815 3.02548 3.57815 5.81481C3.56873 8.59471 5.8138 10.8555 8.5937 10.8649C8.60626 10.8649 8.61778 10.8649 8.62929 10.8649Z" 
-                                  Stroke="#212121" 
-                                  StrokeThickness="1.48026" 
-                                  StrokeLineJoin="Round" 
-                                  StrokeStartLineCap="Round"
-                                  StrokeEndLineCap="Round"
-                                  Fill="Transparent"
-                                  Width="20"
-                                  Height="20"
-                                  Stretch="Uniform"/>
+                            <Image Source="/Resources/icon/profile.ico" Width="20" Height="20" Stretch="Uniform" />
                         </Border>
                         <TextBlock Grid.Column="1" Text="Edit Profile" FontSize="16" Foreground="#212121" VerticalAlignment="Center"/>
                         <Path Grid.Column="2" Data="M7.25391 5.05911L13.0105 10.8157L7.25391 16.5723" Stroke="#212121" StrokeThickness="1.48026" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Width="12" Height="6" Stretch="Uniform" VerticalAlignment="Center" Margin="0,0,16,0"/>
@@ -86,10 +77,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Border Width="27" Height="27" Margin="16,0,10,0" VerticalAlignment="Center">
-                            <Canvas Width="20" Height="20">
-                                <!-- Key icon -->
-                                <Path Data="M10,2A8,8 0 1,0 18,10A8,8 0 0,0 10,2ZM10,14A4,4 0 1,1 14,10A4,4 0 0,1 10,14Z" Stroke="#212121" StrokeThickness="1.5" Fill="Transparent"/>
-                            </Canvas>
+                            <Image Source="/Resources/icon/key.ico" Width="20" Height="20" Stretch="Uniform" />
                         </Border>
                         <TextBlock Grid.Column="1" Text="Change Password" FontSize="16" Foreground="#212121" VerticalAlignment="Center"/>
                         <Path Grid.Column="2" Data="M7.25391 5.05911L13.0105 10.8157L7.25391 16.5723" Stroke="#212121" StrokeThickness="1.48026" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Width="12" Height="6" Stretch="Uniform" VerticalAlignment="Center" Margin="0,0,16,0"/>
@@ -103,19 +91,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Border Width="27" Height="27" Margin="16,0,10,0" VerticalAlignment="Center">
-                            <Canvas Width="20" Height="20">
-                                <!-- Sessions icon -->
-                                <Path Data="M8.62929 10.8649C11.4186 10.8649 13.6794 8.60413 13.6794 5.81481C13.6794 3.02548 11.4186 0.763672 8.62929 0.763672C5.83997 0.763672 3.57815 3.02548 3.57815 5.81481C3.56873 8.59471 5.8138 10.8555 8.5937 10.8649C8.60626 10.8649 8.61778 10.8649 8.62929 10.8649Z" 
-                                      Stroke="#212121" 
-                                      StrokeThickness="1.48026" 
-                                      StrokeLineJoin="Round" 
-                                      StrokeStartLineCap="Round"
-                                      StrokeEndLineCap="Round"
-                                      Fill="Transparent"
-                                      Width="20"
-                                      Height="20"
-                                      Stretch="Uniform"/>
-                            </Canvas>
+                            <Image Source="/Resources/icon/info-circle.ico" Width="20" Height="20" Stretch="Uniform" />
                         </Border>
                         <TextBlock Grid.Column="1" Text="Manage Active Sessions" FontSize="16" Foreground="#212121" VerticalAlignment="Center"/>
                         <Path Grid.Column="2" Data="M7.25391 5.05911L13.0105 10.8157L7.25391 16.5723" Stroke="#212121" StrokeThickness="1.48026" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Width="12" Height="6" Stretch="Uniform" VerticalAlignment="Center" Margin="0,0,16,0"/>
@@ -132,10 +108,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Border Width="27" Height="27" Margin="16,0,10,0" VerticalAlignment="Center">
-                            <Canvas Width="20" Height="20">
-                                <!-- Crown icon -->
-                                <Path Data="M2,16 L10,4 L18,16 Z" Stroke="#212121" StrokeThickness="1.5" Fill="Transparent"/>
-                            </Canvas>
+                            <Image Source="/Resources/icon/crown.ico" Width="20" Height="20" Stretch="Uniform" />
                         </Border>
                         <TextBlock Grid.Column="1" Text="Active subscription" FontSize="16" Foreground="#212121" VerticalAlignment="Center"/>
                         <Path Grid.Column="2" Data="M7.25391 5.05911L13.0105 10.8157L7.25391 16.5723" Stroke="#212121" StrokeThickness="1.48026" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Width="12" Height="6" Stretch="Uniform" VerticalAlignment="Center" Margin="0,0,16,0"/>
@@ -149,11 +122,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Border Width="27" Height="27" Margin="16,0,10,0" VerticalAlignment="Center">
-                            <Canvas Width="20" Height="20">
-                                <!-- Card icon -->
-                                <Rectangle Width="20" Height="14" Stroke="#212121" StrokeThickness="1.5"/>
-                                <Rectangle Width="8" Height="2" Canvas.Left="6" Canvas.Top="10" Stroke="#212121" StrokeThickness="1.5"/>
-                            </Canvas>
+                            <Image Source="/Resources/icon/card.ico" Width="20" Height="20" Stretch="Uniform" />
                         </Border>
                         <TextBlock Grid.Column="1" Text="Payment method" FontSize="16" Foreground="#212121" VerticalAlignment="Center"/>
                         <Path Grid.Column="2" Data="M7.25391 5.05911L13.0105 10.8157L7.25391 16.5723" Stroke="#212121" StrokeThickness="1.48026" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Width="12" Height="6" Stretch="Uniform" VerticalAlignment="Center" Margin="0,0,16,0"/>
@@ -170,11 +139,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Border Width="27" Height="27" Margin="16,0,10,0" VerticalAlignment="Center">
-                            <Canvas Width="20" Height="20">
-                                <!-- Trash icon -->
-                                <Rectangle Width="14" Height="16" Canvas.Left="3" Canvas.Top="2" Stroke="#F75555" StrokeThickness="1.5"/>
-                                <Rectangle Width="8" Height="2" Canvas.Left="6" Canvas.Top="4" Stroke="#F75555" StrokeThickness="1.5"/>
-                            </Canvas>
+                            <Image Source="/Resources/icon/trash.ico" Width="20" Height="20" Stretch="Uniform" />
                         </Border>
                         <TextBlock Grid.Column="1" Text="Delete Account" FontSize="16" Foreground="#F75555" VerticalAlignment="Center"/>
                         <Path Grid.Column="2" Data="M7.25391 5.05911L13.0105 10.8157L7.25391 16.5723" Stroke="#F75555" StrokeThickness="1.48026" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Width="12" Height="6" Stretch="Uniform" VerticalAlignment="Center" Margin="0,0,16,0"/>

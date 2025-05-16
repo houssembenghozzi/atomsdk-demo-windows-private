@@ -27,25 +27,23 @@ namespace Atom.VPN.Demo
 
         private void AccountRow_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            e.Handled = true; // Mark as handled immediately
             try
             {
                 MainContainerWindow mainWindow = Application.Current.MainWindow as MainContainerWindow;
                 if (mainWindow != null)
                 {
-                    mainWindow.NavigateToEditProfilePage();
-                    e.Handled = true;
+                    mainWindow.NavigateToAccountPage();
                 }
                 else if (NavigationService != null)
                 {
-                    NavigationService.Navigate(new EditProfilePage());
-                    e.Handled = true;
+                    NavigationService.Navigate(new AccountPage());
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Navigation error in AccountRow_MouseDown: {ex.Message}");
-                // Prevent the exception from crashing the app
-                e.Handled = true;
+                // Optionally, reconsider if e.Handled should be false here if an error occurs before navigation
             }
         }
 

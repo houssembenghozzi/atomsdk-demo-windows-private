@@ -149,15 +149,6 @@
     <Compile Include="ProtocolPage.xaml.cs">
       <DependentUpon>ProtocolPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PaymentPage.xaml.cs">
-      <DependentUpon>PaymentPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="AddOnDialog.xaml.cs">
-      <DependentUpon>AddOnDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="AddOnPage.xaml.cs">
-      <DependentUpon>AddOnPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ResetPasswordPage.xaml.cs">
       <DependentUpon>ResetPasswordPage.xaml</DependentUpon>
     </Compile>
@@ -257,24 +248,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ProtocolPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="PaymentPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="AddOnDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="AddOnPage.xaml">
+    <Page Include="ProtocolPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ResetPasswordPage.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\icon\password-gray.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\WorldMap.xaml">
@@ -432,14 +418,18 @@
     <Resource Include="Resources\fortis_icon.png" />
     <Resource Include="Resources\Images\fortis_icon.png" />
     <Resource Include="Resources\Images\fortis_logo.png" />
+    <Resource Include="Resources\icon\card.ico" />
     <Content Include="Resources\icon\chrome.svg" />
+    <Resource Include="Resources\icon\crown.ico" />
     <Content Include="Resources\icon\eye-slash.svg" />
     <Content Include="Resources\icon\eye.svg" />
     <Content Include="Resources\icon\Facebook.svg" />
     <Content Include="Resources\icon\firefox.svg" />
     <Resource Include="Resources\icon\fortis_ico.ico" />
     <Resource Include="Resources\icon\global.ico" />
+    <Resource Include="Resources\icon\info-circle.ico" />
     <Content Include="Resources\icon\instagram.svg" />
+    <Resource Include="Resources\icon\key.ico" />
     <Content Include="Resources\icon\lock.svg" />
     <Content Include="Resources\icon\mail.svg" />
     <Content Include="Resources\icon\netflix.svg" />
@@ -448,6 +438,8 @@
     <Resource Include="Resources\icon\profile.ico" />
     <Resource Include="Resources\icon\sms.ico" />
     <Content Include="Resources\icon\snapchat.svg" />
+    <Resource Include="Resources\icon\trash.ico" />
+    <Resource Include="Resources\icon\Union.ico" />
     <Content Include="Resources\Images\mail_icon.svg" />
     <Resource Include="Resources\Images\world_map.png" />
     <Content Include="Resources\sample.svg">

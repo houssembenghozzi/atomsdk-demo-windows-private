@@ -100,12 +100,12 @@ namespace Atom.VPN.Demo
             
             try
             {
-                // Get the countries list directly
+                // Get the countries list
                 var countries = CountryData.AllCountries;
                 
                 if (countries != null && countries.Count > 0)
                 {
-                    // Add countries to the ComboBox
+                    // Add countries as ComboBoxItems for better styling and search
                     foreach (var country in countries)
                     {
                         if (!string.IsNullOrEmpty(country.Name))
@@ -115,13 +115,6 @@ namespace Atom.VPN.Demo
                             item.Tag = country; // Store the country object for later reference
                             CountryComboBox.Items.Add(item);
                         }
-                    }
-                    
-                    // Set a default selected item if none is selected
-                    if (CountryComboBox.SelectedIndex == -1 && CountryComboBox.Items.Count > 0)
-                    {
-                        // Select first item as default
-                        CountryComboBox.SelectedIndex = 0;
                     }
                 }
                 else
@@ -134,30 +127,17 @@ namespace Atom.VPN.Demo
                         item.Content = country;
                         CountryComboBox.Items.Add(item);
                     }
-                    
-                    // Set a default selected item
-                    if (CountryComboBox.Items.Count > 0)
-                    {
-                        CountryComboBox.SelectedIndex = 0;
-                    }
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 // In case of any error, use the fallback countries
-                CountryComboBox.Items.Clear();
                 string[] fallbackCountries = { "United States", "Canada", "United Kingdom", "Australia" };
                 foreach (string country in fallbackCountries)
                 {
                     ComboBoxItem item = new ComboBoxItem();
                     item.Content = country;
                     CountryComboBox.Items.Add(item);
-                }
-                
-                // Set a default selected item
-                if (CountryComboBox.Items.Count > 0)
-                {
-                    CountryComboBox.SelectedIndex = 0;
                 }
             }
         }
@@ -292,27 +272,13 @@ namespace Atom.VPN.Demo
             if (string.IsNullOrEmpty(countryName))
                 return;
                 
-            // Ensure the ComboBox has items
-            if (CountryComboBox.Items.Count == 0)
+            foreach (ComboBoxItem item in CountryComboBox.Items)
             {
-                PopulateCountryComboBox(); // Repopulate if needed
-            }
-                
-            // Find and select the ComboBoxItem with this country name
-            for (int i = 0; i < CountryComboBox.Items.Count; i++)
-            {
-                if (CountryComboBox.Items[i] is ComboBoxItem item && 
-                    item.Content.ToString().Equals(countryName, StringComparison.OrdinalIgnoreCase))
+                if (item.Content.ToString() == countryName)
                 {
-                    CountryComboBox.SelectedIndex = i;
-                    return;
+                    CountryComboBox.SelectedItem = item;
+                    break;
                 }
-            }
-            
-            // If country not found, select the first item as fallback
-            if (CountryComboBox.Items.Count > 0 && CountryComboBox.SelectedIndex == -1)
-            {
-                CountryComboBox.SelectedIndex = 0;
             }
         }
 

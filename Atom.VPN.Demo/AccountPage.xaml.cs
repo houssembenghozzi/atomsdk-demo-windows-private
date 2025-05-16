@@ -1,14 +1,27 @@
+using System;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace Atom.VPN.Demo
 {
     public partial class AccountPage : Page
     {
+        private bool _isPageJustLoaded = true;
+
         public AccountPage()
         {
             InitializeComponent();
+            this.Loaded += (s, e) => { 
+                // Give a small delay to ensure any stray events might have passed
+                var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(200) };
+                timer.Tick += (senderTimer, eventArgs) => {
+                    _isPageJustLoaded = false;
+                    timer.Stop();
+                };
+                timer.Start();
+            };
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -24,6 +37,11 @@ namespace Atom.VPN.Demo
 
         private void ChangePasswordRow_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            if (_isPageJustLoaded)
+            {
+                System.Diagnostics.Debug.WriteLine("ChangePasswordRow_Click skipped due to _isPageJustLoaded flag.");
+                return; // Don't navigate if page just loaded
+            }
             NavigationService?.Navigate(new ChangePasswordPage());
         }
 
