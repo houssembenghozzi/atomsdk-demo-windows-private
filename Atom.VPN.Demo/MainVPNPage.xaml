@@ -296,7 +296,7 @@
                                 Content="United States - Washington DC"
                                 Width="323"
                                 Height="62"
-                            Margin="0,0,0,3">
+                                Margin="0,0,0,15">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Border Background="#FFFFFF" 
@@ -360,7 +360,7 @@
                         </Grid>
                         
                     <!-- Quick location options -->
-                    <Grid x:Name="QuickLocationPanel" Margin="0,0,0,3">
+                    <Grid x:Name="QuickLocationPanel" Margin="0,0,0,15">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
@@ -368,7 +368,7 @@
                             
                         <!-- Smart Location button content -->
                             <Button Grid.Column="0" 
-                                Margin="0,0,1.5,0"
+                                Margin="0,0,5,0"
                                 Height="60"
                                 Background="#FFFFFF"
                                 BorderThickness="1"
@@ -422,7 +422,7 @@
                             
                         <!-- Recent Location button content -->
                             <Button Grid.Column="1" 
-                                Margin="1.5,0,0,0"
+                                Margin="5,0,0,0"
                                 Height="60"
                                 Background="#FFFFFF"
                                 BorderThickness="1"
@@ -498,7 +498,7 @@
                            Padding="15"
                            Width="325"
                            Height="54"
-                           Margin="0,3,0,3">
+                           Margin="0,0,0,0">
                         <Grid VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
