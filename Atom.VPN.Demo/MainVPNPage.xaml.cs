@@ -10,6 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Windows.Navigation;
+using System.Linq;
 
 namespace Atom.VPN.Demo
 {
@@ -35,7 +36,7 @@ namespace Atom.VPN.Demo
             // Set initial visibility
             ConnectionInfoPanel.Visibility = Visibility.Collapsed;
             QuickLocationPanel.Visibility = Visibility.Visible;
-            AppShortcutsPanel.Visibility = Visibility.Collapsed; // Ensure app shortcuts hidden initially
+            AppShortcutsPanel.Visibility = Visibility.Collapsed; // Hide app shortcuts until connected
             
             // Initialize app shortcuts
             InitializeAppShortcuts();
@@ -138,6 +139,12 @@ namespace Atom.VPN.Demo
         
         private void UpdateAppShortcutsUI()
         {
+            // We're not using the dynamic app shortcuts anymore since we've created a static layout in XAML
+            // This method is kept for compatibility but doesn't need to do anything
+            return;
+            
+            // Original implementation below (commented out)
+            /*
             AppShortcutsPanel.Children.Clear();
             
             int count = 0;
@@ -208,6 +215,7 @@ namespace Atom.VPN.Demo
                 
                 count++;
             }
+            */
         }
         
         private Color GetColorFromAppName(string appName)
@@ -231,6 +239,23 @@ namespace Atom.VPN.Demo
             {
                 LaunchApplication(appName);
             }
+        }
+        
+        private void AppShortcutIcon_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is FrameworkElement element && element.Tag is string appName)
+            {
+                LaunchApplication(appName);
+            }
+        }
+        
+        private void AppShortcutsCard_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            // Open the app shortcuts manager window
+            OpenAppShortcutsManager();
+            
+            // Prevent event from bubbling up
+            e.Handled = true;
         }
         
         private void AddShortcut_Click(object sender, RoutedEventArgs e)
@@ -460,6 +485,43 @@ namespace Atom.VPN.Demo
         {
             // Navigate to the payment page for dedicated IP subscription
             NavigationService.Navigate(new PaymentPage());
+        }
+        
+        private void CountrySelectionButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Navigate to the server location page
+            NavigationService.Navigate(new ServerLocationPage());
+        }
+        
+        // Method to update the selected country from ServerLocationPage
+        public void UpdateSelectedCountry(string countryName, string flagEmoji, string location = null)
+        {
+            // Find the country selection button
+            var countryButton = FindName("CountrySelectionButton") as Button;
+            if (countryButton != null)
+            {
+                // Use the location if provided, otherwise just use country name
+                countryButton.Content = !string.IsNullOrEmpty(location) ? location : countryName;
+                
+                // Try to update the flag emoji in the button template
+                var template = countryButton.Template;
+                if (template != null)
+                {
+                    // We need to apply the template first to access the visual tree
+                    countryButton.ApplyTemplate();
+                    
+                    // Find the emoji text block in the template
+                    var flagContainer = template.FindName("FlagContainer", countryButton) as Grid;
+                    if (flagContainer != null)
+                    {
+                        var flagTextBlock = flagContainer.Children.OfType<TextBlock>().FirstOrDefault();
+                        if (flagTextBlock != null)
+                        {
+                            flagTextBlock.Text = flagEmoji;
+                        }
+                    }
+                }
+            }
         }
         
         // Add logout functionality

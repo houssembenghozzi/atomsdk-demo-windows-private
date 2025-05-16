@@ -96,6 +96,9 @@
     <Compile Include="ChangePasswordPage.xaml.cs">
       <DependentUpon>ChangePasswordPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CitySelectionPage.xaml.cs">
+      <DependentUpon>CitySelectionPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DeleteAccountConfirmationDialog.xaml.cs">
       <DependentUpon>DeleteAccountConfirmationDialog.xaml</DependentUpon>
     </Compile>
@@ -103,6 +106,9 @@
       <DependentUpon>EditProfilePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="CountryData.cs" />
+    <Compile Include="ServerLocationPage.xaml.cs">
+      <DependentUpon>ServerLocationPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TestHelper.cs" />
     <Compile Include="HelpCenterPage.xaml.cs">
       <DependentUpon>HelpCenterPage.xaml</DependentUpon>
@@ -195,6 +201,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="CitySelectionPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="DeleteAccountConfirmationDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -268,6 +278,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\WorldMap.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ServerLocationPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
