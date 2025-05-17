@@ -209,7 +209,8 @@ namespace Atom.VPN.Demo
 
                 if (response.IsSuccessStatusCode)
                 {
-                    MessageBox.Show("Password changed successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    new SuccessDialog("Password Changed", "Your password has been changed successfully!").ShowDialog();
+                    
                     // Clear fields after successful change
                     OldPasswordBox.Password = string.Empty;
                     NewPasswordBox.Password = string.Empty;
