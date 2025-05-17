@@ -79,6 +79,7 @@ namespace Atom.VPN.Demo
     public partial class EditProfilePage : Page
     {
         private static readonly HttpClient client = new HttpClient();
+        private static UserProfileData _cachedUserProfileData = null; // Added for caching
 
         public EditProfilePage()
         {
@@ -143,18 +144,82 @@ namespace Atom.VPN.Demo
         
         private async void EditProfilePage_Loaded(object sender, RoutedEventArgs e)
         {
-            await LoadUserProfileAsync();
+            if (_cachedUserProfileData != null)
+            {
+                PopulateUIFromData(_cachedUserProfileData);
+            }
+            else
+            {
+                LoadingOverlay.Visibility = Visibility.Visible; // Show loading indicator
+                await LoadUserProfileAsync();
+            }
+        }
+
+        // New method to populate UI from data object
+        private void PopulateUIFromData(UserProfileData userData)
+        {
+            NameTextBox.Text = userData.Name;
+            EmailTextBox.Text = userData.Email;
+            // PhoneTextBox.Text = userData.Phone ?? ""; // Initial assignment
+
+            string countryName = GetCountryNameByCode(userData.Country ?? "");
+            SelectCountryByName(countryName); // This might trigger CountryComboBox_SelectionChanged
+            UpdateCountryCode(countryName); // Sets CountryCodeTextBlock
+
+            // Set phone number without country code, after country code is determined
+            if (!string.IsNullOrEmpty(userData.Phone))
+            {
+                string phoneCodeWithPlus = CountryCodeTextBlock.Text; // e.g., "+1"
+                string phoneCode = phoneCodeWithPlus.StartsWith("+") ? phoneCodeWithPlus.Substring(1) : phoneCodeWithPlus;
+
+                // Check if the userData.Phone starts with the numeric phone code (e.g. "1" for "+1")
+                // Or if it starts with the phone code including '+'
+                if (!string.IsNullOrEmpty(phoneCode) && userData.Phone.StartsWith(phoneCode) && !userData.Phone.StartsWith("+")) 
+                {
+                     // If userData.Phone is like "1XXXXXXXXXX" and phoneCode is "1"
+                    if (userData.Phone.Length > phoneCode.Length && char.IsDigit(userData.Phone[phoneCode.Length]))
+                    {
+                        PhoneTextBox.Text = userData.Phone.Substring(phoneCode.Length).Trim();
+                    }
+                    else if (userData.Phone.Equals(phoneCode)) // Handles case where phone is just the code
+                    {
+                         PhoneTextBox.Text = "";
+                    }
+                    else 
+                    {
+                        PhoneTextBox.Text = userData.Phone; // Fallback if substring logic is complex
+                    }
+                }
+                else if (!string.IsNullOrEmpty(phoneCodeWithPlus) && userData.Phone.StartsWith(phoneCodeWithPlus))
+                {
+                     // If userData.Phone is like "+1XXXXXXXXXX" and phoneCodeWithPlus is "+1"
+                     PhoneTextBox.Text = userData.Phone.Substring(phoneCodeWithPlus.Length).Trim();
+                }
+                else
+                {
+                    PhoneTextBox.Text = userData.Phone ?? ""; // Default if no specific prefix matches
+                }
+            }
+            else
+            {
+                PhoneTextBox.Text = ""; // Clear if userData.Phone is null or empty
+            }
         }
 
         private async Task LoadUserProfileAsync()
         {
+            // Ensure overlay is visible if called directly and cache is empty, 
+            // though EditProfilePage_Loaded should handle the initial call.
+            if (_cachedUserProfileData == null) 
+            {
+                LoadingOverlay.Visibility = Visibility.Visible;
+            }
+
             string token = AuthTokenManager.CurrentToken;
             if (string.IsNullOrEmpty(token))
             {
                 new ErrorDialog("Authentication Error", "You are not logged in. Please log in again.").ShowDialog();
-                // Optionally navigate to login page
-                // var mainWin = Application.Current.MainWindow as MainContainerWindow;
-                // mainWin?.NavigateToLoginPage();
+                LoadingOverlay.Visibility = Visibility.Collapsed; // Hide on early exit
                 return;
             }
 
@@ -173,35 +238,10 @@ namespace Atom.VPN.Demo
                     if (profileResponse != null && profileResponse.Success && profileResponse.Data != null)
                     {
                         var userData = profileResponse.Data;
-                        NameTextBox.Text = userData.Name;
-                        EmailTextBox.Text = userData.Email;
-                        PhoneTextBox.Text = userData.Phone ?? "";
+                        _cachedUserProfileData = userData; // Cache the data
+                        PopulateUIFromData(userData); // Populate UI using the new method
                         
-                        // Convert country code to name and select in ComboBox
-                        string countryName = GetCountryNameByCode(userData.Country ?? "");
-                        
-                        // Find and select the ComboBoxItem with this country name
-                        SelectCountryByName(countryName);
-                        
-                        // Set phone code based on country
-                        UpdateCountryCode(countryName);
-                        
-                        // Set phone number without country code
-                        if (!string.IsNullOrEmpty(userData.Phone))
-                        {
-                            string phoneCode = GetCountryCodeFromCountryName(countryName);
-                            if (!string.IsNullOrEmpty(phoneCode) && userData.Phone.StartsWith(phoneCode))
-                            {
-                                // Remove country code from phone number
-                                PhoneTextBox.Text = userData.Phone.Substring(phoneCode.Length).Trim();
-                            }
-                            else
-                            {
-                                // Keep phone as is if no country code found
-                                PhoneTextBox.Text = userData.Phone;
-                            }
-                        }
-                        
+                        // Original population logic removed from here
                     }
                     else
                     {
@@ -226,6 +266,10 @@ namespace Atom.VPN.Demo
             catch (Exception ex)
             {
                 new ErrorDialog("Error", $"An unexpected error occurred: {ex.Message}").ShowDialog();
+            }
+            finally
+            {
+                LoadingOverlay.Visibility = Visibility.Collapsed; // Hide loading indicator in all cases
             }
         }
 
