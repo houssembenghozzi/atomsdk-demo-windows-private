@@ -1,8 +1,13 @@
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Text.RegularExpressions;
 using System.Windows.Documents;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Atom.VPN.Demo
 {
@@ -11,7 +16,15 @@ namespace Atom.VPN.Demo
     /// </summary>
     public partial class SignUpPage : Page
     {
-        private TextBox passwordTextBox;
+        private static readonly HttpClient client = new HttpClient();
+        private const string ApiBaseUrl = "http://203.161.50.155:3001";
+        
+        private bool isLengthValid = false;
+        private bool hasNumber = false;
+        private bool hasSpecialChar = false;
+        private bool hasUppercase = false;
+        private bool hasLowercase = false;
+        private bool isAsciiOnly = false;
         
         public SignUpPage()
         {
@@ -22,6 +35,19 @@ namespace Atom.VPN.Demo
             
             // Setup password visibility toggle
             SetupPasswordVisibilityToggle();
+            
+            // Initialize password validation UI
+            UpdatePasswordValidationUI(PasswordBox.Password);
+            
+            // Update button state when terms checkbox is clicked
+            TermsCheckbox.Click += (s, e) => UpdateSignUpButtonState();
+            
+            // Add handler for username text box to properly handle placeholder
+            UsernameTextBox.TextChanged += (s, e) => 
+            {
+                UsernameTextBoxPlaceholder.Visibility = string.IsNullOrEmpty(UsernameTextBox.Text) ? 
+                    Visibility.Visible : Visibility.Collapsed;
+            };
         }
         
         private void InputField_GotFocus(object sender, RoutedEventArgs e)
@@ -29,16 +55,33 @@ namespace Atom.VPN.Demo
             // Change border color and placeholder text to black when the input field gets focus
             if (sender is TextBox textBox)
             {
-                var border = textBox.Template.FindName("border", textBox) as Border;
-                if (border != null)
+                if (textBox == UsernameTextBox)
                 {
-                    border.BorderBrush = System.Windows.Media.Brushes.Black;
+                    // Handle username text box separately
+                    UsernameBorder.BorderBrush = System.Windows.Media.Brushes.Black;
+                    if (UsernameTextBoxPlaceholder != null)
+                    {
+                        UsernameTextBoxPlaceholder.Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(50, 52, 56));
+                    }
+                    // Change username icon color
+                    if (UsernameIcon != null)
+                    {
+                        UsernameIcon.Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(17, 24, 39));
+                    }
                 }
-                
-                var placeholder = textBox.Template.FindName("Placeholder", textBox) as TextBlock;
-                if (placeholder != null)
+                else
                 {
-                    placeholder.Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(50, 52, 56));
+                    var border = textBox.Template.FindName("border", textBox) as Border;
+                    if (border != null)
+                    {
+                        border.BorderBrush = System.Windows.Media.Brushes.Black;
+                    }
+                    
+                    var placeholder = textBox.Template.FindName("Placeholder", textBox) as TextBlock;
+                    if (placeholder != null)
+                    {
+                        placeholder.Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(50, 52, 56));
+                    }
                 }
             }
             else if (sender is PasswordBox passwordBox)
@@ -62,24 +105,50 @@ namespace Atom.VPN.Demo
             // Change border color and placeholder text to gray when the input field loses focus
             if (sender is TextBox textBox)
             {
-                var border = textBox.Template.FindName("border", textBox) as Border;
-                if (border != null)
+                if (textBox == UsernameTextBox)
                 {
-                    border.BorderBrush = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(190, 190, 190));
-                }
-                
-                var placeholder = textBox.Template.FindName("Placeholder", textBox) as TextBlock;
-                if (placeholder != null)
-                {
-                    // Only show placeholder if there's no text
-                    if (string.IsNullOrEmpty(textBox.Text))
+                    // Handle username text box separately
+                    UsernameBorder.BorderBrush = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(190, 190, 190));
+                    if (UsernameTextBoxPlaceholder != null)
                     {
-                        placeholder.Visibility = Visibility.Visible;
-                    placeholder.Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(190, 190, 190));
+                        // Only show placeholder if there's no text
+                        if (string.IsNullOrEmpty(textBox.Text))
+                        {
+                            UsernameTextBoxPlaceholder.Visibility = Visibility.Visible;
+                            UsernameTextBoxPlaceholder.Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(190, 190, 190));
+                        }
+                        else
+                        {
+                            UsernameTextBoxPlaceholder.Visibility = Visibility.Collapsed;
+                        }
                     }
-                    else
+                    // Reset username icon color
+                    if (UsernameIcon != null)
                     {
-                        placeholder.Visibility = Visibility.Collapsed;
+                        UsernameIcon.Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(190, 190, 190));
+                    }
+                }
+                else
+                {
+                    var border = textBox.Template.FindName("border", textBox) as Border;
+                    if (border != null)
+                    {
+                        border.BorderBrush = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(190, 190, 190));
+                    }
+                    
+                    var placeholder = textBox.Template.FindName("Placeholder", textBox) as TextBlock;
+                    if (placeholder != null)
+                    {
+                        // Only show placeholder if there's no text
+                        if (string.IsNullOrEmpty(textBox.Text))
+                        {
+                            placeholder.Visibility = Visibility.Visible;
+                            placeholder.Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(190, 190, 190));
+                        }
+                        else
+                        {
+                            placeholder.Visibility = Visibility.Collapsed;
+                        }
                     }
                 }
             }
@@ -98,7 +167,7 @@ namespace Atom.VPN.Demo
                     if (passwordBox.Password.Length == 0)
                     {
                         placeholder.Visibility = Visibility.Visible;
-                    placeholder.Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(190, 190, 190));
+                        placeholder.Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(190, 190, 190));
                     }
                     else
                     {
@@ -112,194 +181,422 @@ namespace Atom.VPN.Demo
         {
             this.Loaded += (s, e) =>
             {
-                // Initialize the text box field from the XAML element
-                passwordTextBox = PasswordTextBox; // Ensure PasswordTextBox is accessible
-                
                 // Get the show password button from PasswordBox template
                 if (PasswordBox != null && PasswordBox.Template != null && 
                     PasswordBox.Template.FindName("ShowPasswordButton", PasswordBox) is Button showPasswordButton)
                 {
                     showPasswordButton.Click += (sender, args) => 
                     {
-                        if (PasswordBox != null && passwordTextBox != null)
-                    {
-                        // Show the text version and hide the password version
-                        passwordTextBox.Text = PasswordBox.Password;
-                        PasswordBox.Visibility = Visibility.Collapsed;
-                        passwordTextBox.Visibility = Visibility.Visible;
-                            passwordTextBox.Focus(); // Keep focus on the field
-                        args.Handled = true;
+                        if (PasswordBox != null && PasswordTextBox != null)
+                        {
+                            // Show the text version and hide the password version
+                            PasswordTextBox.Text = PasswordBox.Password;
+                            PasswordBox.Visibility = Visibility.Collapsed;
+                            PasswordTextBox.Visibility = Visibility.Visible;
+                            PasswordTextBox.Focus(); // Keep focus on the field
+                            args.Handled = true;
                         }
                     };
                 }
 
                 // Get the hide password button from TextBox template
-                if (passwordTextBox != null && passwordTextBox.Template != null && 
-                    passwordTextBox.Template.FindName("HidePasswordButton", passwordTextBox) is Button hidePasswordButton)
+                if (PasswordTextBox != null && PasswordTextBox.Template != null && 
+                    PasswordTextBox.Template.FindName("HidePasswordButton", PasswordTextBox) is Button hidePasswordButton)
                 {
                     hidePasswordButton.Click += (sender, args) => 
                     {
-                        if (PasswordBox != null && passwordTextBox != null)
-                    {
-                        // Show the password version and hide the text version
-                        PasswordBox.Password = passwordTextBox.Text;
-                        passwordTextBox.Visibility = Visibility.Collapsed;
-                        PasswordBox.Visibility = Visibility.Visible;
+                        if (PasswordBox != null && PasswordTextBox != null)
+                        {
+                            // Show the password version and hide the text version
+                            PasswordBox.Password = PasswordTextBox.Text;
+                            PasswordTextBox.Visibility = Visibility.Collapsed;
+                            PasswordBox.Visibility = Visibility.Visible;
                             PasswordBox.Focus(); // Keep focus on the field
-                        args.Handled = true;
+                            args.Handled = true;
                         }
                     };
                 }
 
                 // Sync password changes between PasswordBox and TextBox
-                if (PasswordBox != null && passwordTextBox != null)
+                if (PasswordBox != null && PasswordTextBox != null)
                 {
                     PasswordBox.PasswordChanged += (sender, args) => 
                     {
-                    if (passwordTextBox.Visibility == Visibility.Visible)
-                    {
-                        passwordTextBox.Text = PasswordBox.Password;
-                    }
-                };
+                        if (PasswordTextBox.Visibility == Visibility.Visible)
+                        {
+                            PasswordTextBox.Text = PasswordBox.Password;
+                        }
+                        UpdatePasswordValidationUI(PasswordBox.Password);
+                    };
 
-                passwordTextBox.TextChanged += (sender, args) => 
-                {
-                    if (PasswordBox.Visibility == Visibility.Visible)
+                    PasswordTextBox.TextChanged += (sender, args) => 
                     {
-                        PasswordBox.Password = passwordTextBox.Text;
-                    }
-                };
+                        if (PasswordBox.Visibility == Visibility.Visible)
+                        {
+                            PasswordBox.Password = PasswordTextBox.Text;
+                        }
+                        UpdatePasswordValidationUI(PasswordTextBox.Text);
+                    };
+                }
+                
+                // Do the same for confirm password toggle
+                if (ConfirmPasswordBox != null && ConfirmPasswordBox.Template != null && 
+                    ConfirmPasswordBox.Template.FindName("ShowPasswordButton", ConfirmPasswordBox) is Button confirmShowPasswordButton)
+                {
+                    confirmShowPasswordButton.Click += (sender, args) => 
+                    {
+                        if (ConfirmPasswordBox != null && ConfirmPasswordTextBox != null)
+                        {
+                            // Show the text version and hide the password version
+                            ConfirmPasswordTextBox.Text = ConfirmPasswordBox.Password;
+                            ConfirmPasswordBox.Visibility = Visibility.Collapsed;
+                            ConfirmPasswordTextBox.Visibility = Visibility.Visible;
+                            ConfirmPasswordTextBox.Focus(); // Keep focus on the field
+                            args.Handled = true;
+                        }
+                    };
+                }
+
+                // Get the hide password button from TextBox template
+                if (ConfirmPasswordTextBox != null && ConfirmPasswordTextBox.Template != null && 
+                    ConfirmPasswordTextBox.Template.FindName("HidePasswordButton", ConfirmPasswordTextBox) is Button confirmHidePasswordButton)
+                {
+                    confirmHidePasswordButton.Click += (sender, args) => 
+                    {
+                        if (ConfirmPasswordBox != null && ConfirmPasswordTextBox != null)
+                        {
+                            // Show the password version and hide the text version
+                            ConfirmPasswordBox.Password = ConfirmPasswordTextBox.Text;
+                            ConfirmPasswordTextBox.Visibility = Visibility.Collapsed;
+                            ConfirmPasswordBox.Visibility = Visibility.Visible;
+                            ConfirmPasswordBox.Focus(); // Keep focus on the field
+                            args.Handled = true;
+                        }
+                    };
+                }
+
+                // Sync confirm password changes 
+                if (ConfirmPasswordBox != null && ConfirmPasswordTextBox != null)
+                {
+                    ConfirmPasswordBox.PasswordChanged += (sender, args) => 
+                    {
+                        if (ConfirmPasswordTextBox.Visibility == Visibility.Visible)
+                        {
+                            ConfirmPasswordTextBox.Text = ConfirmPasswordBox.Password;
+                        }
+                        UpdateSignUpButtonState();
+                    };
+
+                    ConfirmPasswordTextBox.TextChanged += (sender, args) => 
+                    {
+                        if (ConfirmPasswordBox.Visibility == Visibility.Visible)
+                        {
+                            ConfirmPasswordBox.Password = ConfirmPasswordTextBox.Text;
+                        }
+                        UpdateSignUpButtonState();
+                    };
                 }
             };
         }
 
-        private void SignUp_Click(object sender, RoutedEventArgs e)
+        private void UpdatePasswordValidationUI(string password)
         {
-            // Get and validate input values
+            // Update length validation
+            isLengthValid = Regex.IsMatch(password, @"^.{12,32}$");
+            LengthValidationText.Text = (isLengthValid ? "✔" : "●") + " Must be 12-32 characters long";
+            LengthValidationText.Foreground = isLengthValid 
+                ? new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Green) 
+                : new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0x75, 0x75, 0x75));
+
+            // Update number validation
+            hasNumber = Regex.IsMatch(password, @"[0-9]");
+            NumberValidationText.Text = (hasNumber ? "✔" : "●") + " Must contain at least one number";
+            NumberValidationText.Foreground = hasNumber 
+                ? new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Green) 
+                : new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0x75, 0x75, 0x75));
+
+            // Update special character validation
+            hasSpecialChar = Regex.IsMatch(password, @"[!@#$%^&*,.:{}/]");
+            SpecialCharValidationText.Text = (hasSpecialChar ? "✔" : "●") + " Must contain at least one special character (!@#$%^&amp;*,.:{}/)";
+            SpecialCharValidationText.Foreground = hasSpecialChar 
+                ? new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Green) 
+                : new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0x75, 0x75, 0x75));
+            
+            // Update uppercase validation
+            hasUppercase = Regex.IsMatch(password, @"[A-Z]");
+            UppercaseValidationText.Text = (hasUppercase ? "✔" : "●") + " Must contain at least one uppercase letter";
+            UppercaseValidationText.Foreground = hasUppercase 
+                ? new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Green) 
+                : new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0x75, 0x75, 0x75));
+            
+            // Update lowercase validation
+            hasLowercase = Regex.IsMatch(password, @"[a-z]");
+            LowercaseValidationText.Text = (hasLowercase ? "✔" : "●") + " Must contain at least one lowercase letter";
+            LowercaseValidationText.Foreground = hasLowercase 
+                ? new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Green) 
+                : new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0x75, 0x75, 0x75));
+            
+            // Update ASCII only validation
+            isAsciiOnly = !Regex.IsMatch(password, @"[^\x00-\x7F]");
+            AsciiValidationText.Text = (isAsciiOnly ? "✔" : "●") + " Must contain only ASCII characters";
+            AsciiValidationText.Foreground = isAsciiOnly 
+                ? new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Green) 
+                : new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0x75, 0x75, 0x75));
+            
+            UpdateSignUpButtonState();
+        }
+        
+        private void UpdateSignUpButtonState()
+        {
+            // Get password and confirm password
+            string password = PasswordBox.IsVisible ? PasswordBox.Password : PasswordTextBox.Text;
+            string confirmPassword = ConfirmPasswordBox.IsVisible ? ConfirmPasswordBox.Password : ConfirmPasswordTextBox.Text;
             string email = EmailTextBox.Text.Trim();
-            string password = PasswordBox.Password;
+            string username = UsernameTextBox.Text.Trim();
             
-            // If password is being shown in textbox, get it from there
-            if (PasswordTextBox.Visibility == Visibility.Visible)
+            // Check if passwords match
+            bool passwordsMatch = password == confirmPassword && !string.IsNullOrEmpty(password);
+            
+            // Visually indicate password match status only if confirm password is not empty
+            if (!string.IsNullOrEmpty(confirmPassword))
             {
-                password = PasswordTextBox.Text;
+                var border = ConfirmPasswordBox.IsVisible 
+                    ? ConfirmPasswordBox.Template.FindName("border", ConfirmPasswordBox) as Border
+                    : ConfirmPasswordTextBox.Template.FindName("border", ConfirmPasswordTextBox) as Border;
+                
+                if (border != null)
+                {
+                    // Change border color based on password match
+                    border.BorderBrush = passwordsMatch 
+                        ? new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Green)
+                        : new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Red);
+                }
+                
+                // Update password match status text
+                if (passwordsMatch)
+                {
+                    PasswordMatchStatus.Text = "Passwords match";
+                    PasswordMatchStatus.Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Green);
+                    PasswordMatchStatus.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    PasswordMatchStatus.Text = "Passwords don't match";
+                    PasswordMatchStatus.Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Red);
+                    PasswordMatchStatus.Visibility = Visibility.Visible;
+                }
+            }
+            else
+            {
+                // Hide password match status when confirm password is empty
+                PasswordMatchStatus.Visibility = Visibility.Collapsed;
             }
             
-            bool acceptTerms = TermsCheckbox.IsChecked ?? false;
+            // Check email validity
+            bool isEmailValid = IsValidEmail(email);
+            
+            // Check username validity (max 8 characters)
+            bool isUsernameValid = !string.IsNullOrEmpty(username) && username.Length <= 8;
 
-            // Validate email
-            if (string.IsNullOrWhiteSpace(email))
-            {
-                MessageBox.Show("Please enter your email address.", "Email Required", MessageBoxButton.OK, MessageBoxImage.Warning);
-                EmailTextBox.Focus();
-                return;
-            }
+            // Check terms checkbox is checked
+            bool termsAccepted = TermsCheckbox.IsChecked ?? false;
+            
+            // Check all password requirements and terms
+            bool allRequirementsMet = isLengthValid && hasNumber && hasSpecialChar && 
+                                      hasUppercase && hasLowercase && isAsciiOnly && 
+                                      passwordsMatch && isEmailValid && isUsernameValid && termsAccepted;
+            
+            // Update sign up button state
+            SignUpButton.IsEnabled = allRequirementsMet;
+        }
 
-            if (!IsValidEmail(email))
-            {
-                MessageBox.Show("Please enter a valid email address.", "Invalid Email", MessageBoxButton.OK, MessageBoxImage.Warning);
-                EmailTextBox.Focus();
-                return;
-            }
-
-            // Validate password
-            if (string.IsNullOrWhiteSpace(password))
-            {
-                MessageBox.Show("Please enter a password.", "Password Required", MessageBoxButton.OK, MessageBoxImage.Warning);
-                FocusPassword();
-                return;
-            }
-
-            if (password.Length < 8)
-            {
-                MessageBox.Show("Password must be at least 8 characters long.", "Password Too Short", MessageBoxButton.OK, MessageBoxImage.Warning);
-                FocusPassword();
-                return;
-            }
-
-            // Validate terms acceptance
-            if (!acceptTerms)
-            {
-                MessageBox.Show("You must accept the terms and conditions to sign up.", "Terms Required", MessageBoxButton.OK, MessageBoxImage.Warning);
-                TermsCheckbox.Focus();
-                return;
-            }
+        private async void SignUp_Click(object sender, RoutedEventArgs e)
+        {
+            // Disable sign up button to prevent multiple submissions
+            SignUpButton.IsEnabled = false;
 
             try
             {
-                // Disable inputs to prevent additional clicks
-                EmailTextBox.IsEnabled = false;
-                PasswordBox.IsEnabled = false;
-                PasswordTextBox.IsEnabled = false;
-                TermsCheckbox.IsEnabled = false;
+                // Get and validate input values
+                string email = EmailTextBox.Text.Trim();
+                string username = UsernameTextBox.Text.Trim();
+                string password = PasswordBox.IsVisible ? PasswordBox.Password : PasswordTextBox.Text;
+                string confirmPassword = ConfirmPasswordBox.IsVisible ? ConfirmPasswordBox.Password : ConfirmPasswordTextBox.Text;
                 
-                // Show success message
-                SuccessMessage.Text = $"An email verification has been sent to {email}. Please follow the instructions. Redirecting...";
-                SuccessMessage.Visibility = Visibility.Visible;
+                // Final validation check before API call
+                if (string.IsNullOrWhiteSpace(email))
+                {
+                    new ErrorDialog("Validation Error", "Please enter your email address.").ShowDialog();
+                    EmailTextBox.Focus();
+                    SignUpButton.IsEnabled = true;
+                    return;
+                }
+
+                if (!IsValidEmail(email))
+                {
+                    new ErrorDialog("Validation Error", "Please enter a valid email address.").ShowDialog();
+                    EmailTextBox.Focus();
+                    SignUpButton.IsEnabled = true;
+                    return;
+                }
                 
-                // Use a timer to delay navigation so the user can see the success message
-                var timer = new System.Windows.Threading.DispatcherTimer();
-                timer.Interval = TimeSpan.FromSeconds(3);
-                timer.Tick += (s, args) => {
-                    timer.Stop();
+                if (string.IsNullOrWhiteSpace(username))
+                {
+                    new ErrorDialog("Validation Error", "Please enter a username.").ShowDialog();
+                    UsernameTextBox.Focus();
+                    SignUpButton.IsEnabled = true;
+                    return;
+                }
+                
+                if (username.Length > 8)
+                {
+                    new ErrorDialog("Validation Error", "Username must be maximum 8 characters.").ShowDialog();
+                    UsernameTextBox.Focus();
+                    SignUpButton.IsEnabled = true;
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(password))
+                {
+                    new ErrorDialog("Validation Error", "Please enter a password.").ShowDialog();
+                    FocusPassword();
+                    SignUpButton.IsEnabled = true;
+                    return;
+                }
+
+                if (password != confirmPassword)
+                {
+                    new ErrorDialog("Validation Error", "Passwords do not match.").ShowDialog();
+                    ConfirmPasswordBox.Focus();
+                    SignUpButton.IsEnabled = true;
+                    return;
+                }
+                
+                // Validate password using the detailed validation logic
+                var passwordErrors = ValidatePasswordLocal(password);
+                if (passwordErrors.Count > 0)
+                {
+                    new ErrorDialog("Password Validation Error", $"Password does not meet requirements:\n• {string.Join("\n• ", passwordErrors)}").ShowDialog();
+                    FocusPassword();
+                    SignUpButton.IsEnabled = true;
+                    return;
+                }
+
+                // Create the payload according to the register API expectations
+                var payload = new
+                {
+                    username = username,
+                    email = email,
+                    password = password,
+                    name = username, // Using username as name for simplicity
+                    subscriptionType = "trial" // Default subscription type
+                };
+
+                // Serialize and send the request
+                string jsonPayload = JsonSerializer.Serialize(payload);
+                var requestContent = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+                
+                // Make the API call
+                HttpResponseMessage response = await client.PostAsync($"{ApiBaseUrl}/api/auth/register", requestContent);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Show success dialog
+                    new SuccessDialog("Registration Successful", 
+                        "Your account has been created successfully! You can now log in.").ShowDialog();
                     
-                    // Get the parent window
+                    // Navigate to login page
                     var parentWindow = Window.GetWindow(this);
-                    
-                    // Navigate to login
                     if (parentWindow is MainContainerWindow mcWindow)
                     {
                         mcWindow.NavigateToLoginPage();
                     }
                     else
                     {
-                        // Fallback to window-based approach
-                        var loginWindow = new LoginWindow();
-                        loginWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-                        loginWindow.Show();
+                        // If we can't navigate, just clear the form
+                        EmailTextBox.Text = string.Empty;
+                        UsernameTextBox.Text = string.Empty;
+                        PasswordBox.Password = string.Empty;
+                        ConfirmPasswordBox.Password = string.Empty;
+                        PasswordTextBox.Text = string.Empty;
+                        ConfirmPasswordTextBox.Text = string.Empty;
+                        UpdatePasswordValidationUI(string.Empty);
                         
-                        // Close the current window
-                        if (parentWindow != null)
+                        // Re-enable the sign up button
+                        SignUpButton.IsEnabled = true;
+                    }
+                }
+                else
+                {
+                    // Handle API error response
+                    string errorContent = await response.Content.ReadAsStringAsync();
+                    string errorMessage = $"Failed to register. Status: {response.StatusCode}";
+                    
+                    try
+                    {
+                        // Try to parse a more detailed error message from the response
+                        var errorResponseDoc = JsonDocument.Parse(errorContent);
+                        if (errorResponseDoc.RootElement.TryGetProperty("message", out JsonElement msgProp))
                         {
-                            Application.Current.MainWindow = loginWindow;
-                            parentWindow.Close();
+                            errorMessage = msgProp.GetString();
+                        }
+                        else if (errorResponseDoc.RootElement.TryGetProperty("errors", out JsonElement errorsProp) && 
+                                errorsProp.ValueKind == JsonValueKind.Array && 
+                                errorsProp.GetArrayLength() > 0)
+                        {
+                            // Concatenate multiple error messages if present
+                            var errorMessages = new List<string>();
+                            foreach (var err in errorsProp.EnumerateArray())
+                            {
+                                errorMessages.Add(err.GetString());
+                            }
+                            errorMessage = string.Join("\n", errorMessages);
                         }
                     }
-                };
-                timer.Start();
+                    catch (JsonException)
+                    {
+                        // If we can't parse the JSON, just use the raw response
+                        errorMessage = errorContent;
+                    }
+                    
+                    new ErrorDialog("Registration Error", errorMessage).ShowDialog();
+                    SignUpButton.IsEnabled = true;
+                }
+            }
+            catch (HttpRequestException httpEx)
+            {
+                new ErrorDialog("Network Error", $"A network error occurred: {httpEx.Message}").ShowDialog();
+                SignUpButton.IsEnabled = true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                new ErrorDialog("Error", $"An unexpected error occurred: {ex.Message}").ShowDialog();
+                SignUpButton.IsEnabled = true;
             }
         }
-        
+
         private void FocusPassword()
         {
-            if (passwordTextBox.Visibility == Visibility.Visible)
-                passwordTextBox.Focus();
-            else
+            if (PasswordBox.Visibility == Visibility.Visible)
+            {
                 PasswordBox.Focus();
+            }
+            else
+            {
+                PasswordTextBox.Focus();
+            }
         }
 
         private void TermsAndConditions_Click(object sender, RoutedEventArgs e)
         {
-            // Display terms and conditions in a dialog
-            MessageBox.Show("Terms and Conditions\n\n" +
-                "By using Atom VPN, you agree to our terms of service and privacy policy. " +
-                "Your data will be processed in accordance with our privacy policy, and you " +
-                "consent to the collection and use of your information as described therein.",
-                "Terms and Conditions", MessageBoxButton.OK, MessageBoxImage.Information);
+            // Open terms and conditions
+            MessageBox.Show("Terms and Conditions page would open here.", "Terms and Conditions", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void PrivacyPolicy_Click(object sender, RoutedEventArgs e)
         {
-            // Display privacy policy in a dialog
-            MessageBox.Show("Privacy Policy\n\n" +
-                "Atom VPN is committed to protecting your privacy. We collect minimal information " +
-                "necessary to provide our services. We do not sell or share your personal data with " +
-                "third parties except as required by law.",
-                "Privacy Policy", MessageBoxButton.OK, MessageBoxImage.Information);
+            // Open privacy policy
+            MessageBox.Show("Privacy Policy page would open here.", "Privacy Policy", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void SignIn_Click(object sender, RoutedEventArgs e)
@@ -309,38 +606,47 @@ namespace Atom.VPN.Demo
                 // Get the parent window
                 var parentWindow = Window.GetWindow(this);
                 
-                // Check what type of window we're in
+                // Navigate to login page
                 if (parentWindow is MainContainerWindow mcWindow)
                 {
-                    // Navigate to login page using MainContainerWindow
                     mcWindow.NavigateToLoginPage();
                 }
                 else
                 {
-                    // Navigate to LoginWindow
-                    var loginWindow = new LoginWindow();
-                    loginWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-                loginWindow.Show();
-                    
-                    // Close the parent window
-                    if (parentWindow != null)
-                    {
-                        Application.Current.MainWindow = loginWindow;
-                        parentWindow.Close();
-                    }
+                    new ErrorDialog("Navigation Error", "Could not navigate to login page. Try restarting the application.").ShowDialog();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                new ErrorDialog("Navigation Error", $"Error navigating to login screen: {ex.Message}").ShowDialog();
             }
         }
 
         private bool IsValidEmail(string email)
         {
-            // Simple regex for email validation
-            string pattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
-            return Regex.IsMatch(email, pattern);
+            try
+            {
+                // Simple regex for email validation
+                var regex = new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
+                return regex.IsMatch(email);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        
+        // Comprehensive password validation from ChangePasswordPage
+        private List<string> ValidatePasswordLocal(string password)
+        {
+            var errors = new List<string>();
+            if (!Regex.IsMatch(password, @"^.{12,32}$")) errors.Add("Password must be 12-32 characters long.");
+            if (!Regex.IsMatch(password, @"[A-Z]")) errors.Add("Password must contain at least one uppercase letter.");
+            if (!Regex.IsMatch(password, @"[a-z]")) errors.Add("Password must contain at least one lowercase letter.");
+            if (!Regex.IsMatch(password, @"[0-9]")) errors.Add("Password must contain at least one number.");
+            if (!Regex.IsMatch(password, @"[!@#$%^&*,.:{}/]")) errors.Add("Password must contain at least one special character (!@#$%^&amp;*,.:{}/).");
+            if (Regex.IsMatch(password, @"[^\x00-\x7F]")) errors.Add("Password must contain only ASCII characters.");
+            return errors;
         }
     }
 } 

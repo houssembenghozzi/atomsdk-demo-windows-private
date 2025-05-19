@@ -310,6 +310,10 @@
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter TargetName="border" Property="Background" Value="#111111"/>
                             </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Background" Value="#AAAAAA"/>
+                                <Setter TargetName="border" Property="Opacity" Value="0.7"/>
+                            </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -387,6 +391,178 @@
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
+        
+        <!-- Confirm Password Box Style (copy of PasswordBoxStyle but with different placeholder) -->
+        <Style x:Key="ConfirmPasswordBoxStyle" TargetType="PasswordBox" BasedOn="{StaticResource PasswordBoxStyle}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Border x:Name="border" 
+                                BorderBrush="#BEBEBE" 
+                                BorderThickness="1" 
+                                CornerRadius="30"
+                                Background="Transparent"
+                                Padding="16,16">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="24"/>
+                                    <ColumnDefinition Width="12"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="24"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Path x:Name="PasswordIcon" Grid.Column="0" Width="16" Height="21" Stretch="Uniform" Margin="0,1.5,0,1.5">
+                                    <Path.Data>
+                                        <PathGeometry>
+                                            <PathFigure StartPoint="13,9.5">
+                                                <LineSegment Point="3,9.5" />
+                                                <ArcSegment Point="1,11.5" Size="2,2" SweepDirection="Clockwise" />
+                                                <LineSegment Point="1,17.5" />
+                                                <ArcSegment Point="3,19.5" Size="2,2" SweepDirection="Clockwise" />
+                                                <LineSegment Point="13,19.5" />
+                                                <ArcSegment Point="15,17.5" Size="2,2" SweepDirection="Clockwise" />
+                                                <LineSegment Point="15,11.5" />
+                                                <ArcSegment Point="13,9.5" Size="2,2" SweepDirection="Clockwise" />
+                                            </PathFigure>
+                                            <PathFigure StartPoint="8,15.5">
+                                                <ArcSegment Point="8,13.5" Size="1,1" SweepDirection="Counterclockwise" />
+                                                <ArcSegment Point="8,15.5" Size="1,1" SweepDirection="Counterclockwise" />
+                                            </PathFigure>
+                                            <PathFigure StartPoint="4,9.5">
+                                                <LineSegment Point="4,5.5" />
+                                                <ArcSegment Point="8,1.5" Size="4,4" SweepDirection="Clockwise" />
+                                                <ArcSegment Point="12,5.5" Size="4,4" SweepDirection="Clockwise" />
+                                                <LineSegment Point="12,9.5" />
+                                            </PathFigure>
+                                        </PathGeometry>
+                                    </Path.Data>
+                                    <Path.Stroke>
+                                        <SolidColorBrush x:Name="PasswordIconColor" Color="#BEBEBE" />
+                                    </Path.Stroke>
+                                    <Path.StrokeThickness>1.5</Path.StrokeThickness>
+                                    <Path.StrokeLineJoin>Round</Path.StrokeLineJoin>
+                                    <Path.StrokeStartLineCap>Round</Path.StrokeStartLineCap>
+                                    <Path.StrokeEndLineCap>Round</Path.StrokeEndLineCap>
+                                </Path>
+                                <ScrollViewer Grid.Column="2" x:Name="PART_ContentHost" Focusable="false"/>
+                                <TextBlock Grid.Column="2" 
+                                           x:Name="Placeholder" 
+                                           Text="Confirm Password" 
+                                           Foreground="#BEBEBE" 
+                                           FontFamily="{StaticResource WorkSansMedium}" 
+                                           FontSize="14"
+                                           FontWeight="Medium"/>
+                                <Button Grid.Column="3" x:Name="ShowPasswordButton" Background="Transparent" BorderThickness="0" Cursor="Hand">
+                                    <Image Source="/Resources/icon/eye.svg" Width="24" Height="24" Opacity="0.7"/>
+                                </Button>
+                            </Grid>
+                        </Border>
+                        
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#212121"/>
+                                <Setter TargetName="Placeholder" Property="Visibility" Value="Collapsed"/>
+                                <Setter TargetName="PasswordIcon" Property="Stroke" Value="#111827"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="False">
+                                <Setter TargetName="PasswordIcon" Property="Stroke" Value="#BEBEBE"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Confirm Password TextBox Style (copy of TextBoxStyleForPasswordDisplay but with different placeholder) -->
+        <Style x:Key="ConfirmPasswordTextBoxStyle" TargetType="TextBox" BasedOn="{StaticResource TextBoxStyleForPasswordDisplay}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="border" 
+                                BorderBrush="#BEBEBE" 
+                                BorderThickness="1" 
+                                CornerRadius="30"
+                                Background="Transparent"
+                                Padding="16,16">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="24"/>
+                                    <ColumnDefinition Width="12"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="24"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Path x:Name="PasswordIcon" Grid.Column="0" Width="16" Height="21" Stretch="Uniform" Margin="0,1.5,0,1.5">
+                                    <Path.Data>
+                                        <PathGeometry>
+                                            <PathFigure StartPoint="13,9.5">
+                                                <LineSegment Point="3,9.5" />
+                                                <ArcSegment Point="1,11.5" Size="2,2" SweepDirection="Clockwise" />
+                                                <LineSegment Point="1,17.5" />
+                                                <ArcSegment Point="3,19.5" Size="2,2" SweepDirection="Clockwise" />
+                                                <LineSegment Point="13,19.5" />
+                                                <ArcSegment Point="15,17.5" Size="2,2" SweepDirection="Clockwise" />
+                                                <LineSegment Point="15,11.5" />
+                                                <ArcSegment Point="13,9.5" Size="2,2" SweepDirection="Clockwise" />
+                                            </PathFigure>
+                                            <PathFigure StartPoint="8,15.5">
+                                                <ArcSegment Point="8,13.5" Size="1,1" SweepDirection="Counterclockwise" />
+                                                <ArcSegment Point="8,15.5" Size="1,1" SweepDirection="Counterclockwise" />
+                                            </PathFigure>
+                                            <PathFigure StartPoint="4,9.5">
+                                                <LineSegment Point="4,5.5" />
+                                                <ArcSegment Point="8,1.5" Size="4,4" SweepDirection="Clockwise" />
+                                                <ArcSegment Point="12,5.5" Size="4,4" SweepDirection="Clockwise" />
+                                                <LineSegment Point="12,9.5" />
+                                            </PathFigure>
+                                        </PathGeometry>
+                                    </Path.Data>
+                                    <Path.Stroke>
+                                        <SolidColorBrush x:Name="PasswordIconColor" Color="#BEBEBE" />
+                                    </Path.Stroke>
+                                    <Path.StrokeThickness>1.5</Path.StrokeThickness>
+                                    <Path.StrokeLineJoin>Round</Path.StrokeLineJoin>
+                                    <Path.StrokeStartLineCap>Round</Path.StrokeStartLineCap>
+                                    <Path.StrokeEndLineCap>Round</Path.StrokeEndLineCap>
+                                </Path>
+                                <ScrollViewer Grid.Column="2" x:Name="PART_ContentHost" Focusable="false"/>
+                                <TextBlock Grid.Column="2" 
+                                           x:Name="Placeholder" 
+                                           Text="Confirm Password" 
+                                           Foreground="#BEBEBE" 
+                                           FontFamily="{StaticResource WorkSansMedium}" 
+                                           FontSize="14"
+                                           FontWeight="Medium"/>
+                                <Button Grid.Column="3" x:Name="HidePasswordButton" Background="Transparent" BorderThickness="0" Cursor="Hand">
+                                    <Path Data="M12 9C13.1 9 14.12 9.32 15 9.88L17.58 7.3C16.04 6.14 14.1 5.5 12 5.5C7.94 5.5 4.36 8.04 2.79 12C3.18 12.88 3.71 13.69 4.37 14.4L6.21 12.56C6.07 12.21 6 11.84 6 11.5C6 9.01 8.01 7 10.5 7C11.05 7 11.57 7.11 12.03 7.3L13.6 5.72C13.07 5.58 12.55 5.5 12 5.5C9.24 5.5 7 7.74 7 10.5C7 11.24 7.2 11.91 7.55 12.5L6.09 14.01C4.5 13.01 3.24 11.59 2.42 10C3.75 6.5 7.5 4 12 4C14.3 4 16.38 4.78 18.1 6.12L19.88 4.34C17.96 2.89 15.61 2 12.86 2C7.38 2 2.6 5.88 1 11.5C1.89 13.85 3.6 15.84 5.85 17.14L4.15 18.85C4 18.7 3.85 18.55 3.7 18.4C1.45 16.36 0 13.86 0 11.5C0 11.31 0.01 11.12 0.03 10.93L0 10.93ZM12 14.5C10.62 14.5 9.5 13.38 9.5 12C9.5 11.07 10.09 10.26 11 9.82L14.18 13C13.74 13.91 12.93 14.5 12 14.5ZM22.79 11.95C22.17 10.41 21.18 9.09 19.94 8.12L18.53 9.53C19.57 10.27 20.43 11.26 20.98 12.38C19.65 15.88 15.9 18.38 11.44 18.38C10.5 18.38 9.6 18.24 8.74 18L7.2 19.5C8.8 20.31 10.56 20.88 12.44 20.88C17.92 20.88 22.7 16.99 24.33 11.49C24.19 11.04 24 10.58 23.75 10.14L22.79 11.95Z" Fill="#BEBEBE" Width="24" Height="24" Stretch="Uniform"/>
+                                </Button>
+                            </Grid>
+                        </Border>
+                        
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#212121"/>
+                                <Setter TargetName="Placeholder" Property="Visibility" Value="Collapsed"/>
+                                <Setter TargetName="PasswordIcon" Property="Stroke" Value="#111827"/>
+                            </Trigger>
+                            <Trigger Property="Text" Value="">
+                                <Setter TargetName="Placeholder" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="False">
+                                <Setter TargetName="PasswordIcon" Property="Stroke" Value="#BEBEBE"/>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsFocused" Value="True"/>
+                                    <Condition Property="Text" Value=""/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Placeholder" Property="Visibility" Value="Collapsed"/>
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Page.Resources>
     
     <Grid Margin="0" SnapsToDevicePixels="True">
@@ -426,6 +602,66 @@
                          GotFocus="InputField_GotFocus"
                          LostFocus="InputField_LostFocus"/>
                 
+                <!-- Username Input (max 8 characters) -->
+                <Border x:Name="UsernameBorder"
+                       BorderBrush="#BEBEBE" 
+                       BorderThickness="1" 
+                       CornerRadius="30"
+                       Background="Transparent"
+                       Padding="16,16"
+                       Margin="0,0,0,20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="24"/>
+                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <Path x:Name="UsernameIcon" 
+                              Grid.Column="0" 
+                              Width="20" 
+                              Height="20" 
+                              Stretch="Uniform" 
+                              Margin="0,0,0,0" 
+                              StrokeThickness="1.5" 
+                              Stroke="#BEBEBE" 
+                              StrokeLineJoin="Round" 
+                              StrokeStartLineCap="Round" 
+                              StrokeEndLineCap="Round">
+                            <Path.Data>
+                                <PathGeometry>
+                                    <PathFigure StartPoint="16,21">
+                                        <LineSegment Point="16,19" />
+                                        <ArcSegment Point="8,19" Size="8,8" SweepDirection="Clockwise" IsLargeArc="True"/>
+                                        <LineSegment Point="8,21" />
+                                    </PathFigure>
+                                    <PathFigure StartPoint="12,11">
+                                        <ArcSegment Point="12,11" Size="4,4" SweepDirection="Clockwise" IsLargeArc="True"/>
+                                    </PathFigure>
+                                </PathGeometry>
+                            </Path.Data>
+                        </Path>
+                        
+                        <TextBox x:Name="UsernameTextBox" 
+                                 Grid.Column="2" 
+                                 FontFamily="{StaticResource WorkSansRegular}" 
+                                 FontSize="16" 
+                                 Foreground="#323438" 
+                                 Background="Transparent" 
+                                 BorderThickness="0"
+                                 MaxLength="8"
+                                 GotFocus="InputField_GotFocus"
+                                 LostFocus="InputField_LostFocus"/>
+                        
+                        <TextBlock Grid.Column="2" 
+                                   x:Name="UsernameTextBoxPlaceholder" 
+                                   Text="Username (max 8 characters)" 
+                                   Foreground="#BEBEBE" 
+                                   FontFamily="{StaticResource WorkSansRegular}" 
+                                   FontSize="16"/>
+                    </Grid>
+                </Border>
+                
                 <!-- Password Section -->
                 <Grid Margin="0,0,0,20">
                     <PasswordBox x:Name="PasswordBox" 
@@ -439,6 +675,38 @@
                              GotFocus="InputField_GotFocus"
                              LostFocus="InputField_LostFocus"/>
                 </Grid>
+                
+                <!-- Password Validation messages (Add after the Password and before the Confirm Password fields) -->
+                <StackPanel x:Name="PasswordValidationMessages" Margin="0,5,0,16">
+                    <TextBlock x:Name="LengthValidationText" Text="● Must be 12-32 characters long" Foreground="#757575" FontSize="12" VerticalAlignment="Center" Margin="0,2,0,2"/>
+                    <TextBlock x:Name="UppercaseValidationText" Text="● Must contain at least one uppercase letter" Foreground="#757575" FontSize="12" VerticalAlignment="Center" Margin="0,2,0,2"/>
+                    <TextBlock x:Name="LowercaseValidationText" Text="● Must contain at least one lowercase letter" Foreground="#757575" FontSize="12" VerticalAlignment="Center" Margin="0,2,0,2"/>
+                    <TextBlock x:Name="NumberValidationText" Text="● Must contain at least one number" Foreground="#757575" FontSize="12" VerticalAlignment="Center" Margin="0,2,0,2"/>
+                    <TextBlock x:Name="SpecialCharValidationText" Text="● Must contain at least one special character (!@#$%^&amp;*,.:{}/)" Foreground="#757575" FontSize="12" VerticalAlignment="Center" Margin="0,2,0,2"/>
+                    <TextBlock x:Name="AsciiValidationText" Text="● Must contain only ASCII characters" Foreground="#757575" FontSize="12" VerticalAlignment="Center" Margin="0,2,0,2"/>
+                </StackPanel>
+                
+                <!-- Confirm Password Section -->
+                <Grid Margin="0,0,0,5">
+                    <PasswordBox x:Name="ConfirmPasswordBox" 
+                                 Style="{StaticResource ConfirmPasswordBoxStyle}" 
+                                 Margin="0,0,0,0"
+                                 GotFocus="InputField_GotFocus"
+                                 LostFocus="InputField_LostFocus"/>
+                    <TextBox x:Name="ConfirmPasswordTextBox"
+                             Style="{StaticResource ConfirmPasswordTextBoxStyle}"
+                             Margin="0,0,0,0"
+                             GotFocus="InputField_GotFocus"
+                             LostFocus="InputField_LostFocus"/>
+                </Grid>
+                
+                <!-- Password Match Status -->
+                <TextBlock x:Name="PasswordMatchStatus" 
+                           Text="Passwords match" 
+                           Foreground="Green" 
+                           FontSize="12" 
+                           Margin="16,0,0,15"
+                           Visibility="Collapsed"/>
                 
                 <!-- Success Message (initially hidden) -->
                 <TextBlock x:Name="SuccessMessage"
@@ -456,9 +724,11 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     
-                    <CheckBox x:Name="TermsCheckbox" Style="{StaticResource TermsCheckboxStyle}" VerticalAlignment="Top" Margin="0,3,10,0"/>
+                    <Border x:Name="TermsCheckboxBorder" BorderBrush="#BEBEBE" BorderThickness="1" CornerRadius="4" Width="24" Height="24" Margin="0,0,10,0">
+                        <CheckBox x:Name="TermsCheckbox" Style="{StaticResource TermsCheckboxStyle}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2"/>
+                    </Border>
                     
-                    <TextBlock Grid.Column="1" VerticalAlignment="Center" TextWrapping="Wrap">
+                    <TextBlock Grid.Column="1" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="14">
                         <Run Text="Agree to "/>
                         <Hyperlink Foreground="#DC1E3D" Click="TermsAndConditions_Click">
                             <Run Text="Terms &amp; Conditions"/>
@@ -472,7 +742,8 @@
             </StackPanel>
             
             <!-- Sign Up Button -->
-            <Button Style="{StaticResource SignUpButtonStyle}" 
+            <Button x:Name="SignUpButton" 
+                    Style="{StaticResource SignUpButtonStyle}" 
                     Margin="0,0,0,60"
                     Click="SignUp_Click"/>
         </StackPanel>

@@ -98,8 +98,8 @@ namespace Atom.VPN.Demo
             NumberValidationText.Text = (hasNumber ? "✔" : "●") + " Must contain at least one number";
             NumberValidationText.Foreground = hasNumber ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Color.FromRgb(0x75, 0x75, 0x75));
 
-            hasSpecialChar = Regex.IsMatch(password, @"[!@#$%^&*,.:{}]");
-            SpecialCharValidationText.Text = (hasSpecialChar ? "✔" : "●") + " Must contain at least one special character (!@#$%^&*,.:{})";
+            hasSpecialChar = Regex.IsMatch(password, @"[!@#$%^&*,.:{}/]");
+            SpecialCharValidationText.Text = (hasSpecialChar ? "✔" : "●") + " Must contain at least one special character (!@#$%^&amp;*,.:{}/)";
             SpecialCharValidationText.Foreground = hasSpecialChar ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Color.FromRgb(0x75, 0x75, 0x75));
             
             UpdateSaveButtonState();
@@ -271,8 +271,8 @@ namespace Atom.VPN.Demo
             if (!Regex.IsMatch(password, @"[a-z]")) errors.Add("Password must contain at least one lowercase letter.");
             if (!Regex.IsMatch(password, @"[0-9]")) errors.Add("Password must contain at least one number.");
             // Special characters from backend: /[!@#$%^&*,.:{}/]/
-            if (!Regex.IsMatch(password, @"[!@#$%^&*,.:{}/]")) errors.Add("Password must contain at least one special character (e.g., !@#$%^&*,.:{}/).");
-            if (!Regex.IsMatch(password, @"^[ -]*$")) errors.Add("Password must not contain non-ASCII characters.");
+            if (!Regex.IsMatch(password, @"[!@#$%^&*,.:{}/]")) errors.Add("Password must contain at least one special character (!@#$%^&amp;*,.:{}/).");
+            if (!Regex.IsMatch(password, @"^[ -]*$")) errors.Add("Password must not contain non-ASCII characters.");
             return errors;
         }
 
