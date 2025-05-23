@@ -98,7 +98,7 @@ namespace Atom.VPN.Demo
                                 new SolidColorBrush(Colors.White),
                                 null,
                                 Geometry.Parse(pathData));
-                        }
+                }
                         
                         drawingContext.Pop();
                     }

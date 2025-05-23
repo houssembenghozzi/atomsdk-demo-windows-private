@@ -26,31 +26,31 @@
                  MouseDown="CloseOnBackgroundClick"/>
         
         <!-- Popup content -->
-        <Border Background="#FFFFFF" 
+    <Border Background="#FFFFFF" 
                 CornerRadius="14" 
-                BorderBrush="#EEEEEE" 
+            BorderBrush="#EEEEEE" 
                 BorderThickness="2" 
                 Padding="16,24,16,24"
                 Width="408"
                 Height="243.21"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                
-                <!-- Header -->
-                <TextBlock Grid.Row="0" 
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Header -->
+            <TextBlock Grid.Row="0" 
                            Text="App shortcuts" 
                            FontSize="18" 
-                           FontWeight="SemiBold" 
-                           Foreground="#333333" 
+                       FontWeight="SemiBold" 
+                       Foreground="#333333" 
                            Margin="0,0,0,24"
                            HorizontalAlignment="Center"/>
-                
+            
                 <!-- Shortcuts Grid - Centered with smaller icons and less gap -->
                 <Grid Grid.Row="1" 
                       Margin="0,0,0,24" 
@@ -210,12 +210,12 @@
                         Cursor="Hand"
                         HorizontalAlignment="Center"
                         MouseDown="AddNewButton_Click">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    
                         <Ellipse Width="24" 
                                  Height="24" 
                                  Fill="Transparent" 
@@ -223,7 +223,7 @@
                                  StrokeThickness="2"
                                  Grid.Column="0"
                                  Margin="16,0,0,0"/>
-                        
+                                    
                         <Path Data="M12,7L12,17" 
                               Stroke="#FF9800" 
                               StrokeThickness="2" 
@@ -240,13 +240,13 @@
                                    Grid.Column="1"
                                    FontSize="16" 
                                    Foreground="#333333" 
-                                   HorizontalAlignment="Center" 
-                                   VerticalAlignment="Center" 
+                           HorizontalAlignment="Center" 
+                           VerticalAlignment="Center" 
                                    Padding="0,0,0,0"
                                    FontWeight="Medium"/>
                     </Grid>
-                </Border>
-            </Grid>
-        </Border>
+            </Border>
+        </Grid>
+    </Border>
     </Grid>
 </Window> 

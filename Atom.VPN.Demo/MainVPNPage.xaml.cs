@@ -513,7 +513,7 @@ namespace Atom.VPN.Demo
                     // Find the emoji text block in the template
                     var flagContainer = template.FindName("FlagContainer", countryButton) as Grid;
                     if (flagContainer != null)
-                    {
+            {
                         var flagTextBlock = flagContainer.Children.OfType<TextBlock>().FirstOrDefault();
                         if (flagTextBlock != null)
                         {

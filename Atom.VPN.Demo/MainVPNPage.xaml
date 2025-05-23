@@ -115,9 +115,15 @@
                                     <TextBlock x:Name="SubTitle" 
                                                Text="{TemplateBinding Content}" 
                                                FontSize="14" 
-                                               Foreground="White" 
-                                               FontWeight="SemiBold"
-                                               FontFamily="{StaticResource WorkSansMedium}"/>
+                                               Foreground="#323438" 
+                                               FontFamily="{StaticResource WorkSansMedium}"
+                                               FontWeight="600"
+                                               Height="14"
+                                               LineHeight="14"
+                                               TextWrapping="NoWrap"
+                                               VerticalAlignment="Top"
+                                               HorizontalAlignment="Left"
+                                               Margin="0,6,24,0"/>
                                 </StackPanel>
                                 
                                 <Path Grid.Column="2" 
@@ -267,11 +273,20 @@
                                          Height="90" 
                                          Fill="#E9E9E9"/>
                                 
-                                <!-- Button background - uses #868B96 as in the reference image -->
+                                <!-- Button background - uses radial gradient as specified -->
                                 <Ellipse x:Name="ButtonBackground" 
-                                         Width="80" 
-                                         Height="80" 
-                                         Fill="#868B96"/>
+                                         Width="85" 
+                                         Height="85">
+                                    <Ellipse.Fill>
+                                        <RadialGradientBrush GradientOrigin="0.1995,0.0848" 
+                                                           Center="0.1995,0.0848" 
+                                                           RadiusX="0.9102" 
+                                                           RadiusY="0.9102">
+                                            <GradientStop Color="#D4D7DD" Offset="0"/>
+                                            <GradientStop Color="#868B96" Offset="1"/>
+                                        </RadialGradientBrush>
+                                    </Ellipse.Fill>
+                                </Ellipse>
                                 
                                 <!-- Power icon -->
                                 <Path x:Name="PowerIcon"
@@ -334,47 +349,47 @@
                                 <ControlTemplate TargetType="Button">
                                     <Border Background="#FFFFFF" 
                                         CornerRadius="30"
-                                            BorderThickness="1"
-                                            BorderBrush="#F0F1F3"
+                                        BorderThickness="1"
+                                        BorderBrush="#F0F1F3"
                                         Padding="15,12,15,12">
-                                        <Grid VerticalAlignment="Center">
+                                        <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*" MinWidth="200"/>
                                                 <ColumnDefinition Width="Auto"/>
                                             </Grid.ColumnDefinitions>
                                             
-                                        <Grid x:Name="FlagContainer" Width="30" Height="30" Grid.Column="0" Margin="0,0,0,0">
-                                            <Ellipse Fill="#E9E9E9" Width="30" Height="30"/>
-                                            <TextBlock Text="🇺🇸" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <Grid x:Name="FlagContainer" Width="30" Height="30" Grid.Column="0">
+                                                <Ellipse Fill="#E9E9E9" Width="30" Height="30"/>
+                                                <TextBlock Text="🇺🇸" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                             </Grid>
                                             
-                                        <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
-                                                <TextBlock x:Name="Title" 
-                                                           Text="{Binding Path=Tag, RelativeSource={RelativeSource TemplatedParent}}" 
+                                            <StackPanel Grid.Column="1" Margin="12,0,12,0">
+                                                <TextBlock Text="{Binding Path=Tag, RelativeSource={RelativeSource TemplatedParent}}" 
                                                            FontSize="14" 
-                                                           Foreground="#AAAAAA"
+                                                           Foreground="#323438"
                                                            FontFamily="{StaticResource WorkSansMedium}"
-                                                           FontWeight="500"
-                                                           LineHeight="14"
-                                                           VerticalAlignment="Center"/>
-                                                <TextBlock x:Name="SubTitle" 
-                                                           Text="{TemplateBinding Content}" 
+                                                           FontWeight="400"
+                                                           Height="14"
+                                                           LineHeight="14"/>
+                                                <TextBlock Text="{TemplateBinding Content}" 
                                                            FontSize="14" 
                                                            Foreground="#323438" 
-                                                           FontWeight="600"
                                                            FontFamily="{StaticResource WorkSansMedium}"
+                                                           FontWeight="500"
+                                                           Height="14"
                                                            LineHeight="14"
-                                                           VerticalAlignment="Center"
+                                                           TextWrapping="NoWrap"
                                                            Margin="0,6,0,0"/>
                                             </StackPanel>
                                             
                                             <Path Grid.Column="2" 
-                                                  Data="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" 
-                                                  Fill="#AAAAAA" 
-                                              Width="6" 
-                                              Height="10" 
+                                                  Data="M1.79127 13.867L8.65834 6.99988L1.79127 0.132812L0.0898438 1.83424L5.25549 6.99988L0.0898438 12.1655L1.79127 13.867Z"
+                                                  Fill="#323438" 
+                                                  Width="9" 
+                                                  Height="14" 
                                                   Stretch="Uniform"
+                                                  VerticalAlignment="Center"
                                                   Margin="0,0,5,0"/>
                                         </Grid>
                                     </Border>
@@ -417,19 +432,27 @@
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="Auto"/>
                                                     <ColumnDefinition Width="*"/>
                                                 </Grid.ColumnDefinitions>
                                                 
                                             <Grid Width="24" Height="24" Grid.Column="0" VerticalAlignment="Center">
-                                                <Path Data="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" 
-                                                  Fill="#FFA251" 
-                                                  Width="18" 
-                                                          Height="18" 
+                                                        <Path Data="M11.165 5.43037C11.1131 5.30805 11.0287 5.20309 10.9215 5.12736C10.8143 5.05163 10.6886 5.00817 10.5585 5.0019H7.36547L8.25086 1.617C8.27906 1.51108 8.28304 1.39992 8.26249 1.29217C8.24193 1.18442 8.1974 1.08298 8.13235 0.99572C8.0674 0.909302 7.98399 0.839268 7.88852 0.790992C7.79305 0.742715 7.68806 0.717478 7.58159 0.717216H2.70145C2.54405 0.711693 2.38947 0.760919 2.26288 0.856876C2.13629 0.952833 2.04514 1.08987 2.00429 1.24566L0.135888 8.3868C0.10769 8.49272 0.103713 8.60388 0.124268 8.71163C0.144823 8.81938 0.189356 8.92082 0.254406 9.00808C0.320068 9.09546 0.404593 9.16607 0.501356 9.21439C0.598119 9.26271 0.704491 9.28742 0.812136 9.28658H3.51016L2.24829 14.0997C2.20695 14.2549 2.21798 14.4199 2.2796 14.5679C2.34121 14.7158 2.44981 14.8382 2.58778 14.915C2.72576 14.9919 2.88503 15.0188 3.03978 14.9913C3.19454 14.9639 3.33572 14.8837 3.44044 14.7638L11.0395 6.19447C11.13 6.09298 11.19 5.96691 11.2122 5.83137C11.2345 5.69583 11.2181 5.5566 11.165 5.43037ZM4.33978 11.6289L5.08575 8.77242C5.11394 8.6665 5.11792 8.55535 5.09737 8.4476C5.07681 8.33985 5.03228 8.2384 4.96723 8.15114C4.90228 8.06473 4.81888 7.99469 4.72341 7.94641C4.62794 7.89814 4.52294 7.8729 4.41647 7.87264H1.73936L3.23129 2.14544H6.66831L5.78291 5.53034C5.75448 5.63822 5.75116 5.75141 5.77322 5.86084C5.79528 5.97026 5.84209 6.07286 5.9099 6.16038C5.97771 6.24789 6.06463 6.31789 6.16365 6.36474C6.26268 6.41159 6.37106 6.43399 6.48007 6.43013H8.96894L4.33978 11.6289Z" 
+                                                          Fill="#FF980E" 
+                                                      Width="12" 
+                                                      Height="15" 
                                                           Stretch="Uniform"
-                                                  HorizontalAlignment="Center"/>
-                                                </Grid>
+                                                      HorizontalAlignment="Center"/>
+                                            </Grid>
+
+                                            <Line Grid.Column="1"
+                                                  X1="0" Y1="0" X2="0" Y2="33"
+                                                  Stroke="#BEBEBE"
+                                                  StrokeThickness="0.79"
+                                                  Margin="10,0,10,0"
+                                                          VerticalAlignment="Center"/>
                                                 
-                                            <StackPanel Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center">
+                                            <StackPanel Grid.Column="2" VerticalAlignment="Center">
                                                 <TextBlock Text="Smart Location" 
                                                       FontFamily="{StaticResource WorkSansMedium}" 
                                                                FontSize="12" 
@@ -471,21 +494,27 @@
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="Auto"/>
                                                     <ColumnDefinition Width="*"/>
                                                 </Grid.ColumnDefinitions>
                                                 
                                             <Grid Width="24" Height="24" Grid.Column="0" VerticalAlignment="Center">
-                                                <Path Data="M12 6V12L16 14M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2Z" 
-                                                  Stroke="#666666" 
-                                                  StrokeThickness="1.5"
-                                                  Fill="Transparent"
-                                                  Width="18" 
-                                                  Height="18" 
+                                                <Path Data="M5.70567 2.52582C5.63272 2.5258 5.56047 2.54016 5.49306 2.56807C5.42565 2.59598 5.3644 2.6369 5.31281 2.68849C5.26123 2.74008 5.22031 2.80133 5.1924 2.86874C5.16448 2.93615 5.15013 3.00839 5.15015 3.08135V5.51667L3.79985 6.19616C3.73469 6.22893 3.67663 6.27421 3.62898 6.32942C3.58133 6.38463 3.54502 6.44869 3.52212 6.51793C3.49923 6.58717 3.49019 6.66025 3.49554 6.73298C3.50088 6.80571 3.5205 6.87668 3.55327 6.94184C3.58604 7.00699 3.63133 7.06505 3.68654 7.1127C3.74175 7.16035 3.8058 7.19666 3.87504 7.21956C3.94429 7.24245 4.01736 7.25149 4.09009 7.24614C4.16283 7.2408 4.2338 7.22118 4.29895 7.18841L5.95523 6.35512C6.04723 6.30895 6.12458 6.23809 6.17862 6.15047C6.23265 6.06285 6.26125 5.96193 6.2612 5.85899V3.08135C6.26122 3.00839 6.24687 2.93615 6.21895 2.86874C6.19104 2.80133 6.15012 2.74008 6.09853 2.68849C6.04695 2.6369 5.9857 2.59598 5.91829 2.56807C5.85088 2.54016 5.77863 2.5258 5.70567 2.52582ZM5.70567 0.303711C4.60694 0.303711 3.53289 0.629523 2.61933 1.23994C1.70576 1.85037 0.99373 2.71798 0.573264 3.73308C0.152798 4.74817 0.0427845 5.86515 0.257136 6.94277C0.471488 8.02039 1.00058 9.01025 1.7775 9.78717C2.55442 10.5641 3.54427 11.0932 4.62189 11.3075C5.69951 11.5219 6.81649 11.4119 7.83159 10.9914C8.84668 10.5709 9.7143 9.8589 10.3247 8.94534C10.9351 8.03178 11.261 6.95772 11.261 5.85899C11.2593 4.38616 10.6734 2.97413 9.63199 1.93268C8.59054 0.891224 7.17851 0.305396 5.70567 0.303711ZM5.70567 10.3032C4.82669 10.3032 3.96744 10.0426 3.2366 9.55423C2.50575 9.06589 1.93612 8.3718 1.59975 7.55972C1.26337 6.74765 1.17536 5.85406 1.34684 4.99197C1.51833 4.12987 1.9416 3.33799 2.56313 2.71645C3.18467 2.09491 3.97655 1.67164 4.83865 1.50016C5.70074 1.32868 6.59433 1.41669 7.40641 1.75306C8.21848 2.08944 8.91257 2.65906 9.40091 3.38991C9.88925 4.12076 10.1499 4.98001 10.1499 5.85899C10.1486 7.03726 9.67989 8.16688 8.84673 9.00004C8.01357 9.83321 6.88394 10.3019 5.70567 10.3032Z" 
+                                                          Fill="#FF980E" 
+                                                      Width="12" 
+                                                      Height="12" 
                                                           Stretch="Uniform"
-                                                  HorizontalAlignment="Center"/>
-                                                </Grid>
+                                                      HorizontalAlignment="Center"/>
+                                            </Grid>
+
+                                            <Line Grid.Column="1"
+                                                  X1="0" Y1="0" X2="0" Y2="33"
+                                                  Stroke="#BEBEBE"
+                                                  StrokeThickness="0.79"
+                                                  Margin="10,0,10,0"
+                                                          VerticalAlignment="Center"/>
                                                 
-                                            <StackPanel Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center">
+                                            <StackPanel Grid.Column="2" Margin="0,0,0,0" VerticalAlignment="Center">
                                                 <TextBlock Text="Recent Location" 
                                                       FontFamily="{StaticResource WorkSansMedium}" 
                                                                FontSize="12" 
@@ -500,18 +529,13 @@
                                                 </StackPanel>
                                             </Grid>
                                         </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Cursor" Value="Hand"/>
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
                                     </ControlTemplate>
                                 </Button.Template>
                             </Button>
                         </Grid>
                 
                     <!-- App Shortcuts Panel -->
-                    <Grid x:Name="AppShortcutsPanel" Margin="0,0,0,15">
+                    <Grid x:Name="AppShortcutsPanel" Margin="0,0,0,15" Visibility="Collapsed">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -691,6 +715,24 @@
                                  LineHeight="14"
                                  Margin="15,0,0,0"
                                       VerticalAlignment="Center"/>
+
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="15,0,0,0" VerticalAlignment="Center">
+                            <TextBlock Text="Ad Blocker" 
+                                     FontFamily="{StaticResource WorkSansMedium}" 
+                                     FontSize="14" 
+                                     Foreground="#323438" 
+                                     FontWeight="600"
+                                     LineHeight="14"
+                                     VerticalAlignment="Center"/>
+                            
+                            <Path Data="M6.33398 10.333H7.66732V6.33301H6.33398V10.333ZM7.00065 0.333008C3.31732 0.333008 0.333984 3.31634 0.333984 6.99967C0.333984 10.683 3.31732 13.6663 7.00065 13.6663C10.684 13.6663 13.6673 10.683 13.6673 6.99967C13.6673 3.31634 10.684 0.333008 7.00065 0.333008ZM7.00065 12.333C4.06065 12.333 1.66732 9.93967 1.66732 6.99967C1.66732 4.05967 4.06065 1.66634 7.00065 1.66634C9.94065 1.66634 12.334 4.05967 12.334 6.99967C12.334 9.93967 9.94065 12.333 7.00065 12.333ZM6.33398 4.99967H7.66732V3.66634H6.33398V4.99967Z"
+                                      Fill="#464646"
+                                      Width="14"
+                                      Height="14"
+                                  Stretch="Uniform"
+                                  Margin="8,0,0,0"
+                                      VerticalAlignment="Center"/>
+                        </StackPanel>
                         
                         <ToggleButton Grid.Column="2" 
                                       x:Name="AdBlockerToggle" 
@@ -728,10 +770,10 @@
                             Background="White" 
                             CornerRadius="24"
                             VerticalAlignment="Center">
-                        <Path Data="M12 1L15.5 7L22 8L17 13L18.5 19.5L12 16.5L5.5 19.5L7 13L2 8L8.5 7L12 1Z" 
+                        <Path Data="M3.5799 2.67028L9.76303 8.25028L15.2718 1.29362C15.426 1.09914 15.6211 0.94285 15.8424 0.836402C16.0637 0.729954 16.3056 0.676086 16.55 0.678809C16.7944 0.681532 17.0351 0.740777 17.2541 0.85213C17.4731 0.963484 17.6648 1.12408 17.8149 1.32195L23.0718 8.24862L29.4548 2.58862C29.7054 2.3668 30.0162 2.2288 30.3454 2.19309C30.6746 2.15737 31.0067 2.22565 31.297 2.38878C31.5874 2.55191 31.8222 2.80211 31.9701 3.10589C32.118 3.40967 32.172 3.75255 32.1247 4.08862L29.6872 21.3336H3.37353L0.898652 4.16695C0.849491 3.82901 0.902787 3.48374 1.05132 3.1779C1.19986 2.87206 1.43645 2.62043 1.72906 2.4571C2.02167 2.29376 2.35616 2.22662 2.68721 2.26475C3.01827 2.30288 3.3299 2.44445 3.5799 2.67028ZM3.50028 23.0003H29.5003V24.667C29.5003 25.109 29.3291 25.5329 29.0243 25.8455C28.7196 26.158 28.3063 26.3336 27.8753 26.3336H5.12528C4.6943 26.3336 4.28097 26.158 3.97623 25.8455C3.67148 25.5329 3.50028 25.109 3.50028 24.667V23.0003Z" 
                               Fill="#FFA251" 
-                              Width="24" 
-                              Height="24" 
+                              Width="33" 
+                              Height="27" 
                               Stretch="Uniform"/>
                     </Border>
                     
@@ -751,14 +793,25 @@
                                    LineHeight="16"/>
                     </StackPanel>
                     
-                    <!-- Right arrow -->
-                    <Path Grid.Column="2" 
-                          Data="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" 
-                          Fill="#323438" 
+                    <!-- Right arrow in dedicated IP section -->
+                    <Canvas Grid.Column="2" 
                           Width="24" 
-                          Height="24" 
-                          Stretch="Uniform"
-                          VerticalAlignment="Center"/>
+                          Height="24"
+                          Margin="16,0,0,0"
+                          VerticalAlignment="Center">
+                        <Path Data="M15 19L21.5 12.5L15 6" 
+                              Stroke="#212121" 
+                              StrokeThickness="2"
+                              StrokeStartLineCap="Round"
+                              StrokeEndLineCap="Round"
+                              StrokeLineJoin="Round"/>
+                        <Path Data="M2 12.5H20.4167" 
+                              Stroke="#212121" 
+                              StrokeThickness="2"
+                              StrokeStartLineCap="Round"
+                              StrokeEndLineCap="Round"
+                              StrokeLineJoin="Round"/>
+                    </Canvas>
                 </Grid>
             </Border>
         </Grid>
