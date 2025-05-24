@@ -349,8 +349,8 @@
                                 <ControlTemplate TargetType="Button">
                                     <Border Background="#FFFFFF" 
                                         CornerRadius="30"
-                                        BorderThickness="1"
-                                        BorderBrush="#F0F1F3"
+                                            BorderThickness="1"
+                                            BorderBrush="#F0F1F3"
                                         Padding="15,12,15,12">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -421,14 +421,14 @@
                                 Background="#FFFFFF"
                                 BorderThickness="1"
                                 BorderBrush="#F0F1F3"
-                                Padding="10">
+                                Padding="6">
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
                                         <Border Background="#FFFFFF" 
                                             CornerRadius="10"
                                                 BorderThickness="1"
                                                 BorderBrush="#F0F1F3"
-                                            Padding="10">
+                                            Padding="6">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="Auto"/>
@@ -436,12 +436,14 @@
                                                     <ColumnDefinition Width="*"/>
                                                 </Grid.ColumnDefinitions>
                                                 
-                                            <Grid Width="24" Height="24" Grid.Column="0" VerticalAlignment="Center">
-                                                        <Path Data="M11.165 5.43037C11.1131 5.30805 11.0287 5.20309 10.9215 5.12736C10.8143 5.05163 10.6886 5.00817 10.5585 5.0019H7.36547L8.25086 1.617C8.27906 1.51108 8.28304 1.39992 8.26249 1.29217C8.24193 1.18442 8.1974 1.08298 8.13235 0.99572C8.0674 0.909302 7.98399 0.839268 7.88852 0.790992C7.79305 0.742715 7.68806 0.717478 7.58159 0.717216H2.70145C2.54405 0.711693 2.38947 0.760919 2.26288 0.856876C2.13629 0.952833 2.04514 1.08987 2.00429 1.24566L0.135888 8.3868C0.10769 8.49272 0.103713 8.60388 0.124268 8.71163C0.144823 8.81938 0.189356 8.92082 0.254406 9.00808C0.320068 9.09546 0.404593 9.16607 0.501356 9.21439C0.598119 9.26271 0.704491 9.28742 0.812136 9.28658H3.51016L2.24829 14.0997C2.20695 14.2549 2.21798 14.4199 2.2796 14.5679C2.34121 14.7158 2.44981 14.8382 2.58778 14.915C2.72576 14.9919 2.88503 15.0188 3.03978 14.9913C3.19454 14.9639 3.33572 14.8837 3.44044 14.7638L11.0395 6.19447C11.13 6.09298 11.19 5.96691 11.2122 5.83137C11.2345 5.69583 11.2181 5.5566 11.165 5.43037ZM4.33978 11.6289L5.08575 8.77242C5.11394 8.6665 5.11792 8.55535 5.09737 8.4476C5.07681 8.33985 5.03228 8.2384 4.96723 8.15114C4.90228 8.06473 4.81888 7.99469 4.72341 7.94641C4.62794 7.89814 4.52294 7.8729 4.41647 7.87264H1.73936L3.23129 2.14544H6.66831L5.78291 5.53034C5.75448 5.63822 5.75116 5.75141 5.77322 5.86084C5.79528 5.97026 5.84209 6.07286 5.9099 6.16038C5.97771 6.24789 6.06463 6.31789 6.16365 6.36474C6.26268 6.41159 6.37106 6.43399 6.48007 6.43013H8.96894L4.33978 11.6289Z" 
-                                                          Fill="#FF980E" 
-                                                      Width="12" 
-                                                      Height="15" 
-                                                          Stretch="Uniform"
+                                            <Grid Width="20" Height="20" Grid.Column="0" VerticalAlignment="Center">
+                                                <Path Data="M11.165 5.43037C11.1131 5.30805 11.0287 5.20309 10.9215 5.12736C10.8143 5.05163 10.6886 5.00817 10.5585 5.0019H7.36547L8.25086 1.617C8.27906 1.51108 8.28304 1.39992 8.26249 1.29217C8.24193 1.18442 8.1974 1.08298 8.13235 0.99572C8.0674 0.909302 7.98399 0.839268 7.88852 0.790992C7.79305 0.742715 7.68806 0.717478 7.58159 0.717216H2.70145C2.54405 0.711693 2.38947 0.760919 2.26288 0.856876C2.13629 0.952833 2.04514 1.08987 2.00429 1.24566L0.135888 8.3868C0.10769 8.49272 0.103713 8.60388 0.124268 8.71163C0.144823 8.81938 0.189356 8.92082 0.254406 9.00808C0.320068 9.09546 0.404593 9.16607 0.501356 9.21439C0.598119 9.26271 0.704491 9.28742 0.812136 9.28658H3.51016L2.24829 14.0997C2.20695 14.2549 2.21798 14.4199 2.2796 14.5679C2.34121 14.7158 2.44981 14.8382 2.58778 14.915C2.72576 14.9919 2.88503 15.0188 3.03978 14.9913C3.19454 14.9639 3.33572 14.8837 3.44044 14.7638L11.0395 6.19447C11.13 6.09298 11.19 5.96691 11.2122 5.83137C11.2345 5.69583 11.2181 5.5566 11.165 5.43037Z" 
+                                                      Fill="Transparent"
+                                                      Stroke="#FF980E"
+                                                      StrokeThickness="1.5"
+                                                      Width="14" 
+                                                      Height="17" 
+                                                      Stretch="Uniform"
                                                       HorizontalAlignment="Center"/>
                                             </Grid>
 
@@ -449,14 +451,14 @@
                                                   X1="0" Y1="0" X2="0" Y2="33"
                                                   Stroke="#BEBEBE"
                                                   StrokeThickness="0.79"
-                                                  Margin="10,0,10,0"
-                                                          VerticalAlignment="Center"/>
+                                                  Margin="6,0,6,0"
+                                                  VerticalAlignment="Center"/>
                                                 
                                             <StackPanel Grid.Column="2" VerticalAlignment="Center">
                                                 <TextBlock Text="Smart Location" 
                                                       FontFamily="{StaticResource WorkSansMedium}" 
-                                                               FontSize="12" 
-                                                               Foreground="#323438" 
+                                                      FontSize="12" 
+                                                      Foreground="#323438" 
                                                       HorizontalAlignment="Left"/>
                                                 <TextBlock Text="Singapore - Jurong" 
                                                       FontFamily="{StaticResource WorkSansRegular}" 
@@ -477,20 +479,20 @@
                             </Button>
                             
                         <!-- Recent Location button content -->
-                            <Button Grid.Column="1" 
+                                                        <Button Grid.Column="1" 
                                     Margin="5,0,0,0"
                                 Height="60"
                                 Background="#FFFFFF"
                                 BorderThickness="1"
                                 BorderBrush="#F0F1F3"
-                                Padding="10">
+                                Padding="6">
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
                                         <Border Background="#FFFFFF" 
                                             CornerRadius="10"
                                                 BorderThickness="1"
                                                 BorderBrush="#F0F1F3"
-                                            Padding="10">
+                                            Padding="6">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="Auto"/>
@@ -498,12 +500,12 @@
                                                     <ColumnDefinition Width="*"/>
                                                 </Grid.ColumnDefinitions>
                                                 
-                                            <Grid Width="24" Height="24" Grid.Column="0" VerticalAlignment="Center">
+                                            <Grid Width="20" Height="20" Grid.Column="0" VerticalAlignment="Center">
                                                 <Path Data="M5.70567 2.52582C5.63272 2.5258 5.56047 2.54016 5.49306 2.56807C5.42565 2.59598 5.3644 2.6369 5.31281 2.68849C5.26123 2.74008 5.22031 2.80133 5.1924 2.86874C5.16448 2.93615 5.15013 3.00839 5.15015 3.08135V5.51667L3.79985 6.19616C3.73469 6.22893 3.67663 6.27421 3.62898 6.32942C3.58133 6.38463 3.54502 6.44869 3.52212 6.51793C3.49923 6.58717 3.49019 6.66025 3.49554 6.73298C3.50088 6.80571 3.5205 6.87668 3.55327 6.94184C3.58604 7.00699 3.63133 7.06505 3.68654 7.1127C3.74175 7.16035 3.8058 7.19666 3.87504 7.21956C3.94429 7.24245 4.01736 7.25149 4.09009 7.24614C4.16283 7.2408 4.2338 7.22118 4.29895 7.18841L5.95523 6.35512C6.04723 6.30895 6.12458 6.23809 6.17862 6.15047C6.23265 6.06285 6.26125 5.96193 6.2612 5.85899V3.08135C6.26122 3.00839 6.24687 2.93615 6.21895 2.86874C6.19104 2.80133 6.15012 2.74008 6.09853 2.68849C6.04695 2.6369 5.9857 2.59598 5.91829 2.56807C5.85088 2.54016 5.77863 2.5258 5.70567 2.52582ZM5.70567 0.303711C4.60694 0.303711 3.53289 0.629523 2.61933 1.23994C1.70576 1.85037 0.99373 2.71798 0.573264 3.73308C0.152798 4.74817 0.0427845 5.86515 0.257136 6.94277C0.471488 8.02039 1.00058 9.01025 1.7775 9.78717C2.55442 10.5641 3.54427 11.0932 4.62189 11.3075C5.69951 11.5219 6.81649 11.4119 7.83159 10.9914C8.84668 10.5709 9.7143 9.8589 10.3247 8.94534C10.9351 8.03178 11.261 6.95772 11.261 5.85899C11.2593 4.38616 10.6734 2.97413 9.63199 1.93268C8.59054 0.891224 7.17851 0.305396 5.70567 0.303711ZM5.70567 10.3032C4.82669 10.3032 3.96744 10.0426 3.2366 9.55423C2.50575 9.06589 1.93612 8.3718 1.59975 7.55972C1.26337 6.74765 1.17536 5.85406 1.34684 4.99197C1.51833 4.12987 1.9416 3.33799 2.56313 2.71645C3.18467 2.09491 3.97655 1.67164 4.83865 1.50016C5.70074 1.32868 6.59433 1.41669 7.40641 1.75306C8.21848 2.08944 8.91257 2.65906 9.40091 3.38991C9.88925 4.12076 10.1499 4.98001 10.1499 5.85899C10.1486 7.03726 9.67989 8.16688 8.84673 9.00004C8.01357 9.83321 6.88394 10.3019 5.70567 10.3032Z" 
                                                           Fill="#FF980E" 
                                                       Width="12" 
-                                                      Height="12" 
-                                                          Stretch="Uniform"
+                                                      Height="12"
+                                                      Stretch="Uniform"
                                                       HorizontalAlignment="Center"/>
                                             </Grid>
 
@@ -511,14 +513,14 @@
                                                   X1="0" Y1="0" X2="0" Y2="33"
                                                   Stroke="#BEBEBE"
                                                   StrokeThickness="0.79"
-                                                  Margin="10,0,10,0"
-                                                          VerticalAlignment="Center"/>
+                                                  Margin="6,0,6,0"
+                                                  VerticalAlignment="Center"/>
                                                 
                                             <StackPanel Grid.Column="2" Margin="0,0,0,0" VerticalAlignment="Center">
                                                 <TextBlock Text="Recent Location" 
                                                       FontFamily="{StaticResource WorkSansMedium}" 
-                                                               FontSize="12" 
-                                                               Foreground="#323438" 
+                                                      FontSize="12" 
+                                                      Foreground="#323438" 
                                                       HorizontalAlignment="Left"/>
                                                 <TextBlock Text="Japan - Tokyo" 
                                                       FontFamily="{StaticResource WorkSansRegular}" 
@@ -544,137 +546,164 @@
                         <!-- App Shortcuts card -->
                         <Border Grid.Column="0" 
                                 Background="#FFFFFF" 
-                                CornerRadius="6.35"
+                                CornerRadius="10"
                                 BorderThickness="1"
                                 BorderBrush="#F0F1F3"
-                                Padding="12,8,12,8"
+                                Padding="8"
                                 Margin="0,0,5,0"
                                 Width="154"
-                                Height="59.52"
-                                Cursor="Hand"
-                                MouseDown="AppShortcutsCard_MouseDown">
+                                Height="60">
                             <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="22"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
                                 
-                                <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
-                                    <Ellipse Fill="#FFF5E6" Width="18" Height="18"/>
+                                <Grid Width="20" Height="20" Grid.Column="0" VerticalAlignment="Center">
+                                    <Path Data="M6.87364 11.7971C9.92905 11.7971 12.4289 9.29721 12.4289 6.24181C12.4289 3.1864 9.92905 0.686523 6.87364 0.686523C3.81824 0.686523 1.31836 3.1864 1.31836 6.24181C1.31836 9.29721 3.81824 11.7971 6.87364 11.7971Z M4.65039 6.24121H9.09462 M6.87305 8.46376V4.01953" 
+                                          Stroke="#FF980E" 
+                                          StrokeThickness="1"
+                                          Width="13" 
+                                          Height="13"
+                                          Stretch="Uniform"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                                </Grid>
+
+                                <Line Grid.Column="1"
+                                      X1="0" Y1="0" X2="0" Y2="33"
+                                      Stroke="#BEBEBE"
+                                      StrokeThickness="0.79"
+                                      Margin="6,0,6,0"
+                                      VerticalAlignment="Center"/>
+                                    
+                                <StackPanel Grid.Column="2" VerticalAlignment="Center">
                                     <TextBlock Text="App shortcuts" 
-                                               FontFamily="{StaticResource WorkSansMedium}" 
-                                               FontSize="11" 
-                                               Foreground="#323438" 
-                                               FontWeight="SemiBold"
-                                               Margin="6,0,0,0"
-                                               VerticalAlignment="Center"/>
+                                              FontFamily="{StaticResource WorkSansMedium}" 
+                                              FontSize="12" 
+                                              Foreground="#323438" 
+                                              HorizontalAlignment="Left"/>
+                                    <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                                        <!-- Netflix icon -->
+                                        <Border Width="20" Height="20" 
+                                               Margin="0,0,4,0" 
+                                               Tag="Netflix"
+                                               MouseDown="AppShortcutIcon_Click"
+                                               Cursor="Hand">
+                                            <Grid>
+                                                <Rectangle Width="19.0467" Height="19.0467" 
+                                                          RadiusX="4.76167" RadiusY="4.76167"
+                                                          Fill="Black"
+                                                          HorizontalAlignment="Center"
+                                                          VerticalAlignment="Center"/>
+                                                <Canvas Width="20" Height="20">
+                                                    <Path Data="M14.4486 3.01855H11.7773V17.3036H14.4486V3.01855Z" 
+                                                          Fill="#E53333"/>
+                                                    <Path Data="M9.10656 3.01855H6.43555V17.3036H9.10656V3.01855Z" 
+                                                          Fill="#E53333"/>
+                                                    <Path Data="M14.449 17.3036H11.7778L6.43555 3.01855H9.10656L14.449 17.3036Z" 
+                                                          Fill="#F84437"/>
+                                                </Canvas>
+                                            </Grid>
+                                        </Border>
+                                        <!-- Chrome icon -->
+                                        <Border Width="20" Height="20" 
+                                               Margin="0,0,4,0" 
+                                               Background="#4285F4" 
+                                               CornerRadius="4.76"
+                                               Tag="Chrome"
+                                               MouseDown="AppShortcutIcon_Click"
+                                               Cursor="Hand">
+                                            <TextBlock Text="C" 
+                                                      FontFamily="{StaticResource WorkSansBold}" 
+                                                      FontSize="12" 
+                                                      Foreground="White" 
+                                                      HorizontalAlignment="Center" 
+                                                      VerticalAlignment="Center"/>
+                                        </Border>
+                                        <!-- Firefox icon -->
+                                        <Border Width="20" Height="20" 
+                                               Margin="0,0,4,0" 
+                                               Background="#FF7139" 
+                                               CornerRadius="4.76"
+                                               Tag="Firefox"
+                                               MouseDown="AppShortcutIcon_Click"
+                                               Cursor="Hand">
+                                            <TextBlock Text="F" 
+                                                      FontFamily="{StaticResource WorkSansBold}" 
+                                                      FontSize="12" 
+                                                      Foreground="White" 
+                                                      HorizontalAlignment="Center" 
+                                                      VerticalAlignment="Center"/>
+                                        </Border>
+                                        <!-- Edge icon -->
+                                        <Border Width="20" Height="20" 
+                                               Background="#0078D7" 
+                                               CornerRadius="4.76"
+                                               Tag="Edge"
+                                               MouseDown="AppShortcutIcon_Click"
+                                               Cursor="Hand">
+                                            <TextBlock Text="E" 
+                                                      FontFamily="{StaticResource WorkSansBold}" 
+                                                      FontSize="12" 
+                                                      Foreground="White" 
+                                                      HorizontalAlignment="Center" 
+                                                      VerticalAlignment="Center"/>
+                                        </Border>
+                                    </StackPanel>
                                 </StackPanel>
-                                
-                                <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,2,0,2" VerticalAlignment="Center" HorizontalAlignment="Left">
-                                    <!-- Netflix icon -->
-                                    <Border Background="#E50914" 
-                                            CornerRadius="4"
-                                            Width="21" 
-                                            Height="21"
-                                            Margin="0,0,6,0"
-                                            Cursor="Hand"
-                                            Tag="Netflix"
-                                            MouseDown="AppShortcutIcon_Click">
-                                        <TextBlock Text="N"
-                                                   FontFamily="{StaticResource WorkSansBold}"
-                                                   FontSize="13"
-                                                   Foreground="White"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"/>
-                                    </Border>
-                                    
-                                    <!-- Chrome icon -->
-                                    <Border Background="#4285F4" 
-                                            CornerRadius="4"
-                                            Width="21" 
-                                            Height="21"
-                                            Margin="0,0,6,0"
-                                            Cursor="Hand"
-                                            Tag="Chrome"
-                                            MouseDown="AppShortcutIcon_Click">
-                                        <Image Source="/Atom.VPN.Demo;component/Resources/icon/chrome.svg" 
-                                               Width="15" 
-                                               Height="15"/>
-                                    </Border>
-                                    
-                                    <!-- Firefox icon -->
-                                    <Border Background="#FF7139" 
-                                            CornerRadius="4"
-                                            Width="21" 
-                                            Height="21"
-                                            Margin="0,0,6,0"
-                                            Cursor="Hand"
-                                            Tag="Firefox"
-                                            MouseDown="AppShortcutIcon_Click">
-                                        <Image Source="/Atom.VPN.Demo;component/Resources/icon/firefox.svg" 
-                                               Width="15" 
-                                               Height="15"/>
-                                    </Border>
-                                    
-                                    <!-- Edge icon -->
-                                    <Border Background="#0078D7" 
-                                            CornerRadius="4"
-                                            Width="21" 
-                                            Height="21"
-                                            Cursor="Hand"
-                                            Tag="Edge"
-                                            MouseDown="AppShortcutIcon_Click">
-                                        <TextBlock Text="E"
-                                                   FontFamily="{StaticResource WorkSansBold}"
-                                                   FontSize="13"
-                                                   Foreground="White"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"/>
-                                    </Border>
-                    </StackPanel>
-                </Grid>
+                            </Grid>
                         </Border>
-                
+                        
                         <!-- Connected IP card -->
                         <Border Grid.Column="1"
-                       Background="#FFFFFF" 
-                                CornerRadius="6.35"
+                                Background="#FFFFFF" 
+                                CornerRadius="10"
                                 BorderThickness="1"
                                 BorderBrush="#F0F1F3"
-                                Padding="12,8,12,8"
+                                Padding="8"
                                 Margin="5,0,0,0"
                                 Width="154"
-                                Height="59.52">
+                                Height="60">
                             <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="22"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
                                 
-                                <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
-                                    <Path Width="18" 
-                                          Height="18" 
-                                          Fill="#4CAF50"
-                                          Data="M9.344 15.344L21.344 3.344L23.188 5.156L9.344 19L1.375 11.031L3.219 9.188L9.344 15.344Z"
-                                          Stretch="Uniform"/>
+                                <Grid Width="20" Height="20" Grid.Column="0" VerticalAlignment="Center">
+                                    <Path Data="M9.00039 4.65307C9.00039 4.44274 8.94185 4.24103 8.83765 4.0923C8.73345 3.94358 8.59212 3.86002 8.44476 3.86002H2.00502L3.28296 2.04393C3.38759 1.8946 3.44637 1.69206 3.44637 1.48087C3.44637 1.26968 3.38759 1.06713 3.28296 0.9178C3.17834 0.768466 3.03643 0.68457 2.88847 0.68457C2.7405 0.68457 2.5986 0.768466 2.49397 0.9178L0.271453 4.09001C0.194355 4.20153 0.142128 4.34315 0.121362 4.49699C0.100596 4.65083 0.112221 4.81001 0.154771 4.95443C0.196454 5.09926 0.26724 5.22323 0.358208 5.31073C0.449175 5.39823 0.556254 5.44534 0.665949 5.44613H8.44476C8.59212 5.44613 8.73345 5.36257 8.83765 5.21385C8.94185 5.06512 9.00039 4.8634 9.00039 4.65307ZM11.1785 7.52392C11.1368 7.37909 11.066 7.25512 10.975 7.16762C10.884 7.08012 10.777 7.03301 10.6673 7.03223H2.88847C2.7411 7.03223 2.59978 7.11578 2.49558 7.26451C2.39138 7.41323 2.33284 7.61495 2.33284 7.82528C2.33284 8.03561 2.39138 8.23733 2.49558 8.38605C2.59978 8.53478 2.7411 8.61833 2.88847 8.61833H9.32821L8.05026 10.4344C7.99818 10.5081 7.95685 10.5959 7.92864 10.6925C7.90043 10.7891 7.88591 10.8928 7.88591 10.9975C7.88591 11.1022 7.90043 11.2058 7.92864 11.3025C7.95685 11.3991 7.99818 11.4868 8.05026 11.5606C8.10191 11.6349 8.16337 11.6939 8.23107 11.7341C8.29878 11.7744 8.37141 11.7951 8.44476 11.7951C8.51811 11.7951 8.59073 11.7744 8.65844 11.7341C8.72615 11.6939 8.7876 11.6349 8.83925 11.5606L11.0618 8.38835C11.1389 8.27682 11.1911 8.13521 11.2119 7.98136C11.2326 7.82752 11.221 7.66834 11.1785 7.52392Z" 
+                                          Fill="#FF980E" 
+                                          Width="12" 
+                                          Height="12"
+                                          Stretch="Uniform"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                                </Grid>
+
+                                <Line Grid.Column="1"
+                                      X1="0" Y1="0" X2="0" Y2="33"
+                                      Stroke="#BEBEBE"
+                                      StrokeThickness="0.79"
+                                      Margin="6,0,6,0"
+                                      VerticalAlignment="Center"/>
+                                    
+                                <StackPanel Grid.Column="2" VerticalAlignment="Center">
                                     <TextBlock Text="Connected IP" 
-                                               FontFamily="{StaticResource WorkSansMedium}" 
-                                               FontSize="11" 
-                                               Foreground="#323438" 
-                                               FontWeight="SemiBold"
-                                               Margin="6,0,0,0"
-                                               VerticalAlignment="Center"/>
+                                              FontFamily="{StaticResource WorkSansMedium}" 
+                                              FontSize="12" 
+                                              Foreground="#323438" 
+                                              HorizontalAlignment="Left"/>
+                                    <TextBlock Text="198.25.255.36" 
+                                              FontFamily="{StaticResource WorkSansMedium}" 
+                                              FontSize="12" 
+                                              Foreground="#4CAF50" 
+                                              FontWeight="400"
+                                              HorizontalAlignment="Left"
+                                              Margin="0,2,0,0"/>
                                 </StackPanel>
-                                
-                                <TextBlock Grid.Row="1" 
-                                           Text="198.25.255.36" 
-                                           FontFamily="{StaticResource WorkSansMedium}" 
-                                           FontSize="14" 
-                                           Foreground="#4CAF50" 
-                                           FontWeight="SemiBold"
-                                           Margin="0,2,0,2"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"/>
                             </Grid>
                         </Border>
                     </Grid>

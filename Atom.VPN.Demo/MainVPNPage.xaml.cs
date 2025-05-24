@@ -295,9 +295,7 @@ namespace Atom.VPN.Demo
                         if (circle != null)
                         {
                             // Set initial state
-                            circle.Stroke = new SolidColorBrush(_isConnected ? 
-                                Color.FromRgb(76, 175, 80) : // Green color when connected
-                                Color.FromRgb(134, 139, 150));  // Gray color when disconnected
+                            circle.Stroke = new SolidColorBrush(Color.FromRgb(134, 139, 150));  // Start with gray color
 
                             // Make sure the circle is initially visible but with 0 opacity
                             circle.Visibility = Visibility.Visible;
@@ -305,8 +303,23 @@ namespace Atom.VPN.Demo
                         }
                     }
                     
-                    // Start the animation
+                    // Start the wave animation
                     waveAnimation.Begin(PowerButton, true);
+                    
+                    // Start the pulsing animation
+                    var pulseAnimation = new DoubleAnimation
+                    {
+                        From = 1.0,
+                        To = 1.05,
+                        Duration = TimeSpan.FromSeconds(1.5),
+                        AutoReverse = true,
+                        RepeatBehavior = RepeatBehavior.Forever
+                    };
+                    
+                    PowerButton.RenderTransform = new ScaleTransform(1, 1);
+                    PowerButton.RenderTransformOrigin = new Point(0.5, 0.5);
+                    PowerButton.RenderTransform.BeginAnimation(ScaleTransform.ScaleXProperty, pulseAnimation);
+                    PowerButton.RenderTransform.BeginAnimation(ScaleTransform.ScaleYProperty, pulseAnimation);
                 }
             }
         }
@@ -397,7 +410,7 @@ namespace Atom.VPN.Demo
                 
                 // Change status to disconnected
                 StatusText.Text = "Not Connected";
-                StatusText.Foreground = new SolidColorBrush(Colors.White);
+                StatusText.Foreground = new SolidColorBrush(Colors.Black);
                 
                 // Change description
                 DescriptionText.Text = "Press on button to connect";
@@ -413,7 +426,18 @@ namespace Atom.VPN.Demo
                 var buttonBackground = GetTemplateChild(PowerButton, "ButtonBackground") as Shape;
                 if (buttonBackground != null)
                 {
-                    buttonBackground.Fill = new SolidColorBrush(Color.FromRgb(134, 139, 150)); // #868B96
+                    buttonBackground.Fill = new RadialGradientBrush
+                    {
+                        GradientOrigin = new Point(0.1995, 0.0848),
+                        Center = new Point(0.1995, 0.0848),
+                        RadiusX = 0.9102,
+                        RadiusY = 0.9102,
+                        GradientStops = new GradientStopCollection
+                        {
+                            new GradientStop(Color.FromRgb(212, 215, 221), 0),
+                            new GradientStop(Color.FromRgb(134, 139, 150), 1)
+                        }
+                    };
                 }
                 
                 // Set animation circles to gray color when disconnected
@@ -423,8 +447,7 @@ namespace Atom.VPN.Demo
                     var circle = GetTemplateChild(PowerButton, circleName) as Ellipse;
                     if (circle != null)
                     {
-                        circle.Visibility = Visibility.Visible;
-                        circle.Stroke = new SolidColorBrush(Color.FromRgb(134, 139, 150)); // Gray color #868B96
+                        circle.Stroke = new SolidColorBrush(Color.FromRgb(134, 139, 150));
                     }
                 }
                 
@@ -435,9 +458,20 @@ namespace Atom.VPN.Demo
                 ConnectionInfoPanel.Visibility = Visibility.Collapsed;
                 QuickLocationPanel.Visibility = Visibility.Visible;
                 
-                // Stop the pulsing animation but keep our wave animation
-                PowerButton.RenderTransform.BeginAnimation(ScaleTransform.ScaleXProperty, null);
-                PowerButton.RenderTransform.BeginAnimation(ScaleTransform.ScaleYProperty, null);
+                // Keep pulsing animation but change color to gray
+                var pulseAnimation = new DoubleAnimation
+                {
+                    From = 1.0,
+                    To = 1.05,
+                    Duration = TimeSpan.FromSeconds(1.5),
+                    AutoReverse = true,
+                    RepeatBehavior = RepeatBehavior.Forever
+                };
+                
+                PowerButton.RenderTransform = new ScaleTransform(1, 1);
+                PowerButton.RenderTransformOrigin = new Point(0.5, 0.5);
+                PowerButton.RenderTransform.BeginAnimation(ScaleTransform.ScaleXProperty, pulseAnimation);
+                PowerButton.RenderTransform.BeginAnimation(ScaleTransform.ScaleYProperty, pulseAnimation);
             }
             else
             {
@@ -446,19 +480,30 @@ namespace Atom.VPN.Demo
                 
                 // Change status to connecting
                 StatusText.Text = "Connecting...";
-                StatusText.Foreground = new SolidColorBrush(Color.FromRgb(255, 152, 0)); // Orange color
+                StatusText.Foreground = new SolidColorBrush(Colors.Black);
                 
                 // Change description
-                DescriptionText.Text = "Please wait...";
+                DescriptionText.Text = "Waiting to connect secure server";
                 
-                // Change button color to yellow/orange
+                // Keep the button color as is during connecting state
                 var buttonBackground = GetTemplateChild(PowerButton, "ButtonBackground") as Shape;
                 if (buttonBackground != null)
                 {
-                    buttonBackground.Fill = new SolidColorBrush(Color.FromRgb(255, 152, 0)); // Orange color
+                    buttonBackground.Fill = new RadialGradientBrush
+                    {
+                        GradientOrigin = new Point(0.1995, 0.0848),
+                        Center = new Point(0.1995, 0.0848),
+                        RadiusX = 0.9102,
+                        RadiusY = 0.9102,
+                        GradientStops = new GradientStopCollection
+                        {
+                            new GradientStop(Color.FromRgb(212, 215, 221), 0),
+                            new GradientStop(Color.FromRgb(134, 139, 150), 1)
+                        }
+                    };
                 }
                 
-                // Update animation circles to orange during connecting state
+                // Keep animation circles gray during connecting state
                 var animationCircles = new string[] { "AnimationCircle1", "AnimationCircle2", "AnimationCircle3" };
                 foreach (var circleName in animationCircles)
                 {
@@ -466,7 +511,7 @@ namespace Atom.VPN.Demo
                     if (circle != null)
                     {
                         circle.Visibility = Visibility.Visible;
-                        circle.Stroke = new SolidColorBrush(Color.FromRgb(255, 152, 0)); // Orange color
+                        circle.Stroke = new SolidColorBrush(Color.FromRgb(134, 139, 150));
                     }
                 }
                 
